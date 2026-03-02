@@ -1,0 +1,6 @@
+{
+  "/calculators/earnings-calculator/page": "app/calculators/earnings-calculator/page.js",
+  "/page": "app/page.js",
+  "/guides/page": "app/guides/page.js",
+  "/niche/[slug]/page": "app/niche/[slug]/page.js"
+}

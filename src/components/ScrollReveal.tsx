@@ -1,0 +1,34 @@
+'use client'
+
+import { useEffect } from 'react'
+
+export default function ScrollReveal() {
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
+
+    if (!elements.length) return
+
+    elements.forEach((element) => {
+      if (!element.classList.contains('reveal')) {
+        element.classList.add('reveal')
+      }
+    })
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.2 }
+    )
+
+    elements.forEach((element) => observer.observe(element))
+    return () => observer.disconnect()
+  }, [])
+
+  return null
+}
