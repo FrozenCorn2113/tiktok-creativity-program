@@ -8,8 +8,16 @@ export async function GET(
   const url = getAffiliateLink(params.slug)
 
   if (!url) {
+    console.warn(`[affiliate] unknown slug: ${params.slug}`)
     return NextResponse.redirect(new URL('/resources', request.url))
   }
 
-  return NextResponse.redirect(url)
+  // Server-side audit log — visible in Vercel Function logs
+  console.log(`[affiliate] click slug=${params.slug} dest=${url}`)
+
+  // Pass a custom header so client-side GA4 can pick up the event via
+  // the Measurement Protocol or a redirect page if needed in future.
+  const response = NextResponse.redirect(url)
+  response.headers.set('x-affiliate-slug', params.slug)
+  return response
 }
