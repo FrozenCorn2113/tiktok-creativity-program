@@ -10,7 +10,7 @@ type SeoInput = {
 
 export function buildMetadata({ title, description, path, image }: SeoInput): Metadata {
   const url = new URL(path, siteConfig.url).toString()
-  const ogImage = image ?? `${siteConfig.url}/og-default.png`
+  const ogImage = image ?? `${siteConfig.url}/og-default.svg`
 
   return {
     title,

@@ -1,12 +1,25 @@
 import { NextResponse } from 'next/server'
+import { z } from 'zod'
+
+const bodySchema = z.object({
+  email: z.string().email('Invalid email address').max(254),
+  source: z.string().max(100).optional(),
+})
 
 export async function POST(request: Request) {
-  const { email, source } = await request.json()
-
-  if (!email) {
-    return NextResponse.json({ error: 'Email required' }, { status: 400 })
+  let body: unknown
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
+  const parsed = bodySchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues[0]?.message ?? 'Invalid input' }, { status: 400 })
+  }
+
+  const { email, source } = parsed.data
   const apiKey = process.env.CONVERTKIT_API_KEY
   const formId = process.env.CONVERTKIT_FORM_ID
 

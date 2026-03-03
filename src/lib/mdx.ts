@@ -66,14 +66,8 @@ export function getAllGuides(): GuideFrontmatter[] {
 
 function withImage(frontmatter: GuideFrontmatter): GuideFrontmatter {
   if (frontmatter.image) return frontmatter
-  const keywords =
-    frontmatter.keywords?.slice(0, 3).join(',') ??
-    frontmatter.title.split(' ').slice(0, 3).join(',')
-  const query = encodeURIComponent(keywords)
-  return {
-    ...frontmatter,
-    image: `https://source.unsplash.com/1600x900/?${query}`,
-  }
+  // source.unsplash.com was shut down in 2023; fall back to local OG default
+  return { ...frontmatter, image: '/og-default.png' }
 }
 
 export function getTableOfContents(content: string): TocItem[] {
