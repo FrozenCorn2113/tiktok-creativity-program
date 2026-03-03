@@ -90,8 +90,8 @@ The `\\s` in a regex literal means literal `\s` (backslash + s), not whitespace.
 ### 7. `getGuideBySlug` throws on unknown slug (LOW)
 **File:** `src/lib/mdx.ts:57` — throws `Error` if slug not found. Since this runs at build time via `generateStaticParams`, it's safe now. But if someone hits a `/guides/bad-slug` URL, Next.js will 500 instead of 404.
 
-### 8. `creator-rewards-2026` guide referenced but doesn't exist (HIGH)
-The Navbar "Start here" CTA, footer, `start-here` page, and `niche/[slug]` all link to `/guides/creator-rewards-2026`. Only `content/guides/creator-rewards-2025.mdx` exists (slug mismatch). This is a broken link on every page.
+### 8. ~~`creator-rewards-2026` guide missing~~ — FINDING INCORRECT
+`content/guides/creator-rewards-2025.mdx` has `slug: "creator-rewards-2026"` in frontmatter. The MDX loader resolves by slug, not filename. `/guides/creator-rewards-2026` works correctly. The filename is just stale — not a bug.
 
 ---
 

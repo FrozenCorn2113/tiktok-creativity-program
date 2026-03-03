@@ -6,6 +6,7 @@ import ReadingProgressBar from '@/components/ReadingProgressBar'
 import CommentSection from '@/components/CommentSection'
 import Button from '@/components/ui/Button'
 import WorkingIllustration from '@/components/illustrations/WorkingIllustration'
+import { notFound } from 'next/navigation'
 import { buildMetadata } from '@/lib/seo'
 import { compileGuide, getGuideBySlug, getGuideSlugs, getTableOfContents } from '@/lib/mdx'
 import { siteConfig } from '@/lib/site'
@@ -20,8 +21,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: GuidePageProps) {
-  const { frontmatter } = getGuideBySlug(params.slug)
+  const guide = getGuideBySlug(params.slug)
+  if (!guide) return {}
 
+  const { frontmatter } = guide
   return buildMetadata({
     title: frontmatter.title,
     description: frontmatter.description,
@@ -31,7 +34,10 @@ export async function generateMetadata({ params }: GuidePageProps) {
 }
 
 export default async function GuidePage({ params }: GuidePageProps) {
-  const { frontmatter, content } = getGuideBySlug(params.slug)
+  const guide = getGuideBySlug(params.slug)
+  if (!guide) notFound()
+
+  const { frontmatter, content } = guide
   const toc = getTableOfContents(content)
   const compiled = await compileGuide(content)
 

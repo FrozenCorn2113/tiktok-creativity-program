@@ -40,7 +40,7 @@ export function getGuideSlugs() {
     })
 }
 
-export function getGuideBySlug(slug: string): GuideContent {
+export function getGuideBySlug(slug: string): GuideContent | null {
   const files = fs.readdirSync(guidesDirectory).filter((file) => file.endsWith('.mdx'))
 
   for (const file of files) {
@@ -54,12 +54,13 @@ export function getGuideBySlug(slug: string): GuideContent {
     }
   }
 
-  throw new Error(`Guide not found for slug: ${slug}`)
+  return null
 }
 
 export function getAllGuides(): GuideFrontmatter[] {
   return getGuideSlugs()
-    .map((slug) => getGuideBySlug(slug).frontmatter)
+    .map((slug) => getGuideBySlug(slug)?.frontmatter)
+    .filter((f): f is GuideFrontmatter => f !== undefined)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
@@ -80,14 +81,14 @@ export function getTableOfContents(content: string): TocItem[] {
   const items: TocItem[] = []
 
   lines.forEach((line) => {
-    const match = /^(#{2,3})\\s+(.*)/.exec(line)
+    const match = /^(#{2,3})\s+(.*)/.exec(line)
     if (!match) return
     const level = match[1].length
     const title = match[2].trim()
     const id = title
       .toLowerCase()
-      .replace(/[^a-z0-9\\s-]/g, '')
-      .replace(/\\s+/g, '-')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
     items.push({ id, title, level })
   })
 

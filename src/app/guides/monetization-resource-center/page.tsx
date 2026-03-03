@@ -1,9 +1,11 @@
+import { notFound } from 'next/navigation'
 import Container from '@/components/ui/Container'
 import { compileGuide, getGuideBySlug } from '@/lib/mdx'
 
 export default async function MonetizationResourceCenterPage() {
-  const { content } = getGuideBySlug('monetization-resource-center')
-  const compiled = await compileGuide(content)
+  const guide = getGuideBySlug('monetization-resource-center')
+  if (!guide) notFound()
+  const compiled = await compileGuide(guide.content)
 
   return (
     <section className="py-12">
