@@ -41,8 +41,27 @@ export default async function GuidePage({ params }: GuidePageProps) {
   const toc = getTableOfContents(content)
   const compiled = await compileGuide(content)
 
+  const articleUrl = `${siteConfig.url}/guides/${frontmatter.slug}`
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: frontmatter.title,
+    description: frontmatter.description,
+    datePublished: frontmatter.date,
+    dateModified: frontmatter.date,
+    url: articleUrl,
+    image: frontmatter.image ?? `${siteConfig.url}/og-default.svg`,
+    author: { '@type': 'Organization', name: siteConfig.name, url: siteConfig.url },
+    publisher: { '@type': 'Organization', name: siteConfig.name, url: siteConfig.url },
+    keywords: frontmatter.keywords?.join(', '),
+  }
+
   return (
     <section className="py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <ReadingProgressBar />
       <Container>
         <div className="grid gap-10 lg:grid-cols-[220px_1fr_200px]">
