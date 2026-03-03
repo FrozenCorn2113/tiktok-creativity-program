@@ -1,6 +1,12 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import VideoEmbed from '@/components/VideoEmbed'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Media Library',
+  description: 'Video walkthroughs and visuals supporting TikTok creator education — earnings calculators, program guides, and more.',
+}
 
 export default function MediaPage() {
   return (

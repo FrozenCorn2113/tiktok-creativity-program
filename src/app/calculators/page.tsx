@@ -1,5 +1,11 @@
 import Container from '@/components/ui/Container'
 import ArticleCard from '@/components/ArticleCard'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'TikTok Earnings Calculators',
+  description: 'Free TikTok Creator Rewards calculators: estimate earnings, compare RPM by country, and forecast income from your follower count.',
+}
 
 const calculators = [
   {

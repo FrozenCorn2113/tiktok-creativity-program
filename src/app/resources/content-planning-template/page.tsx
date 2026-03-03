@@ -1,6 +1,12 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import EmailSignupForm from '@/components/EmailSignupForm'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Content Planning Template',
+  description: 'A weekly content planning template designed for TikTok creators in the Creator Rewards Program.',
+}
 
 export default function ContentPlanningTemplatePage() {
   return (

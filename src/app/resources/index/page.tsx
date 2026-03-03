@@ -1,5 +1,11 @@
 import Container from '@/components/ui/Container'
 import ArticleCard from '@/components/ArticleCard'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'All Creator Resources',
+  description: 'Browse every free template and tool for TikTok creators — earnings trackers, checklists, and viral content worksheets.',
+}
 
 const resources = [
   {

@@ -1,5 +1,11 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Sponsor This Site',
+  description: 'Partner with TikTok Creativity Program to reach creators through guide placements, calculator visibility, and newsletter features.',
+}
 
 export default function SponsorPage() {
   return (

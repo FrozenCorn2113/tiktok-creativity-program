@@ -3,6 +3,12 @@ import EmailSignupForm from '@/components/EmailSignupForm'
 import ScrollReveal from '@/components/ScrollReveal'
 import StepCard from '@/components/StepCard'
 import CollaborationIllustration from '@/components/illustrations/CollaborationIllustration'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'TikTok Creator Rewards Program — Guides, Calculators & Strategies',
+  description: 'Everything you need to succeed in the TikTok Creator Rewards Program. Eligibility guides, earnings calculators, and monetization strategies.',
+}
 
 export default function HomePage() {
   return (

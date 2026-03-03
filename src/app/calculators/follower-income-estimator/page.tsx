@@ -1,6 +1,12 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import FollowerIncomeEstimator from '@/components/FollowerIncomeEstimator'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'TikTok Follower Income Estimator',
+  description: 'Estimate monthly TikTok Creator Rewards income based on your follower count, niche, and posting frequency.',
+}
 
 export default function FollowerIncomeEstimatorPage() {
   return (

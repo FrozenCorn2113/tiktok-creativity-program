@@ -1,4 +1,10 @@
 import Container from '@/components/ui/Container'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About',
+  description: 'An independent resource helping TikTok creators understand eligibility, earnings, and monetization strategies for the Creator Rewards Program.',
+}
 
 export default function AboutPage() {
   return (

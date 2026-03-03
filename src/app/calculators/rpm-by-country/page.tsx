@@ -1,6 +1,12 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import RpmByCountryCalculator from '@/components/RpmByCountryCalculator'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'TikTok RPM by Country Estimator',
+  description: 'Compare TikTok Creator Rewards RPM rates by country to understand how your audience location affects earnings.',
+}
 
 export default function RpmByCountryPage() {
   return (

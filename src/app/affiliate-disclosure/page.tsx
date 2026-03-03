@@ -1,4 +1,10 @@
 import Container from '@/components/ui/Container'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Affiliate Disclosure',
+  description: 'Some links on this site are affiliate links. Here\'s how that works and what it means for our recommendations.',
+}
 
 export default function AffiliateDisclosurePage() {
   return (

@@ -1,4 +1,10 @@
 import Container from '@/components/ui/Container'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Contact',
+  description: 'Questions, corrections, or collaboration ideas? Get in touch with the TikTok Creativity Program team.',
+}
 
 export default function ContactPage() {
   return (

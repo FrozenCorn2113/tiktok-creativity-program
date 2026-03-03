@@ -1,5 +1,11 @@
 import Container from '@/components/ui/Container'
 import ArticleCard from '@/components/ArticleCard'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Creator Products & Playbooks',
+  description: 'Premium TikTok monetization playbooks, checklists, and templates to grow earnings faster.',
+}
 
 const products = [
   {

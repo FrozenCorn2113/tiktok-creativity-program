@@ -1,4 +1,10 @@
 import Container from '@/components/ui/Container'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'How TikTok Creativity Program collects, uses, and protects your information.',
+}
 
 export default function PrivacyPage() {
   return (

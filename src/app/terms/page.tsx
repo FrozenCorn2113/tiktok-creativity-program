@@ -1,4 +1,10 @@
 import Container from '@/components/ui/Container'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Terms of Use',
+  description: 'Terms governing your use of TikTok Creativity Program. We are not affiliated with TikTok or ByteDance.',
+}
 
 export default function TermsPage() {
   return (

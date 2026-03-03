@@ -1,5 +1,11 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Troubleshooting Creator Rewards',
+  description: 'Fix missing qualified views, RPM drops, and Creator Rewards program rejections with step-by-step troubleshooting guides.',
+}
 
 export default function TroubleshootingPage() {
   return (

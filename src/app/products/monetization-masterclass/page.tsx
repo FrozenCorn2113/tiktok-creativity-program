@@ -1,6 +1,12 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import EmailSignupForm from '@/components/EmailSignupForm'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'TikTok Monetization Masterclass',
+  description: 'A structured course covering Creator Rewards, brand deals, affiliate income, and digital product revenue for creators.',
+}
 
 export default function MonetizationMasterclassPage() {
   return (

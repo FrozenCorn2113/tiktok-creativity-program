@@ -1,6 +1,12 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import EmailSignupForm from '@/components/EmailSignupForm'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Creator Rewards Application Checklist',
+  description: 'A pre-application checklist to avoid the most common TikTok Creator Rewards rejection reasons.',
+}
 
 export default function CreatorRewardsChecklistPage() {
   return (

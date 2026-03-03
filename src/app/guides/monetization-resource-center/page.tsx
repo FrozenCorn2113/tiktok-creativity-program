@@ -1,6 +1,12 @@
 import { notFound } from 'next/navigation'
 import Container from '@/components/ui/Container'
 import { compileGuide, getGuideBySlug } from '@/lib/mdx'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'TikTok Monetization Resource Center',
+  description: 'The complete hub for TikTok monetization: Creator Rewards guides, earnings calculators, and income strategies in one place.',
+}
 
 export default async function MonetizationResourceCenterPage() {
   const guide = getGuideBySlug('monetization-resource-center')

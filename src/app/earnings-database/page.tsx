@@ -1,5 +1,11 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Creator Earnings Database',
+  description: 'Anonymized real-world TikTok earnings examples showing how views and RPM translate into Creator Rewards payouts.',
+}
 
 const sampleRows = [
   { niche: 'Fitness', followers: '28K', views: '420K', rpm: '$0.68', earnings: '$287' },

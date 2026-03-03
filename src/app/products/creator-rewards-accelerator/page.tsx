@@ -1,6 +1,12 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import EmailSignupForm from '@/components/EmailSignupForm'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Creator Rewards Accelerator',
+  description: 'A premium playbook with checklists, templates, and workflows to get approved for Creator Rewards and increase RPM.',
+}
 
 export default function CreatorRewardsAcceleratorPage() {
   return (

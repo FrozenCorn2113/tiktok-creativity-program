@@ -1,6 +1,12 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import EmailSignupForm from '@/components/EmailSignupForm'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Premium TikTok Monetization Newsletter',
+  description: 'Weekly deep dives, templates, and data-backed strategies for creators who want recurring income. Join the waitlist.',
+}
 
 export default function NewsletterPage() {
   return (

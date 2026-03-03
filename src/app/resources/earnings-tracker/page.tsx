@@ -2,6 +2,12 @@ import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import EmailSignupForm from '@/components/EmailSignupForm'
 import { trackEvent } from '@/lib/analytics'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'TikTok Earnings Tracker',
+  description: 'Free spreadsheet to track your TikTok qualified views, RPM, and Creator Rewards payouts week by week.',
+}
 
 export default function EarningsTrackerPage() {
   const trackerUrl = process.env.NEXT_PUBLIC_EARNINGS_TRACKER_URL

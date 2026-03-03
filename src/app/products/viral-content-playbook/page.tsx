@@ -1,6 +1,12 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import EmailSignupForm from '@/components/EmailSignupForm'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Viral Content Playbook',
+  description: 'Hook formulas, pacing templates, and series builders to create consistently high-performing TikTok content.',
+}
 
 export default function ViralContentPlaybookPage() {
   return (

@@ -2,6 +2,12 @@ import Container from '@/components/ui/Container'
 import EarningsCalculator from '@/components/EarningsCalculator'
 import CalloutBox from '@/components/CalloutBox'
 import ComparisonTable from '@/components/ComparisonTable'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'TikTok Earnings Calculator',
+  description: 'Estimate your TikTok Creator Rewards payout based on qualified views, RPM, and the Additional Reward bonus.',
+}
 
 const faqRows = [
   [
