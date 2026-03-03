@@ -132,6 +132,7 @@ export function getGuidesByCategory(): Record<GuideCategory, GuideFrontmatter[]>
 export async function compileGuide(content: string) {
   return compileMDX({
     source: content,
+    // eslint-disable-next-line react-hooks/rules-of-hooks -- useMDXComponents is an MDX utility, not a React hook
     components: useMDXComponents({}),
     options: { parseFrontmatter: false },
   })
