@@ -14,11 +14,9 @@ vi.mock('next/server', () => ({
 const mockFetch = vi.fn()
 vi.stubGlobal('fetch', mockFetch)
 
-// Helper to build a mock Request
+// Helper to build a mock Request (cast via unknown to avoid TS strict overlap errors)
 function makeRequest(body: unknown) {
-  return {
-    json: async () => body,
-  } as Request
+  return { json: async () => body } as unknown as Request
 }
 
 describe('POST /api/email', () => {
@@ -42,7 +40,7 @@ describe('POST /api/email', () => {
 
   it('returns 400 for malformed JSON body', async () => {
     const { POST } = await import('@/app/api/email/route')
-    const badReq = { json: async () => { throw new Error('bad json') } } as Request
+    const badReq = { json: async () => { throw new Error('bad json') } } as unknown as Request
     const res = await POST(badReq)
     expect(res.status).toBe(400)
   })
@@ -52,7 +50,7 @@ describe('POST /api/email', () => {
     const { POST } = await import('@/app/api/email/route')
     const res = await POST(makeRequest({ email: 'user@example.com' }))
     expect(res.status).toBe(500)
-    expect((res.body as { error: string }).error).toMatch(/not configured/i)
+    expect((res.body as unknown as { error: string }).error).toMatch(/not configured/i)
   })
 
   it('calls ConvertKit and returns success on valid email', async () => {
@@ -61,7 +59,7 @@ describe('POST /api/email', () => {
     const res = await POST(makeRequest({ email: 'creator@example.com', source: 'inline' }))
     expect(mockFetch).toHaveBeenCalledOnce()
     expect(res.status).toBe(200)
-    expect((res.body as { success: boolean }).success).toBe(true)
+    expect((res.body as unknown as { success: boolean }).success).toBe(true)
   })
 
   it('returns 500 when ConvertKit responds with an error', async () => {
