@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const routes = [
     '',
+    '/start-here',
     '/guides',
     '/guides/monetization-resource-center',
     '/calculators',
