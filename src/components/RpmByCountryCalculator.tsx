@@ -22,14 +22,7 @@ const countries: CountryConfig[] = [
 ]
 
 const defaultMix: Record<string, number> = {
-  US: 35,
-  UK: 10,
-  DE: 10,
-  FR: 8,
-  JP: 10,
-  KR: 7,
-  MX: 10,
-  BR: 10,
+  US: 35, UK: 10, DE: 10, FR: 8, JP: 10, KR: 7, MX: 10, BR: 10,
 }
 
 export default function RpmByCountryCalculator() {
@@ -82,12 +75,13 @@ export default function RpmByCountryCalculator() {
   return (
     <form
       onSubmit={handleCalculate}
-      className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 shadow-sm"
+      className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-white shadow-[var(--shadow-md)] overflow-hidden"
     >
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <div className="space-y-4">
+      <div className="grid gap-0 lg:grid-cols-[1.2fr_1fr]">
+        {/* Inputs panel */}
+        <div className="space-y-5 p-6 lg:p-8">
           <div>
-            <label className="text-sm font-semibold text-[var(--color-text)]">
+            <label className="block text-sm font-semibold text-[var(--color-ink)]">
               Monthly views
             </label>
             <input
@@ -95,7 +89,7 @@ export default function RpmByCountryCalculator() {
               min={0}
               value={views}
               onChange={(event) => setViews(Number(event.target.value))}
-              className="mt-2 h-11 w-full rounded-[var(--radius-md)] border border-[var(--color-border)] px-3 text-sm focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)]"
+              className="mt-2 h-12 w-full rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-inset)] px-4 font-[family-name:var(--font-mono)] text-right text-sm text-[var(--color-ink)] transition-shadow focus-visible:outline-none focus-visible:border-[var(--color-primary)] focus-visible:shadow-[var(--focus-ring-input)]"
             />
             <p className="mt-2 text-xs text-[var(--color-text-subtle)]">
               We assume 82% of views are qualified after eligibility.
@@ -103,40 +97,48 @@ export default function RpmByCountryCalculator() {
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text)]">Audience mix (%)</p>
-            <div className="mt-3 grid gap-3 md:grid-cols-2">
+            <p className="text-sm font-semibold text-[var(--color-ink)]">
+              Audience mix (%)
+              {totalPercent !== 100 ? (
+                <span className="ml-2 text-xs font-normal text-[var(--color-warning)]">
+                  Total: {totalPercent}% — adjust to 100%
+                </span>
+              ) : (
+                <span className="ml-2 text-xs font-normal text-[var(--color-success)]">
+                  Total: 100%
+                </span>
+              )}
+            </p>
+            <div className="mt-3 grid gap-2.5 md:grid-cols-2">
               {countries.map((country) => (
-                <label key={country.code} className="flex items-center justify-between text-sm">
-                  <span>{country.name}</span>
+                <label key={country.code} className="flex items-center justify-between gap-2 text-sm text-[var(--color-text)]">
+                  <span className="min-w-0 truncate">{country.name}</span>
                   <input
                     type="number"
                     min={0}
                     max={100}
                     value={mix[country.code] ?? 0}
                     onChange={(event) => handleMixChange(country.code, Number(event.target.value))}
-                    className="h-9 w-20 rounded-[var(--radius-md)] border border-[var(--color-border)] px-2 text-sm text-right"
+                    className="h-9 w-20 flex-shrink-0 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-inset)] px-2 font-[family-name:var(--font-mono)] text-right text-sm text-[var(--color-ink)] focus-visible:outline-none focus-visible:border-[var(--color-primary)]"
                   />
                 </label>
               ))}
             </div>
-            <p className="mt-2 text-xs text-[var(--color-text-subtle)]">
-              Total: {totalPercent}% {totalPercent !== 100 ? '(Adjust to 100%)' : null}
-            </p>
           </div>
 
-          <label className="flex items-center gap-3 text-sm text-[var(--color-text)]">
+          <label className="flex cursor-pointer items-center gap-3 text-sm text-[var(--color-text)]">
             <input
               type="checkbox"
               checked={includeBonus}
               onChange={(event) => setIncludeBonus(event.target.checked)}
-              className="h-4 w-4 rounded border-[var(--color-border)] text-[var(--color-accent)]"
+              className="h-4 w-4 cursor-pointer rounded border-[var(--color-border)] accent-[var(--color-primary)]"
             />
             Include Additional Reward bonus (+20%)
           </label>
 
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center rounded-[var(--radius-lg)] bg-[var(--color-accent)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--color-accent-strong)]"
+            className="inline-flex w-full cursor-pointer items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-primary)] px-4 py-3 text-[0.9375rem] font-semibold text-[var(--color-ink-strong)] transition-all duration-200 hover:bg-[var(--color-primary-hover)] hover:shadow-[var(--shadow-sm)] active:scale-95"
           >
             Calculate blended RPM
           </button>
@@ -147,30 +149,35 @@ export default function RpmByCountryCalculator() {
           ) : null}
         </div>
 
-        <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-subtle)]">
-            Estimated RPM range
+        {/* Results panel */}
+        <div className="border-t border-[var(--color-border)] bg-[var(--color-surface-warm)] p-6 lg:border-t-0 lg:border-l lg:p-8">
+          <p className="text-[0.75rem] font-semibold uppercase tracking-wide text-[var(--color-text-subtle)]">
+            Blended RPM range
           </p>
-          <p className="mt-3 text-2xl font-semibold text-[var(--color-text)]">
+          <p className="mono-output mt-3 text-[1.75rem] lg:text-[2rem]">
             ${blended.min.toFixed(2)} – ${blended.max.toFixed(2)}
           </p>
-          <div className="mt-4 space-y-2 text-sm text-[var(--color-text)]">
-            <div className="flex items-center justify-between">
-              <span>Qualified views</span>
-              <span className="font-semibold">{qualifiedViews.toLocaleString()}</span>
+          <div className="mt-5 space-y-3 border-t border-[var(--color-border)] pt-4">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-[var(--color-text-muted)]">Qualified views</span>
+              <span className="font-[family-name:var(--font-mono)] font-semibold text-[var(--color-ink)]">
+                {qualifiedViews.toLocaleString()}
+              </span>
             </div>
-            <div className="flex items-center justify-between">
-              <span>Estimated earnings</span>
-              <span className="font-semibold">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-[var(--color-text-muted)]">Estimated earnings</span>
+              <span className="font-[family-name:var(--font-mono)] font-semibold text-[var(--color-ink)]">
                 ${earningsRange.min.toFixed(2)} – ${earningsRange.max.toFixed(2)}
               </span>
             </div>
-            <div className="flex items-center justify-between">
-              <span>Bonus applied</span>
-              <span className="font-semibold">{includeBonus ? 'Yes (+20%)' : 'No'}</span>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-[var(--color-text-muted)]">Bonus applied</span>
+              <span className="font-semibold text-[var(--color-ink)]">
+                {includeBonus ? 'Yes (+20%)' : 'No'}
+              </span>
             </div>
           </div>
-          <p className="mt-4 text-xs text-[var(--color-text-subtle)]">
+          <p className="mt-4 text-xs text-[var(--color-text-subtle)] leading-[1.6]">
             Blended RPM is weighted by your audience mix and typical country ranges.
           </p>
         </div>

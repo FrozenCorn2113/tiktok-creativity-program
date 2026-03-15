@@ -30,7 +30,6 @@ export default function HomePage() {
               <div className="mt-8">
                 <EmailSignupForm
                   variant="inline"
-                  layout="inline"
                   title=""
                   description=""
                   ctaLabel="Get the free guide"

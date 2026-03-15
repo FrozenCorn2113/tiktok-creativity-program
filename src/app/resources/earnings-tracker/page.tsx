@@ -1,7 +1,6 @@
 import Container from '@/components/ui/Container'
 import CalloutBox from '@/components/CalloutBox'
 import EmailSignupForm from '@/components/EmailSignupForm'
-import { trackEvent } from '@/lib/analytics'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -65,14 +64,7 @@ export default function EarningsTrackerPage() {
               href={trackerUrl}
               target="_blank"
               rel="noreferrer"
-              onClick={() =>
-                trackEvent({
-                  action: 'lead_magnet_download',
-                  category: 'engagement',
-                  label: 'earnings_tracker',
-                })
-              }
-              className="inline-flex w-full items-center justify-center rounded-[var(--radius-lg)] bg-[var(--color-accent)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--color-accent-strong)]"
+              className="inline-flex w-full items-center justify-center rounded-[var(--radius-lg)] bg-[var(--color-primary)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-hover)]"
             >
               Open the tracker
             </a>

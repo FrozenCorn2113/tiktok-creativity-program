@@ -39,7 +39,7 @@ export default function MonetizationMasterclassPage() {
             <ul className="mt-3 space-y-2">
               {modules.map((m) => (
                 <li key={m} className="flex gap-2 text-sm text-[var(--color-text-muted)]">
-                  <span className="mt-0.5 shrink-0 text-[var(--color-accent)]">✓</span>
+                  <span className="mt-0.5 shrink-0 text-[var(--color-primary)]">✓</span>
                   {m}
                 </li>
               ))}

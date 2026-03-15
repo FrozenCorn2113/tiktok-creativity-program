@@ -59,6 +59,7 @@
   --leading-body: 1.7;
   --leading-small: 1.5;
   --leading-caption: 1.4;
+  --leading-h4: 1.4;
 
   /* ── Border Radius ─────────────────────────────────────────────────────── */
   --radius-sm: 8px;                 /* Small elements, inline badges */

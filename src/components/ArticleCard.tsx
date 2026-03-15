@@ -46,7 +46,7 @@ export default function ArticleCard({
         ) : null}
         <h3 className="text-base font-semibold text-[var(--color-text)] line-clamp-2">{title}</h3>
         <p className="text-sm text-[var(--color-text-muted)] line-clamp-3">{excerpt}</p>
-        <span className="mt-auto text-sm font-semibold text-[var(--color-accent)]">Read guide</span>
+        <span className="mt-auto text-sm font-semibold text-[var(--color-primary)]">Read guide</span>
       </div>
     </Link>
   )

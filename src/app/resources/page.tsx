@@ -21,7 +21,7 @@ export default function ResourcesPage() {
           </header>
           <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="space-y-4">
-              <CalloutBox type="success">
+              <CalloutBox type="tip">
                 Download the TikTok Earnings Tracker to log views, RPM, and payouts in one place.
               </CalloutBox>
               <div className="flex flex-wrap gap-3">

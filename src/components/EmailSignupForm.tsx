@@ -4,14 +4,13 @@ import { useState } from 'react'
 import Button from '@/components/ui/Button'
 import { trackEvent } from '@/lib/analytics'
 
-type Variant = 'inline' | 'sidebar' | 'exit-intent'
+type Variant = 'inline' | 'sidebar' | 'exit-intent' | 'hero'
 
 type EmailSignupFormProps = {
   variant?: Variant
   title?: string
   description?: string
   ctaLabel?: string
-  layout?: 'card' | 'inline'
   className?: string
 }
 
@@ -31,6 +30,11 @@ const defaultCopy: Record<Variant, { title: string; description: string; ctaLabe
     description: 'It takes 30 seconds to set up and keeps your Creator Rewards organized.',
     ctaLabel: 'Email me the tracker',
   },
+  hero: {
+    title: 'Start earning more from TikTok',
+    description: 'Free guides, calculators, and the earnings tracker — delivered to your inbox.',
+    ctaLabel: 'Get free access',
+  },
 }
 
 export default function EmailSignupForm({
@@ -38,7 +42,6 @@ export default function EmailSignupForm({
   title,
   description,
   ctaLabel,
-  layout = 'card',
   className = '',
 }: EmailSignupFormProps) {
   const [email, setEmail] = useState('')
@@ -46,6 +49,9 @@ export default function EmailSignupForm({
   const [message, setMessage] = useState('')
 
   const copy = defaultCopy[variant]
+  const isHero = variant === 'hero'
+  const inputHeight = isHero ? 'h-14' : 'h-12'
+  const inputFont = isHero ? 'text-base' : 'text-sm'
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -61,43 +67,40 @@ export default function EmailSignupForm({
         body: JSON.stringify({ email, source: variant }),
       })
 
-      if (!response.ok) {
-        throw new Error('Request failed')
-      }
+      if (!response.ok) throw new Error('Request failed')
 
       setStatus('success')
-      setMessage('Check your inbox for the tracker and next steps.')
+      setMessage('Check your inbox — tracker and next steps on the way.')
       setEmail('')
       trackEvent({
         action: 'email_signup',
         category: 'engagement',
         label: variant,
       })
-    } catch (error) {
+    } catch {
       setStatus('error')
       setMessage('Something went wrong. Please try again.')
     }
   }
 
-  const isCard = layout === 'card'
-
   return (
     <div
-      className={`${isCard ? 'rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-5 shadow-[var(--shadow-sm)]' : ''} ${
-        variant === 'sidebar' && isCard ? 'sticky top-24' : ''
-      } ${className}`}
+      className={`rounded-[var(--radius-xl)] bg-[var(--color-surface-muted)] p-8 ${isHero ? 'md:p-10' : ''} ${className}`}
     >
       {(title ?? copy.title) ? (
-        <h3 className="text-base font-semibold text-[var(--color-text)]">{title ?? copy.title}</h3>
+        <h3 className={`font-bold text-[var(--color-ink-strong)] ${isHero ? 'text-2xl' : 'text-lg'}`}>
+          {title ?? copy.title}
+        </h3>
       ) : null}
       {(description ?? copy.description) ? (
-        <p className="mt-2 text-sm text-[var(--color-text-muted)]">
+        <p className="mt-2 text-sm leading-[1.7] text-[var(--color-text-muted)]">
           {description ?? copy.description}
         </p>
       ) : null}
+
       <form
         onSubmit={handleSubmit}
-        className={`mt-4 flex flex-col gap-3 ${layout === 'inline' ? 'sm:flex-row sm:items-center' : ''}`}
+        className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center"
       >
         <input
           type="email"
@@ -105,24 +108,28 @@ export default function EmailSignupForm({
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Enter your email"
-          className={`h-11 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-3 text-sm focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)] ${
-            layout === 'inline' ? 'sm:flex-1' : ''
-          }`}
+          className={`${inputHeight} ${inputFont} flex-1 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-white px-4 text-[var(--color-text)] placeholder:text-[var(--color-text-subtle)] transition-shadow duration-200 focus-visible:outline-none focus-visible:shadow-[var(--focus-ring-input)] focus-visible:border-[var(--color-primary)]`}
           required
         />
-        <Button type="submit" disabled={status === 'loading'}>
+        <Button
+          type="submit"
+          size={isHero ? 'lg' : 'md'}
+          disabled={status === 'loading'}
+          className={isHero ? 'h-14 whitespace-nowrap' : 'whitespace-nowrap'}
+        >
           {status === 'loading' ? 'Sending...' : ctaLabel ?? copy.ctaLabel}
         </Button>
-        {message ? (
-          <p
-            className={`text-xs ${
-              status === 'success' ? 'text-emerald-700' : 'text-rose-600'
-            }`}
-          >
-            {message}
-          </p>
-        ) : null}
       </form>
+
+      {message ? (
+        <p
+          className={`mt-3 text-xs ${
+            status === 'success' ? 'text-[var(--color-success)]' : 'text-[var(--color-error)]'
+          }`}
+        >
+          {message}
+        </p>
+      ) : null}
     </div>
   )
 }

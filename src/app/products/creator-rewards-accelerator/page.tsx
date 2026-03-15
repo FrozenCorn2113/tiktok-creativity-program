@@ -39,7 +39,7 @@ export default function CreatorRewardsAcceleratorPage() {
             <ul className="mt-3 space-y-2">
               {features.map((f) => (
                 <li key={f} className="flex gap-2 text-sm text-[var(--color-text-muted)]">
-                  <span className="mt-0.5 shrink-0 text-[var(--color-accent)]">✓</span>
+                  <span className="mt-0.5 shrink-0 text-[var(--color-primary)]">✓</span>
                   {f}
                 </li>
               ))}

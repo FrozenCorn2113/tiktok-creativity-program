@@ -87,7 +87,7 @@ export default function LocationPage({ params }: { params: { slug: string } }) {
             <ul className="mt-3 space-y-2 text-sm text-[var(--color-text)]">
               {content.links.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} className="text-[var(--color-accent)] hover:underline">
+                  <a href={link.href} className="text-[var(--color-primary)] hover:underline">
                     {link.label}
                   </a>
                 </li>

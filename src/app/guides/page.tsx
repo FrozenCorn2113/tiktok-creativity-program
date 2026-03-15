@@ -41,7 +41,7 @@ export default function GuidesPage() {
           {featuredGuide && (
             <div className="mx-auto mt-10 max-w-2xl reveal" data-reveal>
               <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-warm)] p-6">
-                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-accent)]">
+                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-primary)]">
                   Featured Guide
                 </p>
                 <h2 className="mt-2 text-xl font-semibold text-[var(--color-text)]">
@@ -52,7 +52,7 @@ export default function GuidesPage() {
                 </p>
                 <Link
                   href={`/guides/${featuredGuide.slug}`}
-                  className="mt-3 inline-block text-sm font-semibold text-[var(--color-accent)] hover:underline"
+                  className="mt-3 inline-block text-sm font-semibold text-[var(--color-primary)] hover:underline"
                 >
                   Read Guide &rarr;
                 </Link>
@@ -68,10 +68,10 @@ export default function GuidesPage() {
                 <ul className="mt-4 space-y-3">
                   {cat.guides.map((guide) => (
                     <li key={guide.slug} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-[var(--color-accent)]" />
+                      <span className="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-[var(--color-primary)]" />
                       <Link
                         href={`/guides/${guide.slug}`}
-                        className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-accent)]"
+                        className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-primary)]"
                       >
                         {guide.title}
                       </Link>

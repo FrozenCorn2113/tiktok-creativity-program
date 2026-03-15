@@ -21,7 +21,8 @@ export default function AffiliateLink({ slug, label, className = '' }: Affiliate
     <a
       href={`/go/${slug}`}
       onClick={handleClick}
-      className={`text-[var(--color-accent)] hover:underline ${className}`}
+      rel="noopener noreferrer sponsored"
+      className={`text-[var(--color-primary-hover)] underline decoration-[var(--color-primary)] underline-offset-2 hover:text-[var(--color-ink)] ${className}`}
     >
       {label}
     </a>

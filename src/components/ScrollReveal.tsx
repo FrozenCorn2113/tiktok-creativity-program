@@ -4,13 +4,23 @@ import { useEffect } from 'react'
 
 export default function ScrollReveal() {
   useEffect(() => {
-    const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
+    // Respect prefers-reduced-motion — skip all animation setup
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
+      elements.forEach((el) => {
+        el.style.opacity = '1'
+        el.style.transform = 'none'
+      })
+      return
+    }
 
+    const elements = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'))
     if (!elements.length) return
 
-    elements.forEach((element) => {
-      if (!element.classList.contains('reveal')) {
-        element.classList.add('reveal')
+    // Add reveal class to initialise hidden state
+    elements.forEach((el) => {
+      if (!el.classList.contains('reveal')) {
+        el.classList.add('reveal')
       }
     })
 
@@ -18,15 +28,15 @@ export default function ScrollReveal() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('reveal-visible')
+            entry.target.classList.add('is-visible')
             observer.unobserve(entry.target)
           }
         })
       },
-      { threshold: 0.2 }
+      { threshold: 0.15, rootMargin: '0px 0px -32px 0px' }
     )
 
-    elements.forEach((element) => observer.observe(element))
+    elements.forEach((el) => observer.observe(el))
     return () => observer.disconnect()
   }, [])
 

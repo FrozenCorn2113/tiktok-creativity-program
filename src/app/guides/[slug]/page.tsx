@@ -111,7 +111,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     <a
                       key={item.id}
                       href={`#${item.id}`}
-                      className="border-b-2 border-transparent px-4 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+                      className="border-b-2 border-transparent px-4 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
                     >
                       {item.title}
                     </a>

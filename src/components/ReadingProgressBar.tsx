@@ -14,14 +14,21 @@ export default function ReadingProgressBar() {
     }
 
     handleScroll()
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
-    <div className="fixed left-0 top-0 z-50 h-1 w-full bg-transparent">
+    <div
+      className="fixed left-0 top-0 z-[60] h-[3px] w-full bg-transparent"
+      role="progressbar"
+      aria-valuenow={Math.round(progress)}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label="Reading progress"
+    >
       <div
-        className="h-full bg-[var(--color-accent)] transition-[width] duration-150"
+        className="h-full rounded-r-full bg-[var(--color-primary)] transition-[width] duration-100 ease-linear"
         style={{ width: `${progress}%` }}
       />
     </div>

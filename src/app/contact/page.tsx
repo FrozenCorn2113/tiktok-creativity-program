@@ -20,7 +20,7 @@ export default function ContactPage() {
           </header>
           <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 text-sm text-[var(--color-text)]">
             <p>
-              Email: <a className="text-[var(--color-accent)]" href="mailto:hello@tiktokcreativityprogram.com">hello@tiktokcreativityprogram.com</a>
+              Email: <a className="text-[var(--color-primary)]" href="mailto:hello@tiktokcreativityprogram.com">hello@tiktokcreativityprogram.com</a>
             </p>
             <p className="mt-3 text-[var(--color-text-muted)]">
               If you’re sharing a Creator Rewards issue, include your country, content format, and

@@ -1,17 +1,18 @@
+/**
+ * @deprecated Use <CalloutBox type="tip"> instead.
+ * Kept for backward compatibility with existing MDX files.
+ */
+import CalloutBox from '@/components/CalloutBox'
+
 type ProTipBoxProps = {
   children: React.ReactNode
   title?: string
 }
 
-export default function ProTipBox({ children, title = 'PRO TIP' }: ProTipBoxProps) {
+export default function ProTipBox({ children, title }: ProTipBoxProps) {
   return (
-    <div className="callout-accent my-6">
-      <p className="text-xs font-bold uppercase tracking-wider text-[var(--color-accent)]">
-        {title}
-      </p>
-      <div className="mt-2 text-sm text-[var(--color-text-muted)] leading-relaxed">
-        {children}
-      </div>
-    </div>
+    <CalloutBox type="tip" title={title} className="my-6">
+      {children}
+    </CalloutBox>
   )
 }

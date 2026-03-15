@@ -107,7 +107,7 @@ export default function NichePage({ params }: { params: { slug: string } }) {
             <ul className="mt-3 space-y-2 text-sm text-[var(--color-text)]">
               {content.next.map((link) => (
                 <li key={link}>
-                  <a href={link} className="text-[var(--color-accent)] hover:underline">
+                  <a href={link} className="text-[var(--color-primary)] hover:underline">
                     {link}
                   </a>
                 </li>
