@@ -10,7 +10,7 @@ type TrustStat = {
 }
 
 const defaultStats: TrustStat[] = [
-  { value: 57, suffix: '', label: 'guides' },
+  { value: 64, suffix: '', label: 'guides' },
   { value: 3, suffix: '', label: 'free calculators' },
   { value: 2026, prefix: 'Updated for ', label: '' },
 ]

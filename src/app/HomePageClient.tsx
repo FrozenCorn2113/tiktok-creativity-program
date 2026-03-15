@@ -8,7 +8,7 @@ import TrustBar from '@/components/TrustBar'
 import GuideCard from '@/components/GuideCard'
 import CategoryFilterTabs from '@/components/CategoryFilterTabs'
 import Link from 'next/link'
-import { ArrowRight, Calculator, ChevronRight } from 'lucide-react'
+import { ArrowRight, Calculator, ChevronRight, CheckCircle, Send, DollarSign, Wrench } from 'lucide-react'
 
 // Static guide data for homepage — matched to actual published guides
 const featuredGuides = [
@@ -64,28 +64,28 @@ const featuredGuides = [
 
 const pillars = [
   {
-    icon: '✓',
+    Icon: CheckCircle,
     title: 'Eligibility',
     description:
       'What TikTok actually requires — follower count, view thresholds, account type, and region — plus the edge cases most guides skip.',
     href: '/guides',
   },
   {
-    icon: '→',
+    Icon: Send,
     title: 'Apply',
     description:
       'How the application process works, what to expect after submitting, and what to do if you get rejected.',
     href: '/guides',
   },
   {
-    icon: '$',
+    Icon: DollarSign,
     title: 'Earnings',
     description:
       'Qualified views, RPM, payout timing, and what the numbers mean for your specific account.',
     href: '/guides',
   },
   {
-    icon: '⚒',
+    Icon: Wrench,
     title: 'Tools',
     description:
       'The editors, schedulers, analytics tools, and music libraries worth knowing — with honest assessments of what\'s actually useful.',
@@ -191,10 +191,10 @@ export default function HomePage() {
                 className="group flex flex-col rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 transition-all duration-200 hover:border-[var(--color-primary)] hover:shadow-[var(--shadow-sm)]"
               >
                 <span
-                  className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-soft)] text-lg font-bold text-[var(--color-primary-hover)]"
+                  className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-md)] bg-[var(--color-accent-soft)] text-[var(--color-primary-hover)]"
                   aria-hidden
                 >
-                  {pillar.icon}
+                  <pillar.Icon className="h-5 w-5" />
                 </span>
                 <h3 className="mt-4 text-[var(--text-h3)] font-semibold text-[var(--color-ink-strong)]">
                   {pillar.title}

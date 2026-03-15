@@ -3,6 +3,7 @@ import EarningsCalculator from '@/components/EarningsCalculator'
 import CalloutBox from '@/components/CalloutBox'
 import ComparisonTable from '@/components/ComparisonTable'
 import PageHeader from '@/components/PageHeader'
+import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
@@ -41,6 +42,8 @@ const benchmarkRows = [
 
 export default function EarningsCalculatorPage() {
   return (
+    <>
+      <ScrollReveal />
     <section className="py-12">
       <Container>
         <div className="space-y-10">
@@ -127,5 +130,6 @@ export default function EarningsCalculatorPage() {
         </div>
       </Container>
     </section>
+    </>
   )
 }
