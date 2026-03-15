@@ -1,10 +1,69 @@
+/* Google Fonts — Manrope (headings + body) + JetBrains Mono (code + numbers) */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Design tokens */
+@import '../styles/tokens.css';
+
+/* Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "../styles/global.css";
+/* Global base styles and animation system */
+@import '../styles/global.css';
 
+/* ── Tailwind @layer base overrides ────────────────────────────────────────── */
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    color: var(--color-ink-strong);
+  }
+
+  /* Ensure Tailwind typography plugin uses Manrope, not Inter */
+  .prose {
+    max-width: var(--prose-max);
+    --tw-prose-body: var(--color-text);
+    --tw-prose-headings: var(--color-ink-strong);
+    --tw-prose-links: var(--color-primary-hover);
+    --tw-prose-bold: var(--color-ink-strong);
+    --tw-prose-counters: var(--color-text-muted);
+    --tw-prose-bullets: var(--color-primary);
+    --tw-prose-hr: var(--color-border);
+    --tw-prose-quotes: var(--color-text-muted);
+    --tw-prose-quote-borders: var(--color-border-strong);
+    --tw-prose-captions: var(--color-text-subtle);
+    --tw-prose-code: var(--color-ink);
+    --tw-prose-pre-code: var(--color-text);
+    --tw-prose-pre-bg: var(--color-surface-inset);
+    --tw-prose-th-borders: var(--color-border);
+    --tw-prose-td-borders: var(--color-border);
+  }
+
+  .prose :where(code):not(:where([class~='not-prose'] *)) {
+    font-family: var(--font-mono);
+    background: var(--color-surface-inset);
+    border-radius: var(--radius-sm);
+    padding: 0.125em 0.375em;
+    font-size: 0.875em;
+    font-weight: 500;
+  }
+
+  .prose :where(code):not(:where([class~='not-prose'] *))::before,
+  .prose :where(code):not(:where([class~='not-prose'] *))::after {
+    content: '';
+  }
+}
+
+/* ── Tailwind @layer utilities ──────────────────────────────────────────────── */
 @layer utilities {
+  /* Line clamp */
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -17,5 +76,48 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  /* Mono number rendering */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+
+  /* Cursor pointer enforcement */
+  .interactive {
+    cursor: pointer;
+  }
+
+  /* Scroll padding for fixed nav */
+  .scroll-mt-nav {
+    scroll-margin-top: var(--nav-height);
+  }
+
+  /* Animation delay utilities for stagger */
+  .animation-delay-75  { animation-delay: 75ms; }
+  .animation-delay-150 { animation-delay: 150ms; }
+  .animation-delay-225 { animation-delay: 225ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-375 { animation-delay: 375ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+
+  /* Reveal delay utilities (used with .reveal class) */
+  .reveal-delay-0   { --reveal-delay: 0ms; }
+  .reveal-delay-75  { --reveal-delay: 75ms; }
+  .reveal-delay-150 { --reveal-delay: 150ms; }
+  .reveal-delay-225 { --reveal-delay: 225ms; }
+  .reveal-delay-300 { --reveal-delay: 300ms; }
+  .reveal-delay-375 { --reveal-delay: 375ms; }
+  .reveal-delay-500 { --reveal-delay: 500ms; }
+
+  /* Arrow nudge for affiliate links */
+  .arrow-nudge:hover .arrow-icon {
+    transform: translateX(4px);
+    transition: transform 200ms ease;
+  }
+
+  .arrow-icon {
+    transition: transform 200ms ease;
   }
 }

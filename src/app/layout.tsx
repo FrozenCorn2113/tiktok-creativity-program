@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,
+    images: [{ url: '/og-default.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -33,13 +34,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        {/* Google Fonts — Manrope + JetBrains Mono */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
         {searchConsoleVerification ? (
           <meta name="google-site-verification" content={searchConsoleVerification} />
         ) : null}
       </head>
-      <body className="min-h-screen bg-background text-slate-900">
+      <body className="min-h-screen bg-background text-text font-sans antialiased">
         {gaId ? (
           <>
             <Script
@@ -57,7 +63,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </>
         ) : null}
         <Navbar />
-        <main className="flex min-h-[calc(100vh-220px)] flex-col">{children}</main>
+        {/* pt-16 clears the fixed nav (--nav-height: 4rem) */}
+        <main className="flex min-h-[calc(100vh-220px)] flex-col pt-16">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
