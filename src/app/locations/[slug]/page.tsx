@@ -1,5 +1,9 @@
 import Container from '@/components/ui/Container'
+import PageHeader from '@/components/PageHeader'
 import CalloutBox from '@/components/CalloutBox'
+import EmailSignupForm from '@/components/EmailSignupForm'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { buildMetadata } from '@/lib/seo'
 
 const locationContent: Record<
@@ -9,7 +13,7 @@ const locationContent: Record<
   uk: {
     title: 'TikTok Monetization in the UK',
     description: 'UK-specific guidance for Creator Rewards, RPM, and monetization strategies.',
-    focus: ['UK eligibility', 'RPM expectations', 'Best posting windows'],
+    focus: ['UK eligibility requirements', 'RPM expectations for UK audiences', 'Best posting windows for UK viewers'],
     links: [
       { label: 'Creator Rewards UK Guide', href: '/guides/creator-rewards-uk' },
       { label: 'RPM by Country Estimator', href: '/calculators/rpm-by-country' },
@@ -19,7 +23,7 @@ const locationContent: Record<
   canada: {
     title: 'TikTok Monetization in Canada',
     description: 'Alternatives for Canadian creators without Creator Rewards access.',
-    focus: ['Affiliate stack', 'Digital products', 'Brand deals'],
+    focus: ['Affiliate stack strategies', 'Digital products for Canadian creators', 'Brand deals and partnerships'],
     links: [
       { label: 'Canada Monetization Guide', href: '/guides/canada-without-rewards' },
       { label: 'Best Monetization Methods', href: '/guides/best-monetization-methods' },
@@ -29,7 +33,7 @@ const locationContent: Record<
   australia: {
     title: 'TikTok Monetization in Australia',
     description: 'Strategies for Australian creators while waiting for eligibility expansion.',
-    focus: ['Affiliate offers', 'Digital products', 'Community building'],
+    focus: ['Affiliate offers for Australian audiences', 'Digital products', 'Community building'],
     links: [
       { label: 'Australia Eligibility Guide', href: '/guides/australia-eligibility' },
       { label: 'Best Monetization Methods', href: '/guides/best-monetization-methods' },
@@ -56,46 +60,74 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default function LocationPage({ params }: { params: { slug: string } }) {
   const content = locationContent[params.slug]
 
-  if (!content) {
-    return (
-      <section className="py-12">
-        <Container>
-          <CalloutBox type="warning">Location guide is coming soon.</CalloutBox>
-        </Container>
-      </section>
-    )
-  }
+  if (!content) notFound()
 
   return (
-    <section className="py-12">
-      <Container>
-        <div className="space-y-6">
-          <header className="space-y-3">
-            <h1 className="text-3xl font-semibold text-[var(--color-text)]">{content.title}</h1>
-            <p className="text-sm text-[var(--color-text-muted)]">{content.description}</p>
-          </header>
-          <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6">
-            <h2 className="text-xl font-semibold text-[var(--color-text)]">Focus areas</h2>
-            <ul className="mt-3 space-y-2 text-sm text-[var(--color-text)]">
-              {content.focus.map((item) => (
-                <li key={item}>• {item}</li>
-              ))}
-            </ul>
+    <>
+      {/* Header band */}
+      <section className="bg-[var(--color-surface-warm)] py-12">
+        <Container>
+          <PageHeader
+            breadcrumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Guides', href: '/guides' },
+              { label: content.title, href: `/locations/${params.slug}` },
+            ]}
+            title={content.title}
+            description={content.description}
+          />
+        </Container>
+      </section>
+
+      {/* Content */}
+      <section className="bg-white py-12">
+        <Container>
+          <div className="mx-auto max-w-2xl space-y-8">
+            {/* Focus areas */}
+            <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6">
+              <h2 className="text-[var(--text-h3)] font-semibold text-[var(--color-ink-strong)]">
+                Focus areas
+              </h2>
+              <ul className="mt-4 space-y-2">
+                {content.focus.map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-[var(--color-text)]">
+                    <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--color-primary)]" aria-hidden />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Callout */}
+            <CalloutBox type="info">
+              Location-specific guides are actively being expanded. Subscribe to get notified when
+              new content for your region is published.
+            </CalloutBox>
+
+            {/* Email capture */}
+            <EmailSignupForm variant="inline" />
+
+            {/* Next steps */}
+            <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-warm)] p-6">
+              <h3 className="text-[var(--text-h3)] font-semibold text-[var(--color-ink-strong)]">
+                Relevant guides
+              </h3>
+              <ul className="mt-4 space-y-2">
+                {content.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm font-semibold text-[var(--color-primary)] hover:underline"
+                    >
+                      {link.label} &rarr;
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-5">
-            <h3 className="text-base font-semibold text-[var(--color-text)]">Next steps</h3>
-            <ul className="mt-3 space-y-2 text-sm text-[var(--color-text)]">
-              {content.links.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href} className="text-[var(--color-primary)] hover:underline">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </>
   )
 }

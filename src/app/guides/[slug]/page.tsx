@@ -3,14 +3,12 @@ import TableOfContents from '@/components/TableOfContents'
 import EmailSignupForm from '@/components/EmailSignupForm'
 import SocialShareButtons from '@/components/SocialShareButtons'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
-import CommentSection from '@/components/CommentSection'
-import Button from '@/components/ui/Button'
-import WorkingIllustration from '@/components/illustrations/WorkingIllustration'
+import PageHeader from '@/components/PageHeader'
+import RelatedGuides from '@/components/RelatedGuides'
 import { notFound } from 'next/navigation'
 import { buildMetadata } from '@/lib/seo'
-import { compileGuide, getGuideBySlug, getGuideSlugs, getTableOfContents } from '@/lib/mdx'
+import { compileGuide, getGuideBySlug, getGuideSlugs, getTableOfContents, getAllGuides } from '@/lib/mdx'
 import { siteConfig } from '@/lib/site'
-import Link from 'next/link'
 
 type GuidePageProps = {
   params: { slug: string }
@@ -41,6 +39,18 @@ export default async function GuidePage({ params }: GuidePageProps) {
   const toc = getTableOfContents(content)
   const compiled = await compileGuide(content)
 
+  // Build related guides — same category, excluding current
+  const related = getAllGuides()
+    .filter((g) => g.slug !== frontmatter.slug && g.category === frontmatter.category)
+    .slice(0, 3)
+    .map((g) => ({
+      title: g.title,
+      description: g.description ?? '',
+      href: `/guides/${g.slug}`,
+      category: g.category,
+      readTime: g.readingTime,
+    }))
+
   const articleUrl = `${siteConfig.url}/guides/${frontmatter.slug}`
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -50,91 +60,86 @@ export default async function GuidePage({ params }: GuidePageProps) {
     datePublished: frontmatter.date,
     dateModified: frontmatter.date,
     url: articleUrl,
-    image: frontmatter.image ?? `${siteConfig.url}/og-default.svg`,
+    image: frontmatter.image ?? `${siteConfig.url}/og-default.png`,
     author: { '@type': 'Organization', name: siteConfig.name, url: siteConfig.url },
     publisher: { '@type': 'Organization', name: siteConfig.name, url: siteConfig.url },
     keywords: frontmatter.keywords?.join(', '),
   }
 
   return (
-    <section className="py-12">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ReadingProgressBar />
-      <Container>
-        <div className="grid gap-10 lg:grid-cols-[220px_1fr_200px]">
-          {/* Left Sidebar: Table of Contents */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24">
-              <TableOfContents items={toc} />
-            </div>
-          </aside>
 
-          {/* Main Article Content */}
-          <article>
-            <header className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-text-subtle)]">
-                {frontmatter.category ?? 'Guide'}
-              </p>
-              <h1 className="text-3xl font-extrabold text-[var(--color-text)]">
-                {frontmatter.title}
-              </h1>
-              <p className="text-base text-[var(--color-text-muted)]">{frontmatter.description}</p>
-              <div className="text-xs text-[var(--color-text-subtle)]">
-                Updated {frontmatter.date} · {frontmatter.readingTime ?? '8 min read'}
+      {/* Page header band */}
+      <section className="bg-[var(--color-surface-warm)] py-10">
+        <Container>
+          <PageHeader
+            breadcrumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Guides', href: '/guides' },
+              { label: frontmatter.title, href: `/guides/${frontmatter.slug}` },
+            ]}
+            category={frontmatter.category ?? 'Guide'}
+            title={frontmatter.title}
+            description={frontmatter.description}
+            updatedAt={frontmatter.date}
+            readTime={frontmatter.readingTime ?? '8 min'}
+          />
+        </Container>
+      </section>
+
+      {/* Article body */}
+      <section className="bg-white py-10">
+        <Container>
+          {/* Mobile: collapsible TOC above content */}
+          {toc.length > 0 ? (
+            <div className="mb-8 lg:hidden">
+              <TableOfContents items={toc} sidebar={false} />
+            </div>
+          ) : null}
+
+          <div className="flex gap-12">
+            {/* Main article column */}
+            <article className="min-w-0 flex-1">
+              {/* Social share */}
+              <div className="mb-6">
+                <SocialShareButtons
+                  url={articleUrl}
+                  title={frontmatter.title}
+                />
               </div>
-              <SocialShareButtons
-                url={`${siteConfig.url}/guides/${frontmatter.slug}`}
-                title={frontmatter.title}
-              />
-            </header>
 
-            <div className="prose prose-slate mt-8 max-w-none">
-              {compiled.content}
-            </div>
-
-            {/* CTA Button */}
-            <div className="mt-10">
-              <Link href="/resources">
-                <Button size="lg">Get the Pro Toolkit</Button>
-              </Link>
-            </div>
-
-            {/* Bottom Tab Navigation */}
-            {toc.length > 0 && (
-              <div className="mt-10 flex flex-wrap gap-1 border-b border-[var(--color-border)]">
-                {toc
-                  .filter((item) => item.level === 2)
-                  .map((item) => (
-                    <a
-                      key={item.id}
-                      href={`#${item.id}`}
-                      className="border-b-2 border-transparent px-4 py-2 text-sm font-medium text-[var(--color-text-muted)] transition hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
-                    >
-                      {item.title}
-                    </a>
-                  ))}
+              {/* Prose content — max-w-prose, NOT max-w-none */}
+              <div className="prose prose-slate max-w-prose">
+                {compiled.content}
               </div>
-            )}
 
-            <div className="mt-10">
-              <EmailSignupForm variant="inline" />
-            </div>
-            <div className="mt-10">
-              <CommentSection />
-            </div>
-          </article>
+              {/* Inline email capture after content */}
+              <div className="mt-12">
+                <EmailSignupForm variant="inline" />
+              </div>
+            </article>
 
-          {/* Right Sidebar: Illustration */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-24">
-              <WorkingIllustration className="w-full" />
+            {/* Desktop: sticky sidebar ToC */}
+            {toc.length > 0 ? (
+              <aside className="hidden w-56 flex-shrink-0 lg:block xl:w-64">
+                <TableOfContents items={toc} sidebar={true} />
+              </aside>
+            ) : null}
+          </div>
+
+          {/* Related guides strip */}
+          {related.length > 0 ? (
+            <div className="mt-16 border-t border-[var(--color-border)] pt-12">
+              <RelatedGuides guides={related} />
             </div>
-          </aside>
-        </div>
-      </Container>
-    </section>
+          ) : null}
+        </Container>
+      </section>
+    </>
   )
 }

@@ -1,10 +1,14 @@
 import Container from '@/components/ui/Container'
+import PageHeader from '@/components/PageHeader'
 import CalloutBox from '@/components/CalloutBox'
+import EmailSignupForm from '@/components/EmailSignupForm'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { buildMetadata } from '@/lib/seo'
 
 const nicheContent: Record<
   string,
-  { title: string; description: string; focus: string[]; next: string[] }
+  { title: string; description: string; focus: string[]; next: { label: string; href: string }[] }
 > = {
   musicians: {
     title: 'Monetization for musicians on TikTok',
@@ -12,9 +16,9 @@ const nicheContent: Record<
       'Grow plays, drive streams, and stack revenue beyond Creator Rewards with music-friendly income streams.',
     focus: ['Promote music links', 'Sync licensing', 'Live gifts + tips', 'Brand deals'],
     next: [
-      '/guides/creator-rewards-2026',
-      '/guides/grow-5k-to-10k',
-      '/calculators/earnings-calculator',
+      { label: 'TikTok Creator Rewards 2026 Guide', href: '/guides/creator-rewards-2026' },
+      { label: 'Growing from 5K to 10K', href: '/guides/grow-5k-to-10k' },
+      { label: 'Earnings Calculator', href: '/calculators/earnings-calculator' },
     ],
   },
   teachers: {
@@ -23,9 +27,9 @@ const nicheContent: Record<
       'Build authority, sell lesson resources, and keep your account compliant with Creator Rewards.',
     focus: ['Course funnel', 'Affiliate tools', 'Community memberships', 'Lead magnets'],
     next: [
-      '/guides/creator-rewards-2026',
-      '/guides/additional-reward-criteria-2026',
-      '/calculators/earnings-calculator',
+      { label: 'TikTok Creator Rewards 2026 Guide', href: '/guides/creator-rewards-2026' },
+      { label: 'Additional Reward Criteria', href: '/guides/additional-reward-criteria-2026' },
+      { label: 'Earnings Calculator', href: '/calculators/earnings-calculator' },
     ],
   },
   'fitness-creators': {
@@ -34,9 +38,9 @@ const nicheContent: Record<
       'Earn from high-retention workout content, programs, and affiliate tools built for creators.',
     focus: ['Workout plans', 'Affiliate supplements', 'Program upsells', 'Live sessions'],
     next: [
-      '/guides/grow-5k-to-10k',
-      '/guides/additional-reward-criteria-2026',
-      '/calculators/earnings-calculator',
+      { label: 'Growing from 5K to 10K', href: '/guides/grow-5k-to-10k' },
+      { label: 'Additional Reward Criteria', href: '/guides/additional-reward-criteria-2026' },
+      { label: 'Earnings Calculator', href: '/calculators/earnings-calculator' },
     ],
   },
   artists: {
@@ -45,9 +49,9 @@ const nicheContent: Record<
       'Showcase process videos, sell prints, and turn engagement into predictable income.',
     focus: ['Print sales', 'Commissions', 'Process content', 'Behind-the-scenes'],
     next: [
-      '/guides/creator-rewards-2026',
-      '/guides/canada-without-rewards',
-      '/calculators/earnings-calculator',
+      { label: 'TikTok Creator Rewards 2026 Guide', href: '/guides/creator-rewards-2026' },
+      { label: 'Canada Monetization Without Rewards', href: '/guides/canada-without-rewards' },
+      { label: 'Earnings Calculator', href: '/calculators/earnings-calculator' },
     ],
   },
 }
@@ -70,52 +74,74 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default function NichePage({ params }: { params: { slug: string } }) {
   const content = nicheContent[params.slug]
 
-  if (!content) {
-    return (
-      <section className="py-12">
-        <Container>
-          <CalloutBox type="warning">This niche page is still being built.</CalloutBox>
-        </Container>
-      </section>
-    )
-  }
+  if (!content) notFound()
 
   return (
-    <section className="py-12">
-      <Container>
-        <div className="space-y-6">
-          <header className="space-y-3">
-            <h1 className="text-3xl font-semibold text-[var(--color-text)]">{content.title}</h1>
-            <p className="text-sm text-[var(--color-text-muted)]">{content.description}</p>
-          </header>
-          <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6">
-            <h2 className="text-xl font-semibold text-[var(--color-text)]">
-              What to focus on right now
-            </h2>
-            <ul className="mt-4 space-y-2 text-sm text-[var(--color-text)]">
-              {content.focus.map((item) => (
-                <li key={item}>• {item}</li>
-              ))}
-            </ul>
+    <>
+      {/* Header band */}
+      <section className="bg-[var(--color-surface-warm)] py-12">
+        <Container>
+          <PageHeader
+            breadcrumbs={[
+              { label: 'Home', href: '/' },
+              { label: 'Guides', href: '/guides' },
+              { label: content.title, href: `/niche/${params.slug}` },
+            ]}
+            title={content.title}
+            description={content.description}
+          />
+        </Container>
+      </section>
+
+      {/* Content */}
+      <section className="bg-white py-12">
+        <Container>
+          <div className="mx-auto max-w-2xl space-y-8">
+            {/* Focus areas */}
+            <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6">
+              <h2 className="text-[var(--text-h3)] font-semibold text-[var(--color-ink-strong)]">
+                What to focus on right now
+              </h2>
+              <ul className="mt-4 space-y-2">
+                {content.focus.map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-[var(--color-text)]">
+                    <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--color-primary)]" aria-hidden />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Callout */}
+            <CalloutBox type="tip">
+              We're building a dedicated guide for this niche. Subscribe below to get notified when
+              it launches.
+            </CalloutBox>
+
+            {/* Email capture */}
+            <EmailSignupForm variant="inline" />
+
+            {/* Next steps */}
+            <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-warm)] p-6">
+              <h3 className="text-[var(--text-h3)] font-semibold text-[var(--color-ink-strong)]">
+                Next steps
+              </h3>
+              <ul className="mt-4 space-y-2">
+                {content.next.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm font-semibold text-[var(--color-primary)] hover:underline"
+                    >
+                      {link.label} &rarr;
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <CalloutBox type="tip">
-            We’re building a dedicated guide for this niche. Subscribe to get notified when it
-            launches.
-          </CalloutBox>
-          <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-5">
-            <h3 className="text-base font-semibold text-[var(--color-text)]">Next steps</h3>
-            <ul className="mt-3 space-y-2 text-sm text-[var(--color-text)]">
-              {content.next.map((link) => (
-                <li key={link}>
-                  <a href={link} className="text-[var(--color-primary)] hover:underline">
-                    {link}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </>
   )
 }
