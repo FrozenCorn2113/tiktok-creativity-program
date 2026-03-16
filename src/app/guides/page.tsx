@@ -1,14 +1,15 @@
-import Container from '@/components/ui/Container'
-import PageHeader from '@/components/PageHeader'
-import ScrollReveal from '@/components/ScrollReveal'
+// Guides listing — Phase 3 v3 rebuild
+// PAGE_SPECS.md: warm header, shadcn Tabs filter, 3-col card grid, Framer Motion AnimatePresence
+// checklist items via guides listing section
+
 import { getAllGuides } from '@/lib/mdx'
 import { buildMetadata } from '@/lib/seo'
-import GuidesListClient from './GuidesListClient'
+import GuidesListingClient from './GuidesListingClient'
 
 export const metadata = buildMetadata({
-  title: 'Educational Guides Index',
+  title: 'TikTok Creator Rewards Guides',
   description:
-    'Everything TikTok creators need to know about eligibility, qualifying, and earning.',
+    'Everything TikTok creators need to know about eligibility, qualifying, and earning from the Creator Rewards Program. 57 guides updated for 2026.',
   path: '/guides',
 })
 
@@ -18,37 +19,11 @@ export default function GuidesPage() {
   const guides = allGuides.map((g) => ({
     slug: g.slug,
     title: g.title,
-    description: g.description ?? '',
+    excerpt: g.description ?? '',
     category: g.category ?? '',
-    readTime: g.readingTime ?? '',
+    readTime: g.readingTime ?? '8 min',
+    href: `/guides/${g.slug}`,
   }))
 
-  return (
-    <>
-      <ScrollReveal />
-
-      {/* Page header band */}
-      <section className="bg-[var(--color-surface-warm)] py-14">
-        <Container>
-          <div className="reveal mx-auto max-w-2xl" data-reveal>
-            <PageHeader
-              breadcrumbs={[
-                { label: 'Home', href: '/' },
-                { label: 'Guides', href: '/guides' },
-              ]}
-              title="Educational Guides Index"
-              description="Everything TikTok creators need to know about eligibility, qualifying, and earning."
-            />
-          </div>
-        </Container>
-      </section>
-
-      {/* Guide listing — client for filter interactivity */}
-      <section className="bg-white py-14">
-        <Container>
-          <GuidesListClient guides={guides} />
-        </Container>
-      </section>
-    </>
-  )
+  return <GuidesListingClient guides={guides} />
 }

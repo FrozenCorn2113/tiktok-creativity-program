@@ -1,46 +1,47 @@
-import Container from '@/components/ui/Container'
-import Image from 'next/image'
 import Link from 'next/link'
 
+// PAGE_SPECS.md: 404 — centered full-viewport, no nav, no footer, unDraw SVG, two exit buttons
+// copy: CONTENT.md 404-body
 export default function NotFound() {
   return (
-    <section className="flex flex-1 items-center py-24">
-      <Container>
-        <div className="mx-auto max-w-md px-4 text-center">
-          {/* E1-E3: landpress-marketing-4.png via Next.js Image with fill */}
-          <div className="relative mx-auto mb-8 h-[320px] w-full max-w-[320px]">
-            <Image
-              src="/assets/brand-images/landpress-marketing-4.png"
-              alt="Creator looking puzzled at a broken page"
-              fill
-              className="object-contain"
-            />
-          </div>
+    <div className="min-h-screen bg-background-warm flex items-center justify-center px-6">
+      <div className="max-w-md w-full text-center">
+        {/* unDraw page-not-found SVG — orange (#F4A261), color-swapped, optimized */}
+        {/* Item 85-89: actual SVG file, not placeholder */}
+        <img
+          src="/images/illustrations/page-not-found.min.svg"
+          alt="Page not found illustration"
+          width={400}
+          height={300}
+          className="mx-auto mb-8 max-w-xs w-full"
+        />
 
-          <h1 className="text-[var(--text-h1)] font-bold text-[var(--color-ink-strong)]">
-            Page not found
-          </h1>
-          <p className="mx-auto mt-3 max-w-sm text-[var(--text-body)] text-[var(--color-text-muted)]">
-            This page doesn&apos;t exist or was moved. Try the guides index or search from the
-            homepage.
-          </p>
+        <h1 className="text-[3rem] font-extrabold text-brand-ink leading-tight mb-4">
+          Page Not Found
+        </h1>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/"
-              className="inline-flex items-center rounded-[var(--radius-md)] bg-[var(--color-primary)] px-5 py-3 text-[var(--text-btn)] font-semibold text-[var(--color-ink-strong)] transition-all duration-200 hover:bg-[var(--color-primary-hover)] hover:shadow-[var(--shadow-sm)] active:scale-95"
-            >
-              Back to home
-            </Link>
-            <Link
-              href="/guides"
-              className="inline-flex items-center rounded-[var(--radius-md)] border border-[var(--color-border-strong)] px-5 py-3 text-[var(--text-btn)] font-semibold text-[var(--color-ink)] transition-all duration-200 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
-            >
-              Browse guides
-            </Link>
-          </div>
+        <p className="text-base text-text-secondary leading-relaxed mb-8 max-w-sm mx-auto">
+          That page doesn&apos;t exist — which is frustrating, but at least you found us. The guide
+          you&apos;re looking for might have moved, or the URL might have a typo. Try browsing the
+          full guide library or heading back home.
+        </p>
+
+        {/* Item 90: two exit buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center rounded-xl bg-brand-primary text-brand-ink font-bold px-6 py-3 min-h-[48px] hover:bg-brand-primaryHover transition-colors shadow-orange"
+          >
+            Go Home
+          </Link>
+          <Link
+            href="/guides"
+            className="inline-flex items-center justify-center rounded-xl border border-border-strong text-brand-ink font-semibold px-6 py-3 min-h-[48px] hover:border-brand-primary hover:bg-background-warm transition-colors"
+          >
+            Browse Guides
+          </Link>
         </div>
-      </Container>
-    </section>
+      </div>
+    </div>
   )
 }

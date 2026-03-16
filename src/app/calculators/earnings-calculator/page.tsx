@@ -1,194 +1,249 @@
-import Container from '@/components/ui/Container'
-import EarningsCalculator from '@/components/EarningsCalculator'
-import CalloutBox from '@/components/CalloutBox'
-import ComparisonTable from '@/components/ComparisonTable'
-import PageHeader from '@/components/PageHeader'
-import ScrollReveal from '@/components/ScrollReveal'
+// Earnings Calculator page — Phase 3 v3 rebuild
+// PAGE_SPECS.md: hero image, CalculatorPanel, "What affects your results?", FAQ accordion, NO affiliate CTAs
+// checklist items 69-78
+
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import type { Metadata } from 'next'
+import { ChevronRight, Calculator, BarChart2, Users, BookOpen, TrendingUp, Zap } from 'lucide-react'
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+  BreadcrumbPage,
+} from '@/components/ui/breadcrumb'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import { Card, CardContent } from '@/components/ui/card'
+import { CalculatorPanel } from '@/components/sections/calculator-panel'
 
 export const metadata: Metadata = {
   title: 'TikTok Earnings Calculator',
   description:
-    'Estimate your TikTok Creator Rewards payout based on qualified views, RPM, and the Additional Reward bonus.',
+    'Estimate your TikTok Creator Rewards payout based on qualified views and RPM. Uses the actual view-based payout model — not follower count.',
+  openGraph: {
+    images: [{ url: `/og?title=${encodeURIComponent('TikTok Earnings Calculator')}`, width: 1200, height: 630 }],
+  },
 }
 
-const faqRows = [
+const faqs = [
   {
-    cells: [
-      'What RPM should I use?',
-      "Start with $0.60 to $0.80 if you're in the US, UK, or Germany and your content is consistently 1+ minute.",
-    ],
+    q: 'What RPM should I use?',
+    a: 'Start with $0.60–$0.80 if you\'re in the US, UK, or Germany and your content is consistently 1+ minute. Creators in other eligible countries often see $0.20–$0.50. Niche matters — finance and educational content earns more than trends.',
   },
   {
-    cells: [
-      'Why are qualified views lower than total views?',
-      "TikTok only counts eligible For You Page views after you join the program. Duets, Stitches, and Photo Mode don't count.",
-    ],
+    q: 'Why are qualified views lower than total views?',
+    a: 'TikTok only counts organic FYP views on videos 1 minute or longer after you join the program. Duets, Stitches, and Photo Mode don\'t count. Most creators see 70–90% of total views qualify.',
   },
   {
-    cells: [
-      'Does the Additional Reward always apply?',
-      "No. It's a bonus for content that meets quality and engagement thresholds. Use the toggle to model both outcomes.",
-    ],
+    q: 'What is the Additional Reward?',
+    a: 'A bonus of up to 20% on top of base earnings for content that meets quality and engagement thresholds. It\'s not guaranteed — consistent 1+ minute videos with high completion rates earn it most reliably.',
+  },
+  {
+    q: 'How often does TikTok pay out?',
+    a: 'Earnings accumulate monthly and become available for withdrawal around the 15th of the following month, once your balance exceeds $50. You can request a withdrawal to PayPal or direct deposit.',
+  },
+  {
+    q: 'Does my follower count affect earnings?',
+    a: 'No. The Creator Rewards Program pays based on qualified views and your RPM — not follower count. A creator with 20K followers posting 1-minute videos can earn more than a creator with 500K followers posting short clips.',
+  },
+  {
+    q: 'Why does my RPM change month to month?',
+    a: 'RPM fluctuates based on advertiser demand (higher in Q4), your content niche, audience geography, and TikTok\'s internal quality scoring. Track RPM over 3+ months to get a reliable baseline.',
+  },
+  {
+    q: 'Are these estimates guaranteed?',
+    a: 'No. This calculator uses average RPM ranges and typical qualified view ratios based on creator-reported data. Your actual earnings will vary. Use it to model scenarios, not to predict exact payouts.',
   },
 ]
-
 
 export default function EarningsCalculatorPage() {
   return (
     <>
-      <ScrollReveal />
+      {/* Breadcrumb — pt-20 clears fixed floating nav (~64px) */}
+      <div className="max-w-container mx-auto px-6 pt-20">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/" className="text-sm text-text-muted hover:text-text-primary">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator><ChevronRight className="h-3 w-3" aria-hidden /></BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/calculators" className="text-sm text-text-muted hover:text-text-primary">Calculators</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator><ChevronRight className="h-3 w-3" aria-hidden /></BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <BreadcrumbPage className="text-sm text-text-primary font-medium">Earnings Calculator</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
 
-      {/* C1-C3: two-column header band with illustration */}
-      <section className="bg-[#FFF7ED] py-12 md:py-16">
-        <Container>
-          <div className="grid items-center gap-12 md:grid-cols-[3fr_2fr]">
-            {/* C2: LEFT column */}
-            <PageHeader
-              breadcrumbs={[
-                { label: 'Home', href: '/' },
-                { label: 'Calculators', href: '/calculators' },
-                { label: 'Earnings Calculator', href: '/calculators/earnings-calculator' },
-              ]}
-              category="Interactive tool"
-              title="TikTok Creator Rewards earnings calculator"
-              description="Estimate Creator Rewards payouts based on views, RPM, and the Additional Reward bonus. Designed for 1+ minute content posted after joining the program."
-            />
-            {/* C3: RIGHT column — landpress-marketing-hero.png */}
-            <div className="relative hidden h-[320px] w-full md:block">
-              <Image
-                src="/assets/brand-images/landpress-marketing-hero.png"
-                alt="Creator analyzing TikTok earnings with calculator"
-                fill
-                className="object-contain object-right"
-              />
-            </div>
-          </div>
-        </Container>
+      {/* Calculator header — warm background */}
+      <section className="bg-background-warm pt-6 pb-12">
+        <div className="max-w-container mx-auto px-6">
+          <h1 className="text-[2rem] md:text-[3rem] font-extrabold text-brand-ink leading-tight mb-4">
+            TikTok Earnings Calculator
+          </h1>
+          <p className="text-[1.125rem] text-text-secondary max-w-2xl leading-[1.7]">
+            Estimate Creator Rewards payouts based on qualified views and RPM. Built on the actual view-based model —
+            not follower count, not total views.
+          </p>
+        </div>
       </section>
 
-      <section className="py-12">
-      <Container>
-        <div className="space-y-10">
-          {/* Calculator component */}
-          <EarningsCalculator />
+      {/* Hero image — item 69, unique per calculator */}
+      <div className="max-w-container mx-auto px-6 mb-12">
+        <Image
+          src="/images/calculators/hero-earnings.webp"
+          alt="TikTok earnings calculator — phone showing earnings dashboard with dollar symbol"
+          width={1200}
+          height={630}
+          className="w-full rounded-2xl mb-2"
+          priority
+          loading="eager"
+        />
+      </div>
 
-          {/* Contextual guidance — two column */}
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
-            <div className="space-y-4">
-              <h2 className="text-[var(--text-h2)] font-bold text-[var(--color-ink-strong)]">
-                How it works
-              </h2>
-              <p className="text-[var(--text-small)] leading-[1.7] text-[var(--color-text-muted)]">
-                We assume qualified views are roughly 82% of total views, based on average creator
-                reports. RPM varies by country, content quality, and viewer behavior — so we let you
-                choose a realistic range.
+      {/* Calculator tool — item 71-74 */}
+      <section className="pb-16">
+        <div className="max-w-2xl mx-auto px-6">
+          <CalculatorPanel />
+        </div>
+      </section>
+
+      {/* Inline illustration — item 78 */}
+      <div className="max-w-container mx-auto px-6 mb-16">
+        <img
+          src="/images/illustrations/calculator-results.min.svg"
+          alt="Calculator showing earnings results with bar charts"
+          width={800}
+          height={500}
+          className="w-full max-h-[400px] object-contain mx-auto"
+          loading="lazy"
+        />
+      </div>
+
+      {/* What affects your results? — item 75, REQUIRED on every calculator page */}
+      <section className="bg-white pb-16">
+        <div className="max-w-container mx-auto px-6">
+          <h3 className="text-[1.5rem] font-bold text-brand-ink mb-6">What affects your results?</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Card 1 */}
+            <div className="bg-background-surface p-5 rounded-xl border border-border-default">
+              <div className="flex items-center gap-2 mb-3">
+                <BarChart2 className="h-5 w-5 text-brand-primary" aria-hidden />
+                <h4 className="font-bold text-brand-ink text-sm">Your RPM</h4>
+              </div>
+              <p className="text-sm text-text-secondary leading-[1.65] mb-3">
+                RPM varies by country, niche, content length, and viewer behavior. US, UK, and Germany see the highest
+                rates ($0.50–$1.20). Finance and educational content consistently earns more than trends.
               </p>
-              <CalloutBox type="tip" title="Improve your RPM">
-                Focus on 1+ minute videos with high completion rates, clear audio, and a strong hook
-                in the first 2 seconds.
-              </CalloutBox>
-              <p className="text-[var(--text-small)] text-[var(--color-text-muted)]">
-                Want a deeper breakdown?{' '}
-                <Link
-                  href="/guides/optimize-rpm"
-                  className="font-semibold text-[var(--color-primary)] hover:underline"
-                >
-                  Read the RPM optimization guide &rarr;
-                </Link>
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-[var(--text-h3)] font-semibold text-[var(--color-ink-strong)]">
-                FAQ
-              </h3>
-              <ComparisonTable columns={['Question', 'Answer']} rows={faqRows} />
-            </div>
-          </div>
-
-          {/* C10: "What affects your results?" — required section per BRAND.md */}
-          <div className="max-w-prose space-y-4">
-            <h2 className="text-[var(--text-h2)] font-bold text-[var(--color-ink-strong)]">
-              What affects your results?
-            </h2>
-            <p className="text-[var(--text-body)] leading-[1.7] text-[var(--color-text-muted)]">
-              Your RPM is the single biggest variable. Creators in the US, UK, Germany, and Australia
-              typically see RPMs of $0.50–$1.20. Creators in other eligible countries often see $0.20–$0.50.
-              Niche matters too — finance, tech, and educational content consistently earns more than
-              entertainment or trends.
-            </p>
-            <p className="text-[var(--text-body)] leading-[1.7] text-[var(--color-text-muted)]">
-              The qualified view threshold is the other lever. TikTok only counts views that meet the
-              program&apos;s criteria: organic FYP delivery, video length of 1+ minute, and no content
-              exclusions (Duets, Stitches, or Photo Mode). Creators typically see 70–90% of total
-              views qualify. Lower numbers usually mean your content mix includes excluded formats.
-            </p>
-            <p className="text-[var(--text-body)] leading-[1.7] text-[var(--color-text-muted)]">
-              The Additional Reward bonus adds up to 20% on top of your base payout, but it
-              isn&apos;t guaranteed. TikTok applies it based on quality and engagement signals.
-              Consistently 1+ minute videos with high completion rates and strong comments tend to
-              earn it most reliably.
-            </p>
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Link
-                href="/guides/maximize-qualified-views"
-                className="text-sm font-[500] text-[#F4A261] hover:underline"
-              >
-                How to maximize qualified views &rarr;
-              </Link>
-              <Link
-                href="/guides/optimize-rpm"
-                className="text-sm font-[500] text-[#F4A261] hover:underline"
-              >
+              <Link href="/guides/optimize-rpm" className="text-xs font-semibold text-brand-primaryDeep hover:underline">
                 How to improve your RPM &rarr;
               </Link>
-              <Link
-                href="/guides/additional-reward-criteria-2026"
-                className="text-sm font-[500] text-[#F4A261] hover:underline"
-              >
-                Additional Reward criteria explained &rarr;
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-background-surface p-5 rounded-xl border border-border-default">
+              <div className="flex items-center gap-2 mb-3">
+                <TrendingUp className="h-5 w-5 text-brand-primary" aria-hidden />
+                <h4 className="font-bold text-brand-ink text-sm">Qualified view rate</h4>
+              </div>
+              <p className="text-sm text-text-secondary leading-[1.65] mb-3">
+                TikTok only counts organic FYP views on 1+ minute videos. Duets, Stitches, and Photo Mode don&apos;t
+                count. Most creators qualify 70–90% of total views.
+              </p>
+              <Link href="/guides/no-qualified-views" className="text-xs font-semibold text-brand-primaryDeep hover:underline">
+                Why views aren&apos;t counting &rarr;
               </Link>
             </div>
-          </div>
 
-          {/* C11: Related calculators — 2-col grid */}
-          <div className="reveal" data-reveal>
-            <h2 className="mb-4 text-[var(--text-h2)] font-bold text-[var(--color-ink-strong)]">
-              Related calculators
-            </h2>
-            <div className="grid gap-4 md:grid-cols-2">
-              <Link
-                href="/calculators/rpm-by-country"
-                className="group flex flex-col rounded-2xl border border-[#EADFD3] bg-white p-6 transition-all duration-150 hover:border-[#F4A261] hover:shadow-sm"
-              >
-                <h3 className="text-[1.125rem] font-[600] text-[#0B0F1A]">RPM by Country</h3>
-                <p className="mt-2 flex-1 text-sm leading-[1.65] text-[#475467]">
-                  Compare typical RPM ranges by country and model weighted earnings based on your audience mix.
-                </p>
-                <span className="mt-4 flex items-center gap-1 text-sm font-[600] text-[#F4A261] transition-transform duration-200 group-hover:translate-x-0.5">
-                  Open calculator <span aria-hidden>&rarr;</span>
-                </span>
-              </Link>
-              <Link
-                href="/calculators/follower-income-estimator"
-                className="group flex flex-col rounded-2xl border border-[#EADFD3] bg-white p-6 transition-all duration-150 hover:border-[#F4A261] hover:shadow-sm"
-              >
-                <h3 className="text-[1.125rem] font-[600] text-[#0B0F1A]">Follower Income Estimator</h3>
-                <p className="mt-2 flex-1 text-sm leading-[1.65] text-[#475467]">
-                  Project earnings based on follower count, engagement rate, and monthly posting frequency.
-                </p>
-                <span className="mt-4 flex items-center gap-1 text-sm font-[600] text-[#F4A261] transition-transform duration-200 group-hover:translate-x-0.5">
-                  Open calculator <span aria-hidden>&rarr;</span>
-                </span>
+            {/* Card 3 */}
+            <div className="bg-background-surface p-5 rounded-xl border border-border-default">
+              <div className="flex items-center gap-2 mb-3">
+                <Zap className="h-5 w-5 text-brand-primary" aria-hidden />
+                <h4 className="font-bold text-brand-ink text-sm">Additional Reward bonus</h4>
+              </div>
+              <p className="text-sm text-text-secondary leading-[1.65] mb-3">
+                Up to 20% bonus for content that meets TikTok&apos;s quality and engagement thresholds. Not guaranteed —
+                but consistently earns with high-completion 1+ minute content.
+              </p>
+              <Link href="/guides/additional-reward-criteria-2025" className="text-xs font-semibold text-brand-primaryDeep hover:underline">
+                Additional Reward criteria &rarr;
               </Link>
             </div>
           </div>
         </div>
-      </Container>
-    </section>
+      </section>
+
+      {/* FAQ Accordion — item 77, no affiliate links */}
+      <section className="bg-background-warm py-16">
+        <div className="max-w-2xl mx-auto px-6">
+          <h3 className="text-[1.5rem] font-bold text-brand-ink mb-8">Frequently Asked Questions</h3>
+          <Accordion className="space-y-3">
+            {faqs.map((faq, i) => (
+              <AccordionItem
+                key={i}
+                value={i}
+                className="border border-border-default rounded-xl px-5 shadow-sm bg-white"
+              >
+                <AccordionTrigger className="text-left font-semibold text-brand-ink text-sm py-4 hover:no-underline min-h-[48px]">
+                  {faq.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-text-secondary leading-[1.7] pb-4">
+                  {faq.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      {/* Related calculators — item 75 spec: "related calculators grid" — NO affiliate CTAs (item 76) */}
+      <section className="bg-white py-16">
+        <div className="max-w-container mx-auto px-6">
+          <h3 className="text-[1.5rem] font-bold text-brand-ink mb-6">Related calculators</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl">
+            <Link
+              href="/calculators/rpm-by-country"
+              className="group flex flex-col rounded-2xl border border-border-default bg-white p-6 hover:border-brand-primary hover:shadow-sm transition-all"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <BarChart2 className="h-5 w-5 text-brand-primary" aria-hidden />
+                <h4 className="font-bold text-brand-ink">RPM by Country</h4>
+              </div>
+              <p className="text-sm text-text-secondary leading-relaxed flex-1">
+                Compare typical RPM ranges by country and model weighted earnings based on your audience mix.
+              </p>
+              <span className="mt-4 text-sm font-semibold text-brand-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                Open calculator <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+              </span>
+            </Link>
+            <Link
+              href="/calculators/follower-income-estimator"
+              className="group flex flex-col rounded-2xl border border-border-default bg-white p-6 hover:border-brand-primary hover:shadow-sm transition-all"
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <Users className="h-5 w-5 text-brand-primary" aria-hidden />
+                <h4 className="font-bold text-brand-ink">Follower Income Estimator</h4>
+              </div>
+              <p className="text-sm text-text-secondary leading-relaxed flex-1">
+                Project earnings based on follower count, engagement rate, and monthly posting frequency.
+              </p>
+              <span className="mt-4 text-sm font-semibold text-brand-primary flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                Open calculator <ChevronRight className="h-3.5 w-3.5" aria-hidden />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

@@ -1,3 +1,8 @@
+// Start Here layout — logo only, no nav, no footer
+// PAGE_SPECS.md: "Remove navigation. This is a conversion page."
+// checklist item 79: no floating navbar
+// checklist item 80: only wordmark appears, linking to homepage
+
 import Link from 'next/link'
 import { siteConfig } from '@/lib/site'
 import type { Metadata } from 'next'
@@ -6,28 +11,19 @@ export const metadata: Metadata = {
   title: `Start Here | ${siteConfig.name}`,
 }
 
-/**
- * Start Here layout — logo-only header, no nav or footer.
- * Removes navigation for conversion focus.
- * Vale's direction: nav removal improves conversion 2-4x on this page.
- */
 export default function StartHereLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col bg-[var(--color-surface-warm)]">
-      {/* Logo-only header */}
-      <header className="border-b border-[var(--color-border)] bg-white py-4">
-        <div className="mx-auto flex max-w-[var(--container-narrow)] items-center justify-between px-[var(--gutter)]">
+    // Suppress global layout nav/footer by using a standalone layout
+    <div className="flex min-h-screen flex-col">
+      {/* Logo-only header — centered wordmark, no nav links */}
+      <header className="py-6 border-b border-border-default bg-white">
+        <div className="flex justify-center">
           <Link
             href="/"
-            className="font-sans text-lg font-bold tracking-tight text-[var(--color-ink-strong)] hover:text-[var(--color-primary)] transition-colors duration-200"
+            className="text-[1.375rem] font-extrabold tracking-tight text-brand-ink hover:text-brand-primary transition-colors"
+            aria-label="TikTok Creativity Program — back to homepage"
           >
             {siteConfig.name}
-          </Link>
-          <Link
-            href="/guides"
-            className="text-sm font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-ink)] transition-colors duration-200"
-          >
-            Browse guides &rarr;
           </Link>
         </div>
       </header>

@@ -41,6 +41,12 @@ export function FloatingNavbar() {
     setMobileOpen(false);
   }, [pathname]);
 
+  // Hide global nav on conversion pages (Start Here, 404)
+  // PAGE_SPECS.md: Start Here has no navigation — conversion page
+  if (pathname === '/start-here' || pathname.startsWith('/start-here/')) {
+    return null;
+  }
+
   const pillVariants = shouldReduceMotion
     ? {}
     : {
