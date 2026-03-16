@@ -1,9 +1,26 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Manrope, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { siteConfig } from '@/lib/site'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+
+// G1: Manrope via next/font/google — weights 400,500,600,700,800 per BRAND.md Section 4
+const manrope = Manrope({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+// G2: JetBrains Mono via next/font/google — weights 400,500 per BRAND.md Section 4
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -34,18 +51,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        {/* Google Fonts — Manrope + JetBrains Mono */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
         {searchConsoleVerification ? (
           <meta name="google-site-verification" content={searchConsoleVerification} />
         ) : null}
       </head>
-      <body className="min-h-screen bg-background text-text font-sans antialiased">
+      {/* G1+G2: font variables injected via next/font/google className on body */}
+      <body className={`${manrope.variable} ${jetbrainsMono.variable} min-h-screen bg-background text-text font-sans antialiased`}>
         {gaId ? (
           <>
             <Script

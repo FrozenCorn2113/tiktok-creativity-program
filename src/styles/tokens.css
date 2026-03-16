@@ -36,6 +36,8 @@
   --color-info: #0EA5E9;            /* Informational callouts, neutral tips */
 
   /* ── Typography ────────────────────────────────────────────────────────── */
+  /* Note: --font-sans and --font-mono are injected by next/font/google on <body>.
+     These are fallbacks for any context where the body variable isn't inherited. */
   --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace;
 

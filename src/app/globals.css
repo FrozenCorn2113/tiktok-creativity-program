@@ -1,13 +1,13 @@
 /* Design tokens */
 @import '../styles/tokens.css';
 
+/* Global base styles and animation system */
+@import '../styles/global.css';
+
 /* Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Global base styles and animation system */
-@import '../styles/global.css';
 
 /* ── Tailwind @layer base overrides ────────────────────────────────────────── */
 @layer base {

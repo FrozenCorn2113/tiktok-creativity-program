@@ -45,9 +45,10 @@ const config: Config = {
 
       // ─── Typography ───────────────────────────────────────────────────────
       fontFamily: {
-        sans: ['Manrope', 'system-ui', '-apple-system', 'sans-serif'],
-        heading: ['Manrope', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
+        // Use CSS variables injected by next/font/google — falls back to direct name if var not set
+        sans: ['var(--font-sans)', 'Manrope', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['var(--font-sans)', 'Manrope', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['var(--font-mono)', 'JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
       },
       fontSize: {
         display: ['clamp(2.5rem, 5vw, 4rem)', { lineHeight: '1.15', letterSpacing: '-0.025em', fontWeight: '800' }],
