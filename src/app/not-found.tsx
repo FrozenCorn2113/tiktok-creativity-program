@@ -1,19 +1,21 @@
+// PAGE_SPECS.md: 404 — centered full-viewport, NO nav, NO footer, unDraw SVG, two exit buttons
+// Strategy: fixed full-viewport overlay at z-[60] (above FloatingNavbar z-50) covers nav+footer
+// This keeps the root layout intact while visually hiding nav and footer on this page.
+import Image from 'next/image'
 import Link from 'next/link'
 
-// PAGE_SPECS.md: 404 — centered full-viewport, no nav, no footer, unDraw SVG, two exit buttons
-// copy: CONTENT.md 404-body
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-background-warm flex items-center justify-center px-6">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-background-warm px-6">
       <div className="max-w-md w-full text-center">
         {/* unDraw page-not-found SVG — orange (#F4A261), color-swapped, optimized */}
-        {/* Item 85-89: actual SVG file, not placeholder */}
-        <img
+        <Image
           src="/images/illustrations/page-not-found.min.svg"
           alt="Page not found illustration"
           width={400}
           height={300}
           className="mx-auto mb-8 max-w-xs w-full"
+          priority
         />
 
         <h1 className="text-[3rem] font-extrabold text-brand-ink leading-tight mb-4">
@@ -26,7 +28,7 @@ export default function NotFound() {
           full guide library or heading back home.
         </p>
 
-        {/* Item 90: two exit buttons */}
+        {/* Two exit buttons */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/"

@@ -1,5 +1,5 @@
 // Trust bar — 3 stats with Magic UI NumberTicker animated countup
-// Stats: 57 guides, 3 calculators, Updated for 2026
+// Stats: 64 guides, 3 calculators, Updated for 2026
 // Target values render server-side to prevent SSR flash of 0
 
 "use client";
@@ -10,7 +10,7 @@ import { NumberTicker } from "@/components/magicui/number-ticker";
 const stats = [
   {
     Icon: BookOpen,
-    value: 57,
+    value: 64,
     suffix: "",
     label: "Guides Published",
   },

@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { navigation } from '@/lib/site'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/button'
 import Container from '@/components/ui/Container'
 import { X, Menu } from 'lucide-react'
 

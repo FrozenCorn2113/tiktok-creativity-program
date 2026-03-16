@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/button'
 import { trackEvent } from '@/lib/analytics'
 
 type Variant = 'inline' | 'sidebar' | 'exit-intent' | 'hero'
@@ -113,7 +113,7 @@ export default function EmailSignupForm({
         />
         <Button
           type="submit"
-          size={isHero ? 'lg' : 'md'}
+          size={isHero ? 'lg' : 'default'}
           disabled={status === 'loading'}
           className={isHero ? 'h-14 whitespace-nowrap' : 'whitespace-nowrap'}
         >

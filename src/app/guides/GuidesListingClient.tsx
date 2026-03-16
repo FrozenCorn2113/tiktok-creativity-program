@@ -62,7 +62,7 @@ export default function GuidesListingClient({ guides }: { guides: GuideItem[] })
             TikTok Creator Rewards Guides
           </h1>
           <p className="text-[1.125rem] text-text-secondary max-w-2xl mx-auto leading-[1.7]">
-            57 guides covering eligibility, earnings, troubleshooting, and strategy — updated for 2026.
+            64 guides covering eligibility, earnings, troubleshooting, and strategy — updated for 2026.
           </p>
 
           {/* Category filter tabs — scrollable horizontal on mobile */}
@@ -145,8 +145,9 @@ function GuideCard({ guide }: { guide: GuideItem }) {
       href={guide.href}
       className="group flex flex-col border border-border-default rounded-xl overflow-hidden bg-white hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 h-full"
     >
-      {/* Thumbnail */}
+      {/* Thumbnail — dynamic slug path, onError hide if missing */}
       <div className="relative w-full h-48 bg-brand-primarySoft overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`/images/guides/thumb-${guide.slug}.webp`}
           alt={`Thumbnail for ${guide.title}`}

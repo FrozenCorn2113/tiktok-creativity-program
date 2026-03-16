@@ -225,6 +225,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                     className="group flex flex-col border border-border-default rounded-xl overflow-hidden bg-white hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
                   >
                     <div className="relative w-full h-36 bg-brand-primarySoft overflow-hidden">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={`/images/guides/thumb-${guide.slug}.webp`}
                         alt={`Thumbnail for ${guide.title}`}

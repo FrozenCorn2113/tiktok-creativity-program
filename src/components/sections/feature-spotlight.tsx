@@ -79,25 +79,12 @@ export function FeatureSpotlight() {
           >
             <div className="relative w-full h-[420px] rounded-2xl overflow-hidden shadow-lg bg-background-surface">
               <Image
-                src="/images/homepage-explainer.webp"
-                alt="Flat design illustration of a creator at a desk reviewing TikTok analytics on their phone"
+                src="/images/brand/landpress-marketing-2.png"
+                alt="Creator reviewing TikTok analytics and Creator Rewards earnings on their phone"
                 fill
-                className="object-cover"
+                className="object-contain object-center"
                 loading="lazy"
-                onError={(e) => {
-                  const target = e.currentTarget as HTMLImageElement;
-                  target.style.display = "none";
-                }}
               />
-              {/* Fallback placeholder shown while image is being generated */}
-              <div className="absolute inset-0 flex items-center justify-center bg-background-warm">
-                <div className="text-center text-text-muted">
-                  <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-brand-primarySoft flex items-center justify-center">
-                    <CheckCircle className="h-8 w-8 text-brand-primary" aria-hidden />
-                  </div>
-                  <p className="text-sm">Illustration loading...</p>
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>

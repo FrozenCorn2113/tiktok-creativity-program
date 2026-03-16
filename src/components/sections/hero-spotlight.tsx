@@ -41,7 +41,7 @@ export function HeroSpotlight() {
               >
                 <Badge className="w-fit mb-6 bg-brand-primarySoft text-brand-primaryDeep border border-brand-primary/30 text-xs font-semibold tracking-wide px-3 py-1.5">
                   <Zap className="mr-1.5 h-3 w-3" aria-hidden />
-                  Updated for 2026 — 57 Guides
+                  Updated for 2026 — 64 Guides
                 </Badge>
               </motion.div>
 
@@ -76,7 +76,7 @@ export function HeroSpotlight() {
 
               {/* Subheadline */}
               <p className="mt-6 text-[1.125rem] leading-[1.7] text-text-secondary max-w-lg">
-                Real RPM data, eligibility requirements that actually make sense, and 57 guides written for creators — not marketers. Find out if you qualify, how much you can earn, and what to do when things go sideways.
+                Real RPM data, eligibility requirements that actually make sense, and 64 guides written for creators — not marketers. Find out if you qualify, how much you can earn, and what to do when things go sideways.
               </p>
 
               {/* CTA row */}
