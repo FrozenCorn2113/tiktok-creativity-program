@@ -248,9 +248,9 @@ function ResourceItem({
       </p>
       <div className="mt-3 flex flex-wrap items-center gap-3">
         {affiliateSlug && affiliateLabel ? (
-          <span className="flex items-center gap-2">
+          <span className="flex flex-col gap-0.5">
+            <span className="text-[12px] font-[500] text-[#667085]">Affiliate</span>
             <AffiliateLink slug={affiliateSlug} label={affiliateLabel} />
-            <span className="affiliate-label">Affiliate</span>
           </span>
         ) : null}
         {externalHref && externalLabel ? (

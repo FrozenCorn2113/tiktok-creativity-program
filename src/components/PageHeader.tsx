@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Clock, Calendar } from 'lucide-react'
 
 type Breadcrumb = {
   label: string
@@ -67,16 +67,27 @@ export default function PageHeader({
         </p>
       ) : null}
 
-      {/* Byline / meta row */}
+      {/* Byline / meta row — A2: Clock + Calendar Lucide icons */}
       {(byline || updatedAt || readTime) ? (
         <div className="flex flex-wrap items-center gap-3 text-[0.75rem] text-[var(--color-text-subtle)]">
           {byline ? <span>{byline}</span> : null}
           {byline && updatedAt ? <span className="text-[var(--color-border-strong)]">·</span> : null}
-          {updatedAt ? <span>Updated {updatedAt}</span> : null}
+          {updatedAt ? (
+            <span className="flex items-center gap-1">
+              <Calendar className="h-3 w-3 flex-shrink-0" aria-hidden />
+              Updated {updatedAt}
+            </span>
+          ) : null}
           {(byline || updatedAt) && readTime ? (
             <span className="text-[var(--color-border-strong)]">·</span>
           ) : null}
-          {readTime ? <span>{readTime} read</span> : null}
+          {readTime ? (
+            <span className="flex items-center gap-1">
+              <Clock className="h-3 w-3 flex-shrink-0" aria-hidden />
+              {/* readTime may include "read" already (e.g. "12 min read") — output as-is */}
+              {readTime}
+            </span>
+          ) : null}
         </div>
       ) : null}
     </header>
