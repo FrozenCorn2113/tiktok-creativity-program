@@ -96,14 +96,14 @@ export default function HomePageClient() {
       {/* Section 7: Calculators Preview — dark bg-brand-ink split section */}
       <CalculatorsPreview />
 
-      {/* Section 8: Email Capture — 21st.dev Newsletter Form */}
+      {/* Section 8: Email Capture — 21st.dev Newsletter Form (v4: new illustration) */}
       <EmailCapture
         headline="Get the Free Eligibility Checklist"
         subheadline="Every requirement in plain language, the most common rejection reasons, and what to do if your qualified views aren't counting. Updated for 2026."
         cta="Send Me the Checklist"
         showImage={true}
-        imageSrc="/images/brand/landpress-marketing-3.png"
-        imageAlt="Creator reviewing TikTok analytics"
+        imageSrc="/images/brand/email-capture-illustration.webp"
+        imageAlt="Creator checking inbox with checklist lead magnet"
       />
 
       {/* Section 9: Social Proof — Magic UI Marquee logo strip */}

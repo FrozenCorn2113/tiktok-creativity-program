@@ -14,7 +14,7 @@ import { wordRevealContainer, wordRevealItem } from "@/lib/motion";
 import { SpotlightContainer } from "@/components/aceternity/spotlight";
 import { Badge } from "@/components/ui/badge";
 
-const headline = "Everything TikTok Won't Tell You About Getting Paid";
+const headline = "The Real Guide to Getting Paid by TikTok";
 const words = headline.split(" ");
 
 export function HeroSpotlight() {
@@ -41,7 +41,7 @@ export function HeroSpotlight() {
               >
                 <Badge className="w-fit mb-6 bg-brand-primarySoft text-brand-primaryDeep border border-brand-primary/30 text-xs font-semibold tracking-wide px-3 py-1.5">
                   <Zap className="mr-1.5 h-3 w-3" aria-hidden />
-                  Updated for 2026 — 64 Guides
+                  100% Free Resource
                 </Badge>
               </motion.div>
 
@@ -76,24 +76,24 @@ export function HeroSpotlight() {
 
               {/* Subheadline */}
               <p className="mt-6 text-[1.125rem] leading-[1.7] text-text-secondary max-w-lg">
-                Real RPM data, eligibility requirements that actually make sense, and 64 guides written for creators — not marketers. Find out if you qualify, how much you can earn, and what to do when things go sideways.
+                Free calculators, 57 guides, and honest answers to the questions TikTok&apos;s help center won&apos;t touch. Qualified views, RPM, eligibility, what breaks, and how to fix it — all free.
               </p>
 
-              {/* CTA row */}
+              {/* CTA row — v4: calculator primary, start-here secondary */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Link
-                  href="/start-here"
+                  href="/calculators/earnings-calculator"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-brand-ink hover:bg-brand-primaryHover font-bold shadow-orange hover:shadow-lg transition-all hover:scale-[1.02] min-h-[48px] text-base"
                 >
-                  Start Here — It&apos;s Free
-                  <ChevronRight className="h-4 w-4" aria-hidden />
+                  <Calculator className="h-4 w-4" aria-hidden />
+                  Try the Calculator Free
                 </Link>
                 <Link
-                  href="/calculators/earnings-calculator"
+                  href="/start-here"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-brand-ink hover:bg-brand-primarySoft font-semibold min-h-[48px] text-base transition-colors"
                 >
-                  <Calculator className="h-4 w-4" aria-hidden />
-                  Try the Calculator
+                  Start the Learning Path
+                  <ChevronRight className="h-4 w-4" aria-hidden />
                 </Link>
               </div>
             </div>

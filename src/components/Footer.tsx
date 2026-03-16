@@ -20,6 +20,7 @@ const calculatorLinks = [
 ]
 
 const resourceLinks = [
+  { label: 'Tools & Resources', href: '/tools' },
   { label: 'About', href: '/about' },
   { label: 'Affiliate Disclosure', href: '/affiliate-disclosure' },
   { label: 'Privacy Policy', href: '/privacy' },
@@ -114,13 +115,25 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <p className="text-xs text-gray-500">
-            &copy; {new Date().getFullYear()} TikTok Creativity Program. Independent educational resource.
-          </p>
-          <p className="text-xs text-gray-500">
-            Not affiliated with TikTok or ByteDance.
+        {/* Bottom bar (v4: center text + affiliate disclosure) */}
+        <div className="mt-12 pt-6 border-t border-white/10">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <p className="text-xs text-gray-500">
+              &copy; {new Date().getFullYear()} TikTok Creativity Program. Independent educational resource.
+            </p>
+            <p className="text-xs text-gray-500 text-center">
+              All tools and guides are 100% free.
+            </p>
+            <p className="text-xs text-gray-500">
+              Not affiliated with TikTok or ByteDance.
+            </p>
+          </div>
+          {/* Affiliate disclosure below bottom bar */}
+          <p className="text-xs text-gray-500 text-center mt-3">
+            Some links on this site are affiliate links. We may earn a commission at no cost to you.{' '}
+            <Link href="/affiliate-disclosure" className="underline hover:text-gray-400 transition-colors">
+              See our Affiliate Disclosure
+            </Link>.
           </p>
         </div>
       </div>

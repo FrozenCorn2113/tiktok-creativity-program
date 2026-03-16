@@ -14,6 +14,10 @@ import TableOfContents from '@/components/TableOfContents'
 import PageHeader from '@/components/PageHeader'
 import StepCard from '@/components/StepCard'
 import JourneyCard from '@/components/JourneyCard'
+// v4 affiliate + email components
+import { AffiliateDisclosure } from '@/components/affiliate/affiliate-disclosure'
+import { AffiliateCardInline } from '@/components/affiliate/affiliate-card-inline'
+import { EmailCaptureInline } from '@/components/email/email-capture-inline'
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -34,6 +38,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     PageHeader,
     StepCard,
     JourneyCard,
+    // v4 components
+    AffiliateDisclosure,
+    AffiliateCardInline,
+    EmailCaptureInline,
     ...components,
   }
 }

@@ -6,6 +6,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { EmailCapturePopup } from '@/components/email/email-capture-popup'
 
 export const metadata: Metadata = {
   title: 'TikTok Follower Income Estimator',
@@ -16,6 +17,12 @@ export const metadata: Metadata = {
 export default function FollowerIncomeEstimatorPage() {
   return (
     <>
+      <EmailCapturePopup
+        leadMagnetTitle="Follower Income Guide"
+        headline="Want to know what your followers are actually worth?"
+        description="We'll explain what your estimated earnings mean, how engagement rate affects income, and which moves have the biggest impact on your payout."
+        itemCount="Free guide"
+      />
       <ScrollReveal />
       {/* C1-C3: two-column header band with illustration */}
       <section className="bg-[#FFF7ED] py-12 md:py-16">

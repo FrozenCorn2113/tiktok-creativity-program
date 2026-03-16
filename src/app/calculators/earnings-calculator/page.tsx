@@ -16,6 +16,8 @@ import Container from '@/components/ui/Container'
 import PageHeader from '@/components/PageHeader'
 import ScrollReveal from '@/components/ScrollReveal'
 import { CalculatorPanel } from '@/components/sections/calculator-panel'
+import { Badge } from '@/components/ui/badge'
+import { EmailCapturePopup } from '@/components/email/email-capture-popup'
 
 export const metadata: Metadata = {
   title: 'TikTok Earnings Calculator',
@@ -62,20 +64,35 @@ export default function EarningsCalculatorPage() {
     <>
       <ScrollReveal />
 
+      {/* Exit intent popup — v4: calculator pages only */}
+      <EmailCapturePopup
+        leadMagnetTitle="Earnings Calculator Results Guide"
+        headline="Get a breakdown of what your numbers actually mean"
+        description="We'll explain what your estimated earnings mean, how to improve your RPM, and which variables have the biggest impact on your payout."
+        itemCount="Free guide"
+      />
+
       {/* C1-C3: two-column header band with illustration */}
       <section className="bg-[#FFF7ED] py-12 md:py-16">
         <Container>
           <div className="grid items-center gap-12 md:grid-cols-[3fr_2fr]">
-            <PageHeader
-              breadcrumbs={[
-                { label: 'Home', href: '/' },
-                { label: 'Calculators', href: '/calculators' },
-                { label: 'Earnings Calculator', href: '/calculators/earnings-calculator' },
-              ]}
-              category="Interactive tool"
-              title="TikTok earnings calculator"
-              description="Estimate Creator Rewards payouts based on qualified views and RPM. Built on the actual view-based model — not follower count, not total views."
-            />
+            <div>
+              <PageHeader
+                breadcrumbs={[
+                  { label: 'Home', href: '/' },
+                  { label: 'Calculators', href: '/calculators' },
+                  { label: 'Earnings Calculator', href: '/calculators/earnings-calculator' },
+                ]}
+                category="Interactive tool"
+                title="TikTok earnings calculator"
+                description="Estimate Creator Rewards payouts based on qualified views and RPM. Built on the actual view-based model — not follower count, not total views."
+              />
+              {/* v4: Free badge */}
+              <Badge className="mt-3 bg-brand-primarySoft text-brand-primaryDeep border-brand-primary/30 text-xs font-semibold">
+                <Zap className="w-3 h-3 mr-1" aria-hidden />
+                100% Free • No signup required
+              </Badge>
+            </div>
             <div className="relative hidden h-[320px] w-full md:block">
               <Image
                 src="/assets/brand-images/landpress-marketing-hero.png"
@@ -88,6 +105,7 @@ export default function EarningsCalculatorPage() {
           </div>
         </Container>
       </section>
+
 
       {/* Calculator tool */}
       <section className="py-12">

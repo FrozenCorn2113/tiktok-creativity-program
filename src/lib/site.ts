@@ -60,24 +60,23 @@ export const navigation = {
       ],
     },
     {
-      label: 'Resources',
-      href: '/resources',
+      label: 'Tools',
+      href: '/tools',
       sections: [
         {
-          title: 'Downloads',
+          title: 'Creator Tools',
           links: [
-            { label: 'All resources', href: '/resources/index' },
-            { label: 'Earnings Tracker', href: '/resources/earnings-tracker' },
-            { label: 'Creator Rewards Checklist', href: '/resources/creator-rewards-checklist' },
+            { label: 'All Tools & Resources', href: '/tools' },
+            { label: 'Video Editing Tools', href: '/tools#video-editing' },
+            { label: 'Analytics Tools', href: '/tools#analytics-tools' },
           ],
         },
         {
-          title: 'Tools & products',
+          title: 'Resources',
           links: [
-            { label: 'Earnings Database', href: '/earnings-database' },
-            { label: 'Products', href: '/products' },
-            { label: 'Premium Newsletter', href: '/newsletter' },
-            { label: 'Sponsor this site', href: '/sponsor' },
+            { label: 'Downloads', href: '/resources/index' },
+            { label: 'Earnings Tracker', href: '/resources/earnings-tracker' },
+            { label: 'Creator Rewards Checklist', href: '/resources/creator-rewards-checklist' },
           ],
         },
       ],

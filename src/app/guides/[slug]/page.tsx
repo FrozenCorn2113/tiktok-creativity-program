@@ -23,6 +23,9 @@ import { EmailCapture } from '@/components/sections/email-capture'
 import { GuideCards } from '@/components/sections/guide-cards'
 import type { GuideCardData } from '@/components/sections/guide-cards'
 import GuideArticleClient from './GuideArticleClient'
+import { AffiliateDisclosure } from '@/components/affiliate/affiliate-disclosure'
+import { AffiliateCardInline } from '@/components/affiliate/affiliate-card-inline'
+import { EmailCaptureInline } from '@/components/email/email-capture-inline'
 
 type GuidePageProps = {
   params: { slug: string }
@@ -133,6 +136,13 @@ export default async function GuidePage({ params }: GuidePageProps) {
         </Breadcrumb>
       </div>
 
+      {/* Affiliate Disclosure — v4: conditional on hasAffiliateLinks frontmatter */}
+      {Boolean((frontmatter as Record<string, unknown>).hasAffiliateLinks) && (
+        <div className="max-w-container mx-auto px-6 mt-3">
+          <AffiliateDisclosure />
+        </div>
+      )}
+
       {/* Article header — checklist items 53 */}
       <div className="max-w-container mx-auto px-6 pt-6 pb-8">
         {/* Category badge */}
@@ -205,6 +215,26 @@ export default async function GuidePage({ params }: GuidePageProps) {
               <div className="prose prose-lg max-w-none prose-headings:font-sans prose-headings:font-bold prose-headings:text-brand-ink prose-p:text-text-secondary prose-p:leading-[1.75] prose-a:text-brand-primaryDeep prose-a:no-underline hover:prose-a:underline prose-strong:text-brand-ink prose-code:font-mono prose-code:text-brand-primaryDeep prose-code:bg-brand-primarySoft prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm">
                 {compiled.content}
               </div>
+
+              {/* v4: Email capture inline — after main article body */}
+              {Boolean((frontmatter as Record<string, unknown>).hasAffiliateLinks) && (
+                <EmailCaptureInline
+                  leadMagnetTitle="Get the Free Creator Rewards Checklist"
+                  leadMagnetDescription="Every requirement, the most common rejection reasons, and what to do if your qualified views aren't counting. Free instant download."
+                />
+              )}
+
+              {/* v4: Affiliate card inline — tools recommendation */}
+              {Boolean((frontmatter as Record<string, unknown>).hasAffiliateLinks) && (
+                <AffiliateCardInline
+                  toolName="CapCut"
+                  slug="capcut"
+                  review="The editing tool most TikTok creators with high qualified view rates actually use. Fast, free, and built for vertical video. The auto-captions alone are worth it for boosting completion rates."
+                  bestFor="Creators focused on qualified views"
+                  priceRange="Free • Pro from $7.99/mo"
+                  ctaText="Try CapCut Free"
+                />
+              )}
 
               {/* Article footer — "Was this helpful?" + email capture */}
               <div className="mt-16 pt-8 border-t border-border-default">

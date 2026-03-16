@@ -9,8 +9,12 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
 import { NumberTicker } from "@/components/magicui/number-ticker";
+import { Button } from "@/components/ui/button";
 import { fadeUp, viewportOnce } from "@/lib/motion";
 import { cn } from "@/lib/utils";
+import { Share2, Copy } from "lucide-react";
+import { EmailCaptureInline } from "@/components/email/email-capture-inline";
+import { AffiliateCardInline } from "@/components/affiliate/affiliate-card-inline";
 
 interface CalculatorResult {
   earnings: number;
@@ -38,6 +42,7 @@ export function CalculatorPanel({ className }: CalculatorPanelProps) {
   const shouldReduceMotion = useReducedMotion();
   const [views, setViews] = useState(100000);
   const [rpm, setRpm] = useState(0.7);
+  const [copied, setCopied] = useState(false);
 
   const result = calculate(views, rpm);
 
@@ -156,6 +161,76 @@ export function CalculatorPanel({ className }: CalculatorPanelProps) {
             </p>
             <p className="text-xs text-text-muted mt-0.5">with +20% bonus</p>
           </div>
+        </div>
+      </div>
+
+      {/* Section 4b — v4: Email capture + share buttons + affiliate card */}
+      <div className="flex flex-col gap-4 mt-6 pt-6 border-t border-border-default">
+        {/* Email capture */}
+        <EmailCaptureInline
+          leadMagnetTitle="Get a detailed breakdown emailed to you"
+          leadMagnetDescription="We'll send your results with context on what they mean and how to improve."
+        />
+
+        {/* Share buttons */}
+        <div className="flex items-center gap-3 flex-wrap">
+          <span className="text-[13px] font-medium text-text-secondary">Share your results:</span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              const url = typeof window !== "undefined" ? window.location.href : "";
+              const text = encodeURIComponent(
+                `I just calculated my estimated TikTok Creator Rewards earnings using this free calculator → ${url} #TikTokCreator #CreatorRewards`
+              );
+              window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank", "noopener,noreferrer");
+            }}
+            className="flex items-center gap-1.5 text-text-secondary hover:text-brand-ink"
+          >
+            <Share2 className="w-3.5 h-3.5" aria-hidden />
+            Share
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              const url = typeof window !== "undefined" ? window.location.href : "";
+              navigator.clipboard.writeText(url).then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              });
+            }}
+            className="flex items-center gap-1.5 text-text-secondary hover:text-brand-ink"
+          >
+            <Copy className="w-3.5 h-3.5" aria-hidden />
+            {copied ? "Copied!" : "Copy link"}
+          </Button>
+        </div>
+
+        {/* Affiliate card — contextual based on RPM */}
+        <div>
+          <h4 className="text-[14px] font-semibold text-text-secondary mb-3">
+            Tools that can help improve your results
+          </h4>
+          {rpm < 0.02 ? (
+            <AffiliateCardInline
+              toolName="CapCut"
+              slug="capcut"
+              review="The video editor most creators with growing qualified view rates use. Built for vertical video with auto-captions that boost completion rates — which directly affects your RPM."
+              bestFor="Creators building content quality"
+              priceRange="Free • Pro from $7.99/mo"
+              ctaText="Try CapCut Free"
+            />
+          ) : (
+            <AffiliateCardInline
+              toolName="Exolyt"
+              slug="exolyt"
+              review="Deep TikTok analytics that show you exactly which videos are earning qualified views, what's driving your RPM, and where your audience is coming from. Essential for optimizing at your level."
+              bestFor="Creators optimizing their RPM"
+              priceRange="Free plan • Pro from $9.99/mo"
+              ctaText="Try Exolyt"
+            />
+          )}
         </div>
       </div>
     </motion.div>

@@ -4,8 +4,8 @@ import EmailSignupForm from '@/components/EmailSignupForm'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Premium TikTok Monetization Newsletter',
-  description: 'Weekly deep dives, templates, and data-backed strategies for creators who want recurring income. Join the waitlist.',
+  title: 'TikTok Creator Rewards Newsletter — Free',
+  description: 'Weekly updates, tactics, and data-backed strategies for TikTok creators. Free to join.',
 }
 
 export default function NewsletterPage() {
@@ -15,25 +15,24 @@ export default function NewsletterPage() {
         <div className="space-y-6">
           <header className="space-y-3">
             <h1 className="text-3xl font-semibold text-[var(--color-text)]">
-              Premium TikTok Monetization Newsletter
+              TikTok Creator Rewards Newsletter
             </h1>
             <p className="text-sm text-[var(--color-text-muted)]">
-              Weekly deep dives, templates, and data-backed strategies for creators who want
-              recurring income and faster growth.
+              Weekly updates, tactics, and data-backed strategies for creators. Free to join, no strings.
             </p>
           </header>
 
           <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 text-sm">
             <h2 className="text-xl font-semibold text-[var(--color-text)]">What you get</h2>
             <ul className="mt-3 space-y-2 text-sm text-[var(--color-text-muted)]">
-              <li>Exclusive RPM optimization tactics</li>
-              <li>Monthly monetization playbooks</li>
-              <li>Early access to tools and templates</li>
+              <li>RPM optimization tactics</li>
+              <li>Monthly tool roundups and honest reviews</li>
+              <li>Updates when TikTok changes the program rules</li>
             </ul>
           </div>
 
           <CalloutBox type="info">
-            Premium newsletter is launching soon. Join the waitlist to get early access pricing.
+            Free newsletter — no paid tier, no upsells. Just useful information.
           </CalloutBox>
 
           <EmailSignupForm variant="inline" />

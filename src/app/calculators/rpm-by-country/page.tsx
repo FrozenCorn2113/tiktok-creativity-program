@@ -6,6 +6,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { EmailCapturePopup } from '@/components/email/email-capture-popup'
 
 export const metadata: Metadata = {
   title: 'TikTok RPM by Country Estimator',
@@ -16,6 +17,12 @@ export const metadata: Metadata = {
 export default function RpmByCountryPage() {
   return (
     <>
+      <EmailCapturePopup
+        leadMagnetTitle="RPM Optimization Guide"
+        headline="Learn how to improve your RPM in your region"
+        description="We'll break down how audience location affects your RPM, which content niches earn most per view, and how to shift your numbers over time."
+        itemCount="Free guide"
+      />
       <ScrollReveal />
       {/* C1-C3: two-column header band with illustration */}
       <section className="bg-[#FFF7ED] py-12 md:py-16">
