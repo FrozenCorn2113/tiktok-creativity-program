@@ -1,6 +1,6 @@
 # Devan Memory — tiktok-creativity-program
 
-**Last updated:** 2026-03-15
+**Last updated:** 2026-03-16
 **Current branch:** rebuild/audit-and-stabilize
 
 ---
@@ -12,7 +12,7 @@
 | Phase 1 — Foundation (config, tokens, CSS) | COMPLETE |
 | Phase 2 — Components (28 components) | COMPLETE — Bernard PASS |
 | Phase 3 — Pages (15 pages rebuilt) | COMPLETE |
-| Phase 4 — Final pass + deploy | PENDING |
+| Phase 4 — TCP v4 affiliate + email model build | COMPLETE — commit bb04f7cb |
 
 ---
 
@@ -67,12 +67,68 @@ All 7 blocking issues fixed. Build passes 0 errors.
 
 ---
 
-## Phase 4 Remaining Work
-1. New MDX guides: move from `content/new-guides/` to `content/guides/`
-2. Earnings database page — restyle (not touched yet)
-3. Utility pages (contact, privacy, terms, affiliate-disclosure, newsletter, sponsor, media, troubleshooting) — minimal PageHeader treatment
-4. Final Lighthouse check
-5. Vercel deploy
+## Image Generation (2026-03-16)
+
+### What Was Generated
+- 20 images total, 0 failures
+- Script: `scripts/generate-images.mjs` (reusable for future runs)
+- Model: `imagen-4.0-fast-generate-001` (fast tier works, 3-5s/image)
+- API key hardcoded in script as fallback (also reads from GEMINI_API_KEY env)
+
+### Images Generated
+Category hero images (1200x630 WebP) + thumbnails (400x300 WebP):
+- `public/images/guides/hero-getting-started.webp` + thumb (22KB / 8KB)
+- `public/images/guides/hero-maximize-earnings.webp` + thumb (25KB / 9KB)
+- `public/images/guides/hero-troubleshooting.webp` + thumb (28KB / 9KB)
+- `public/images/guides/hero-country-guides.webp` + thumb (29KB / 9KB)
+- `public/images/guides/hero-tools-equipment.webp` + thumb (33KB / 11KB)
+- `public/images/guides/hero-niche-guides.webp` + thumb (27KB / 9KB)
+- `public/images/guides/hero-comparisons.webp` + thumb (19KB / 5KB)
+- `public/images/guides/hero-strategy.webp` + thumb (23KB / 8KB)
+Calculator heroes (1200x630 WebP):
+- `public/images/calculators/hero-earnings.webp` (24KB)
+- `public/images/calculators/hero-rpm.webp` (28KB)
+- `public/images/calculators/hero-follower.webp` (23KB)
+Homepage explainer (800x600 WebP):
+- `public/images/homepage-explainer.webp` (18KB)
+
+### Key Notes
+- These are CATEGORY heroes, not per-guide. 64 individual guides need per-guide heroes per PAGE_SPECS.md rules ("Every guide gets a unique hero. Recycling is not acceptable.")
+- Per-guide generation is a larger job (64 heroes + 64 thumbs = 128 images). Flag to Bernard if needed.
+- Style prompts derived from ILLUSTRATION_PROMPTS.md base prompt — flat line-art, single orange accent.
+
+---
+
+## TCP v4 Phase 4 Build — COMPLETE (2026-03-16)
+
+### Key Patterns Learned
+- **`onError` on `<img>` tags requires `"use client"`** — even if the rest of the component is server-safe. Next.js static gen rejects event handler props on server components.
+- **Client Tabs in server pages → static gen timeout** — extract into a `"use client"` child component (ToolsTabs pattern). Pass data as serializable props from server.
+- **Never import from "use client" modules in server components** — even if importing just a function/class (no hooks). Causes `(0, o.dc) is not a function` runtime error.
+- **`Boolean(unknownTypedValue) && <JSX>`** — correct pattern for conditional rendering when frontmatter value is `unknown` type.
+- **sessionStorage popup gate** — set key BEFORE showing popup to prevent double-show race conditions.
+
+### Build State (post v4)
+- `npm run build`: PASS (107 pages, 0 errors)
+- `npx tsc --noEmit`: PASS (0 errors)
+- ESLint: PASS (0 warnings)
+- All screenshots taken and verified
+
+### v4 Components Built
+| Component | Location | Notes |
+|-----------|----------|-------|
+| AffiliateDisclosure | `src/components/affiliate/` | Server-safe, no use client |
+| AffiliateCardInline | `src/components/affiliate/` | use client (onError) |
+| AffiliateCardGrid | `src/components/affiliate/` | use client (onError) |
+| EmailCaptureInline | `src/components/email/` | use client (useState) |
+| EmailCapturePopup | `src/components/email/` | use client (exit intent, sessionStorage) |
+| LeadMagnetPreview | `src/components/email/` | use client (onError) |
+| ToolsTabs | `src/app/tools/` | use client (Tabs) |
+
+### Remaining items (not in scope for this phase)
+- Per-guide hero images (64 guides × 2 = 128 images)
+- Tool logo images (`public/images/tools/`) — fallback to favicon API currently
+- Vercel deploy (pending Bernard G4 review)
 
 ---
 
