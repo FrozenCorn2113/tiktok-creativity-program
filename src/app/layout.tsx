@@ -1,19 +1,24 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Manrope, JetBrains_Mono, Geist } from 'next/font/google'
+import { Manrope, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { siteConfig } from '@/lib/site'
-import Navbar from '@/components/Navbar'
+import FloatingNavbar from '@/components/aceternity/floating-navbar'
 import Footer from '@/components/Footer'
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
-// G1: Manrope via next/font/google — weights 400,500,600,700,800 per BRAND.md Section 4
-const geist = Geist({subsets:['latin'],variable:'--font-sans'})
+// Manrope — primary brand font, all weights per BRAND.md
+const manrope = Manrope({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-sans',
+  display: 'swap',
+})
 
-// G2: JetBrains Mono via next/font/google — weights 400,500 per BRAND.md Section 4
+// JetBrains Mono — calculator outputs and data values only
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: ['400'],
   variable: '--font-mono',
   display: 'swap',
 })
@@ -31,7 +36,7 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [{ url: '/og-default.png', width: 1200, height: 630 }],
+    images: [{ url: `/og?title=${encodeURIComponent(siteConfig.name)}`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -45,14 +50,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const searchConsoleVerification = process.env.NEXT_PUBLIC_SEARCH_CONSOLE_VERIFICATION
 
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
+    <html lang="en" className={cn(manrope.variable, jetbrainsMono.variable)}>
       <head>
         {searchConsoleVerification ? (
           <meta name="google-site-verification" content={searchConsoleVerification} />
         ) : null}
       </head>
-      {/* G1+G2: font variables injected via next/font/google className on body */}
-      <body className={`${geist.variable} ${jetbrainsMono.variable} min-h-screen bg-background text-text font-sans antialiased`}>
+      <body className="min-h-screen bg-background text-text font-sans antialiased">
         {gaId ? (
           <>
             <Script
@@ -69,9 +73,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Script>
           </>
         ) : null}
-        <Navbar />
-        {/* pt-16 clears the fixed nav (--nav-height: 4rem) */}
-        <main className="flex min-h-[calc(100vh-220px)] flex-col pt-16">
+        <FloatingNavbar />
+        {/* No top padding — HeroSpotlight handles its own pt for floating nav */}
+        <main className="flex min-h-[calc(100vh-220px)] flex-col">
           {children}
         </main>
         <Footer />

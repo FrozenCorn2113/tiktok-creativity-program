@@ -4,10 +4,9 @@
  * This file exports shared animation variants that respect the reduced motion preference.
  */
 
-export type MotionVariants = {
-  hidden: Record<string, unknown>
-  show: Record<string, unknown>
-}
+import type { Variants } from 'framer-motion'
+
+export type MotionVariants = Variants
 
 /** Fade + slide up — used for scroll reveals */
 export const fadeUp: MotionVariants = {

@@ -22,7 +22,7 @@ const config: Config = {
         },
         // Backgrounds
         background: {
-          DEFAULT: tokens.colors.background.page,         // #FFFFFF
+          DEFAULT: tokens.colors.background.page,         // #FFFFFF — also used by shadcn bg-background
           page:     tokens.colors.background.page,
           warm:     tokens.colors.background.warm,        // #FFF7ED
           surface:  tokens.colors.background.surface,     // #F9FAFB
@@ -53,6 +53,35 @@ const config: Config = {
           error:        tokens.colors.status.error,       // #DC2626
           errorSoft:    tokens.colors.status.errorSoft,   // #FEE2E2
         },
+        // shadcn/ui semantic tokens (needed for shadcn component classes)
+        foreground:   'hsl(var(--foreground))',
+        card: {
+          DEFAULT:    'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT:    'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        secondary: {
+          DEFAULT:    'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        muted: {
+          DEFAULT:    'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT:    'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        destructive: {
+          DEFAULT:    'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        input:  'hsl(var(--input))',
+        ring:   'hsl(var(--ring))',
+
         // Legacy aliases — keep so existing components don't break
         primary: {
           DEFAULT: tokens.colors.brand.primary,
@@ -175,8 +204,20 @@ const config: Config = {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%':      { transform: 'translateY(6px)' },
         },
+        // Magic UI Marquee
+        marquee: {
+          '0%':   { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(calc(-100% - var(--gap)))' },
+        },
+        'marquee-vertical': {
+          '0%':   { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(calc(-100% - var(--gap)))' },
+        },
       },
       animation: {
+        // Magic UI Marquee
+        marquee:          'marquee var(--duration) linear infinite',
+        'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
         'fade-in':      `fadeIn ${tokens.animation.durationBase} ${tokens.animation.easingDefault} forwards`,
         'slide-up':     `slideUp ${tokens.animation.durationSlow} ${tokens.animation.easingDefault} forwards`,
         'fade-slide-up': `fadeSlideUp ${tokens.animation.durationSlow} ${tokens.animation.easingDefault} forwards`,

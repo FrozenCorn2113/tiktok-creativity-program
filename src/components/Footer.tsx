@@ -1,79 +1,91 @@
-// Based on 21st.dev efferd/minimal-footer - customized per BRAND.md v2.0
-// Source: https://21st.dev/components/efferd/minimal-footer
-// H18-H19, F1-F5 per Mandatory Implementation Checklist
+// Source: Custom 4-column layout using shadcn primitives — per PAGE_SPECS.md
+// bg-brand-ink dark footer. 4 cols desktop, 2 cols tablet, 1 col mobile.
+// CONTENT.md footer-tagline: "Real information about TikTok's Creator Rewards Program. No hype."
 
 import Link from 'next/link'
-import Container from '@/components/ui/Container'
 
-const footerLinks = {
-  guides: [
-    { label: 'All Guides', href: '/guides' },
-    { label: 'Creator Rewards 2026', href: '/guides/creator-rewards-2026' },
-    { label: 'Additional Reward Criteria', href: '/guides/additional-reward-criteria-2026' },
-    { label: 'Grow from 5K to 10K', href: '/guides/grow-5k-to-10k' },
-  ],
-  tools: [
-    { label: 'Earnings Calculator', href: '/calculators/earnings-calculator' },
-    { label: 'RPM by Country', href: '/calculators/rpm-by-country' },
-    { label: 'Follower Income Estimator', href: '/calculators/follower-income-estimator' },
-    { label: 'Earnings Database', href: '/earnings-database' },
-  ],
-  legal: [
-    { label: 'Privacy Policy', href: '/privacy' },
-    { label: 'Terms of Use', href: '/terms' },
-    { label: 'Affiliate Disclosure', href: '/affiliate-disclosure' },
-    { label: 'Contact', href: '/contact' },
-  ],
-}
+const topGuides = [
+  { label: 'Creator Rewards 2026', href: '/guides/creator-rewards-2026' },
+  { label: 'Eligibility Requirements', href: '/guides/eligibility-requirements' },
+  { label: 'How to Maximize Qualified Views', href: '/guides/maximize-qualified-views' },
+  { label: 'How to Improve Your RPM', href: '/guides/optimize-rpm' },
+  { label: 'What to Do If Rejected', href: '/guides/appeal-rejection' },
+]
+
+const calculatorLinks = [
+  { label: 'Earnings Calculator', href: '/calculators/earnings-calculator' },
+  { label: 'RPM Calculator', href: '/calculators/rpm-by-country' },
+  { label: 'Follower Income Calculator', href: '/calculators/follower-income-estimator' },
+  { label: 'Start Here', href: '/start-here' },
+]
+
+const resourceLinks = [
+  { label: 'About', href: '/about' },
+  { label: 'Affiliate Disclosure', href: '/affiliate-disclosure' },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Contact', href: '/contact' },
+]
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[var(--color-border)] bg-white">
-      <Container className="py-12">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
-          {/* Brand column */}
-          <div className="flex flex-col gap-4">
-            <Link href="/" className="cursor-pointer">
-              <span className="font-bold text-[var(--color-ink-strong)] text-[0.9375rem]" style={{ fontFamily: 'var(--font-sans)' }}>
+    <footer className="bg-brand-ink text-text-inverse">
+      <div className="max-w-container mx-auto px-6 py-16">
+        {/* 4-column grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+          {/* Column 1 — Brand */}
+          <div className="sm:col-span-2 lg:col-span-1">
+            <Link href="/" className="block">
+              <span
+                className="text-lg font-extrabold text-white tracking-tight"
+                style={{ fontWeight: 800 }}
+              >
                 TikTok Creativity Program
               </span>
             </Link>
-            <p className="text-sm text-[var(--color-text-muted)] max-w-xs leading-[1.7]">
-              Clear, practical guidance for creators navigating eligibility, applications, and earnings.
+            <p className="mt-3 text-sm text-gray-400 leading-relaxed max-w-xs">
+              Real information about TikTok&apos;s Creator Rewards Program. No hype.
             </p>
-            <div className="flex gap-3">
-              <Link
-                href="/newsletter"
-                className="text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-ink)]"
-              >
-                Newsletter
-              </Link>
-              <span className="text-[var(--color-border-strong)]">·</span>
-              <Link
-                href="/sponsor"
-                className="text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-ink)]"
-              >
-                Sponsor
-              </Link>
-              <span className="text-[var(--color-border-strong)]">·</span>
-              <Link
-                href="/about"
-                className="text-sm font-medium text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-ink)]"
-              >
-                About
-              </Link>
-            </div>
           </div>
 
-          {/* Guides column */}
+          {/* Column 2 — Top Guides */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-[var(--color-ink)]">Guides</h4>
-            <ul className="space-y-2">
-              {footerLinks.guides.map((link) => (
+            <h4 className="text-xs font-semibold text-white uppercase tracking-wide mb-4">
+              Top Guides
+            </h4>
+            <ul className="space-y-2.5">
+              {topGuides.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-ink)]"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  href="/guides"
+                  className="text-sm text-brand-primary hover:text-brand-primaryHover transition-colors font-medium"
+                >
+                  Browse all guides &rarr;
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3 — Calculators */}
+          <div>
+            <h4 className="text-xs font-semibold text-white uppercase tracking-wide mb-4">
+              Calculators
+            </h4>
+            <ul className="space-y-2.5">
+              {calculatorLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -82,32 +94,17 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Tools column */}
+          {/* Column 4 — Resources */}
           <div>
-            <h4 className="mb-3 text-sm font-semibold text-[var(--color-ink)]">Free Tools</h4>
-            <ul className="space-y-2">
-              {footerLinks.tools.map((link) => (
+            <h4 className="text-xs font-semibold text-white uppercase tracking-wide mb-4">
+              Resources
+            </h4>
+            <ul className="space-y-2.5">
+              {resourceLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-ink)]"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal column */}
-          <div>
-            <h4 className="mb-3 text-sm font-semibold text-[var(--color-ink)]">Legal</h4>
-            <ul className="space-y-2">
-              {footerLinks.legal.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-ink)]"
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -117,20 +114,16 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar — affiliate disclosure mandatory */}
-        <div className="mt-10 border-t border-[var(--color-border)] pt-6">
-          <p className="text-xs text-[var(--color-text-subtle)] leading-[1.6] max-w-2xl">
-            <strong className="font-semibold text-[var(--color-text-muted)]">Affiliate disclosure:</strong>{' '}
-            This site contains affiliate links. If you purchase through them, we may earn a commission at no extra cost to you.
-            This site is an independent educational resource and is not affiliated with, endorsed by,
-            or sponsored by TikTok or ByteDance Ltd. Program terms can change at any time.
+        {/* Bottom bar */}
+        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <p className="text-xs text-gray-500">
+            &copy; {new Date().getFullYear()} TikTok Creativity Program. Independent educational resource.
           </p>
-          <div className="mt-4 flex flex-col gap-2 text-xs text-[var(--color-text-subtle)] sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} TikTok Creativity Program. All rights reserved.</p>
-            <p>Independent. Not affiliated with TikTok or ByteDance.</p>
-          </div>
+          <p className="text-xs text-gray-500">
+            Not affiliated with TikTok or ByteDance.
+          </p>
         </div>
-      </Container>
+      </div>
     </footer>
   )
 }
