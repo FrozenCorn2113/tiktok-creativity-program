@@ -11,13 +11,14 @@ type TrustStat = {
   suffix?: string
   prefix?: string
   label: string
+  noGrouping?: boolean // suppress thousands separator (e.g. years)
 }
 
 // H9: exactly these three stats
 const defaultStats: TrustStat[] = [
   { value: 64, suffix: ' Guides', label: '' },
   { value: 3, suffix: ' Free Calculators', label: '' },
-  { value: 2026, prefix: 'Updated ', label: '' },
+  { value: 2026, prefix: 'Updated ', label: '', noGrouping: true },
 ]
 
 function useCountUp(target: number, isVisible: boolean, duration = 1200) {
@@ -59,6 +60,11 @@ function useCountUp(target: number, isVisible: boolean, duration = 1200) {
   return count
 }
 
+function formatCount(count: number, noGrouping?: boolean): string {
+  if (noGrouping) return String(count)
+  return count.toLocaleString()
+}
+
 function StatItem({ stat }: { stat: TrustStat }) {
   const [isVisible, setIsVisible] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -83,7 +89,7 @@ function StatItem({ stat }: { stat: TrustStat }) {
     <div ref={ref} className="flex flex-col items-center gap-1 text-center">
       {/* H7: stat numbers — large, ink-strong */}
       <span className="text-[1.5rem] font-[700] leading-[1.2] text-[#0B0F1A] md:text-[1.75rem]">
-        {stat.prefix ?? ''}{count.toLocaleString()}{stat.suffix ?? ''}
+        {stat.prefix ?? ''}{formatCount(count, stat.noGrouping)}{stat.suffix ?? ''}
       </span>
       {/* H9: label below number, 12px text-muted */}
       {stat.label ? (
@@ -105,7 +111,7 @@ export default function TrustBar({ stats = defaultStats, className = '' }: Trust
       className={`bg-white px-4 py-8 ${className}`}
       aria-label="Site stats"
     >
-      <div className="mx-auto flex max-w-3xl items-center justify-center gap-8 md:gap-16">
+      <div className="mx-auto grid max-w-3xl grid-cols-3 items-center justify-center gap-4 md:flex md:gap-16">
         {stats.map((stat, i) => (
           <StatItem key={`${stat.label || stat.value}-${i}`} stat={stat} />
         ))}

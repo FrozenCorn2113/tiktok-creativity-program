@@ -110,7 +110,7 @@ export default function ProductsPage() {
                 {/* What's included */}
                 <div className="mt-6">
                   <h3 className="text-[0.75rem] font-semibold uppercase tracking-wide text-[var(--color-text-subtle)]">
-                    What's included
+                    What&apos;s included
                   </h3>
                   <ul className="mt-3 space-y-2">
                     {product.included.map((item) => (

@@ -41,7 +41,7 @@ export default function ResourcesPage() {
             <p className="rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface-muted)] px-4 py-3 text-[0.75rem] text-[var(--color-text-subtle)]">
               Some links on this page are affiliate links. If you purchase through them, this site
               earns a commission at no extra cost to you. Every tool listed here is included because
-              it's relevant to TikTok creators — not because of the commission.
+              it&apos;s relevant to TikTok creators — not because of the commission.
             </p>
 
             {/* Category 1: Video Editing */}
@@ -211,7 +211,7 @@ export default function ResourcesPage() {
             <p className="border-t border-[var(--color-border)] pt-6 text-[0.75rem] text-[var(--color-text-subtle)]">
               Some links on this page are affiliate links. If you purchase through them, this site
               earns a commission at no extra cost to you. Every tool listed here is included because
-              it's relevant to TikTok creators — not because of the commission.
+              it&apos;s relevant to TikTok creators — not because of the commission.
             </p>
           </div>
         </Container>

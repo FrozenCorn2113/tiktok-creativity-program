@@ -114,7 +114,7 @@ export default function NichePage({ params }: { params: { slug: string } }) {
 
             {/* Callout */}
             <CalloutBox type="tip">
-              We're building a dedicated guide for this niche. Subscribe below to get notified when
+              We&apos;re building a dedicated guide for this niche. Subscribe below to get notified when
               it launches.
             </CalloutBox>
 

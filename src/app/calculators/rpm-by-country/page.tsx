@@ -51,7 +51,7 @@ export default function RpmByCountryPage() {
 
           {/* Guidance */}
           <CalloutBox type="tip">
-            If your audience mix isn't 100% yet, use your best estimate. Update monthly to track
+            If your audience mix isn&apos;t 100% yet, use your best estimate. Update monthly to track
             changes in RPM.
           </CalloutBox>
 

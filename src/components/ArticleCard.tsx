@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type React from 'react'
 
 type ArticleCardProps = {
@@ -27,10 +28,11 @@ export default function ArticleCard({
     >
       <div className="relative aspect-video w-full overflow-hidden bg-[var(--color-surface-muted)]">
         {image ? (
-          <img
+          <Image
             src={image}
             alt={title}
-            className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+            fill
+            className="object-cover transition duration-300 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-xs uppercase tracking-wide text-[var(--color-text-subtle)]">
