@@ -153,7 +153,7 @@ export default function HomePage() {
               >
                 {/* H10: Lucide icon 24px, orange */}
                 <span
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FFE9D5] text-[#E58B3A]"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FFE9D5] text-[#F4A261]"
                   aria-hidden
                 >
                   <pillar.Icon className="h-6 w-6" />

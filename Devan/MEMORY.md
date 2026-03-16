@@ -37,7 +37,19 @@
 - Resources page: `ResourceItem` internal helper component handles affiliate + external links
 - Products page: uses Scribe's waitlist copy, no confirmed pricing shown
 
-### Bernard's Phase 2 Notes (resolved)
+### Bernard's Phase 2 Blocking Fixes (2026-03-15)
+All 7 blocking issues fixed. Build passes 0 errors.
+
+1. **Guides listing cards** — `GuidesListClient` grid had `data-reveal` but no `is-visible`. ScrollReveal may not fire in time for client-mounted content. Fixed: added `is-visible` directly to the grid, removed `data-reveal`. Cards now always visible.
+2. **Guide page header illustration** — Wrapped `PageHeader` in two-column grid per A1-A3. Added category-to-illustration helper `getIllustrationForCategory()`. Image goes in right column, `h-[320px]`, fill, object-contain object-right.
+3. **Calculator page headers** — All 3 calculator pages now have `bg-[#FFF7ED]` two-column header section with `landpress-marketing-hero.png` in right column per C1-C3.
+4. **"What affects your results?" section** — Added to all 3 calculator pages (C10). Removed duplicate `benchmarkRows`/`ComparisonTable` from earnings calculator.
+5. **404 illustration** — Replaced `illustration-placeholder` div with `<Image src="/assets/brand-images/landpress-marketing-4.png" fill className="object-contain">` per E1-E3. Button label updated to "Back to home".
+6. **TrustBar year formatting** — Added `noGrouping?: boolean` to `TrustStat` type. Year stat gets `noGrouping: true`. `formatCount()` helper returns `String(count)` when noGrouping, else `.toLocaleString()`. "Updated 2026" now renders correctly.
+7. **Content pillar icon color** — Changed `text-[#E58B3A]` to `text-[#F4A261]` on pillar icon wrapper in HomePageClient per H10.
+**Non-blocking (also fixed):** Guide ToC layout inverted — moved `<aside>` (ToC) before `<article>` in the flex row so ToC is left, prose is right per A5.
+
+### Bernard's Phase 2 Notes (resolved pre-fix)
 - JetBrains Mono on calculator outputs: VERIFIED — `mono-output` CSS class in global.css maps to `--font-mono`, used on `<p className="mono-output">` in EarningsCalculator
 - Duplicate font @import in globals.css: NOT PRESENT — fonts load via `<link>` tags in layout.tsx head, one `@import` for tokens, one for global.css animations. Clean.
 

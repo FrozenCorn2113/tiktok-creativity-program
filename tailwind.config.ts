@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss'
+import tokens from './design/tokens.json'
 
 const config: Config = {
   content: [
@@ -8,170 +9,192 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // ─── Colors ───────────────────────────────────────────────────────────
+      // ─── Colors — sourced directly from design/tokens.json ────────────────
       colors: {
-        // Primary — Brand Orange
-        primary: {
-          DEFAULT: '#F4A261',
-          hover: '#E58B3A',
-          soft: '#FFE9D5',
+        // Brand palette
+        brand: {
+          primary:      tokens.colors.brand.primary,      // #F4A261
+          primaryHover: tokens.colors.brand.primaryHover, // #E8894A
+          primarySoft:  tokens.colors.brand.primarySoft,  // #FFF1E6
+          primaryDeep:  tokens.colors.brand.primaryDeep,  // #C2622A
+          ink:          tokens.colors.brand.ink,           // #111827
+          inkLight:     tokens.colors.brand.inkLight,     // #1F2937
         },
-        // Backgrounds & Surfaces
-        background: '#FFFFFF',
-        'surface-warm': '#FFF7ED',
-        'surface-muted': '#FFF1E6',
-        'surface-inset': '#F9EDE1',
-        // Borders
-        border: {
-          DEFAULT: '#EADFD3',
-          strong: '#DFD1C4',
+        // Backgrounds
+        background: {
+          DEFAULT: tokens.colors.background.page,         // #FFFFFF
+          page:     tokens.colors.background.page,
+          warm:     tokens.colors.background.warm,        // #FFF7ED
+          surface:  tokens.colors.background.surface,     // #F9FAFB
+          elevated: tokens.colors.background.elevated,
         },
         // Text
-        ink: {
-          DEFAULT: '#111827',
-          strong: '#0B0F1A',
-        },
         text: {
-          DEFAULT: '#101828',
-          muted: '#475467',
-          subtle: '#667085',
+          DEFAULT:   tokens.colors.text.primary,          // #111827
+          primary:   tokens.colors.text.primary,
+          secondary: tokens.colors.text.secondary,        // #6B7280
+          muted:     tokens.colors.text.muted,            // #9CA3AF
+          inverse:   tokens.colors.text.inverse,          // #FFFFFF
+          onPrimary: tokens.colors.text.onPrimary,        // #111827
         },
-        // Semantic
-        success: '#12B76A',
-        warning: '#F79009',
-        error: '#F04438',
-        info: '#0EA5E9',
+        // Borders
+        border: {
+          DEFAULT: tokens.colors.border.default,          // #E5E7EB
+          default: tokens.colors.border.default,
+          strong:  tokens.colors.border.strong,           // #D1D5DB
+          focus:   tokens.colors.border.focus,            // #F4A261
+        },
+        // Status
+        status: {
+          success:      tokens.colors.status.success,     // #16A34A
+          successSoft:  tokens.colors.status.successSoft, // #DCFCE7
+          warning:      tokens.colors.status.warning,     // #D97706
+          warningSoft:  tokens.colors.status.warningSoft, // #FEF3C7
+          error:        tokens.colors.status.error,       // #DC2626
+          errorSoft:    tokens.colors.status.errorSoft,   // #FEE2E2
+        },
+        // Legacy aliases — keep so existing components don't break
+        primary: {
+          DEFAULT: tokens.colors.brand.primary,
+          hover:   tokens.colors.brand.primaryHover,
+          soft:    tokens.colors.brand.primarySoft,
+        },
+        ink: {
+          DEFAULT: tokens.colors.brand.ink,
+          strong:  tokens.colors.brand.ink,
+        },
+        surface: tokens.colors.background.surface,
+        'surface-warm':   tokens.colors.background.warm,
+        'surface-muted':  tokens.colors.brand.primarySoft,
+        success: tokens.colors.status.success,
+        warning: tokens.colors.status.warning,
+        error:   tokens.colors.status.error,
       },
 
       // ─── Typography ───────────────────────────────────────────────────────
       fontFamily: {
-        // Use CSS variables injected by next/font/google — falls back to direct name if var not set
-        sans: ['var(--font-sans)', 'Manrope', 'system-ui', '-apple-system', 'sans-serif'],
+        sans:    ['var(--font-sans)', 'Manrope', 'system-ui', '-apple-system', 'sans-serif'],
         heading: ['var(--font-sans)', 'Manrope', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['var(--font-mono)', 'JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
+        mono:    ['var(--font-mono)', 'JetBrains Mono', 'Menlo', 'Monaco', 'monospace'],
       },
       fontSize: {
-        display: ['clamp(2.5rem, 5vw, 4rem)', { lineHeight: '1.15', letterSpacing: '-0.025em', fontWeight: '800' }],
-        h1: ['clamp(2rem, 4vw, 3rem)', { lineHeight: '1.2', letterSpacing: '-0.025em', fontWeight: '700' }],
-        h2: ['clamp(1.5rem, 3vw, 2rem)', { lineHeight: '1.25', fontWeight: '700' }],
-        h3: ['clamp(1.125rem, 2vw, 1.375rem)', { lineHeight: '1.3', fontWeight: '600' }],
-        h4: ['1rem', { lineHeight: '1.4', fontWeight: '600' }],
-        body: ['1rem', { lineHeight: '1.7', fontWeight: '400' }],
-        'body-lg': ['1.125rem', { lineHeight: '1.7', fontWeight: '400' }],
-        small: ['0.875rem', { lineHeight: '1.5', fontWeight: '400' }],
-        caption: ['0.75rem', { lineHeight: '1.4', fontWeight: '500' }],
-        btn: ['0.9375rem', { lineHeight: '1', fontWeight: '600' }],
+        // tokens.json sizes
+        h1:         [tokens.typography.sizes.h1,        { lineHeight: tokens.typography.lineHeights.h1,       fontWeight: tokens.typography.heading.fontWeightBold }],
+        h2:         [tokens.typography.sizes.h2,        { lineHeight: tokens.typography.lineHeights.h2,       fontWeight: tokens.typography.heading.fontWeightBold }],
+        h3:         [tokens.typography.sizes.h3,        { lineHeight: tokens.typography.lineHeights.h3,       fontWeight: tokens.typography.heading.fontWeightBold }],
+        h4:         [tokens.typography.sizes.h4,        { lineHeight: tokens.typography.lineHeights.h4,       fontWeight: tokens.typography.heading.fontWeightSemibold }],
+        'body-lg':  [tokens.typography.sizes.bodyLarge, { lineHeight: tokens.typography.lineHeights.bodyLarge }],
+        body:       [tokens.typography.sizes.body,      { lineHeight: tokens.typography.lineHeights.body }],
+        small:      [tokens.typography.sizes.small,     { lineHeight: '1.5' }],
+        caption:    [tokens.typography.sizes.caption,   { lineHeight: '1.5' }],
+        // Keep legacy aliases
+        display:    ['clamp(2.5rem, 5vw, 4rem)', { lineHeight: '1.15', letterSpacing: '-0.025em', fontWeight: '800' }],
+        btn:        ['0.9375rem', { lineHeight: '1', fontWeight: '600' }],
       },
 
-      // ─── Border Radius ────────────────────────────────────────────────────
+      // ─── Border Radius — from tokens.json ────────────────────────────────
       borderRadius: {
-        sm: '8px',
-        md: '12px',
-        lg: '16px',
-        xl: '24px',
-        full: '9999px',
+        sm:   tokens.borderRadius.sm,   // 6px
+        md:   tokens.borderRadius.md,   // 8px
+        lg:   tokens.borderRadius.lg,   // 12px
+        xl:   tokens.borderRadius.xl,   // 16px
+        '2xl': tokens.borderRadius['2xl'], // 20px
+        full: tokens.borderRadius.full, // 9999px
       },
 
-      // ─── Spacing ──────────────────────────────────────────────────────────
+      // ─── Spacing — from tokens.json gap values ────────────────────────────
       spacing: {
-        xs: '0.25rem',   // 4px
-        sm: '0.5rem',    // 8px
-        md: '1rem',      // 16px
-        lg: '1.5rem',    // 24px
-        xl: '2rem',      // 32px
-        '2xl': '3rem',   // 48px
-        '3xl': '4rem',   // 64px
+        xs:  tokens.spacing.gap.xs,  // 4px
+        sm:  tokens.spacing.gap.sm,  // 8px
+        md:  tokens.spacing.gap.md,  // 16px
+        lg:  tokens.spacing.gap.lg,  // 24px
+        xl:  tokens.spacing.gap.xl,  // 32px
+        '2xl': tokens.spacing.gap['2xl'], // 48px
+        '3xl': tokens.spacing.gap['3xl'], // 64px
       },
 
-      // ─── Shadows ──────────────────────────────────────────────────────────
+      // ─── Shadows — from tokens.json ───────────────────────────────────────
       boxShadow: {
-        sm: '0 1px 3px rgba(0,0,0,0.08)',
-        md: '0 4px 16px rgba(0,0,0,0.10)',
-        lg: '0 10px 15px rgba(0,0,0,0.1)',
-        xl: '0 20px 25px rgba(0,0,0,0.15)',
-        // focus rings
+        sm:     tokens.shadows.sm,
+        md:     tokens.shadows.md,
+        lg:     tokens.shadows.lg,
+        xl:     tokens.shadows.xl,
+        orange: tokens.shadows.orange, // 0 4px 16px rgba(244,162,97,0.35)
+        // Focus rings
         'focus-primary': '0 0 0 3px rgba(244, 162, 97, 0.12)',
-        'focus-input': '0 0 0 2px rgba(244, 162, 97, 0.2)',
+        'focus-input':   '0 0 0 2px rgba(244, 162, 97, 0.2)',
       },
 
       // ─── Max Width ────────────────────────────────────────────────────────
       maxWidth: {
-        prose: '65ch',
-        container: '75rem',
-        narrow: '52rem',
+        container: tokens.spacing.containerMaxWidth, // 1200px
+        content:   tokens.spacing.contentMaxWidth,   // 720px
+        prose:     '65ch',
+        narrow:    '52rem',
       },
 
-      // ─── Animations ───────────────────────────────────────────────────────
+      // ─── Z-Index — from tokens.json ───────────────────────────────────────
+      zIndex: {
+        navbar: tokens.zIndex.navbar,
+        modal:  tokens.zIndex.modal,
+        toast:  tokens.zIndex.toast,
+      },
+
+      // ─── Keyframes ────────────────────────────────────────────────────────
       keyframes: {
         fadeIn: {
-          '0%': { opacity: '0' },
+          '0%':   { opacity: '0' },
           '100%': { opacity: '1' },
         },
         slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '0%':   { transform: 'translateY(20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
         fadeSlideUp: {
-          '0%': { opacity: '0', transform: 'translateY(16px)' },
+          '0%':   { opacity: '0', transform: 'translateY(16px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         scaleIn: {
-          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '0%':   { opacity: '0', transform: 'scale(0.95)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
         popIn: {
-          '0%': { opacity: '0', transform: 'scale(0)' },
-          '70%': { transform: 'scale(1.1)' },
+          '0%':   { opacity: '0', transform: 'scale(0)' },
+          '70%':  { transform: 'scale(1.1)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
         breathe: {
           '0%, 100%': { opacity: '0.7', transform: 'scale(1)' },
-          '50%': { opacity: '1', transform: 'scale(1.015)' },
-        },
-        countUp: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        arrowSlide: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(4px)' },
-        },
-        underlineGrow: {
-          '0%': { width: '0%' },
-          '100%': { width: '100%' },
-        },
-        progressFill: {
-          '0%': { width: '0%' },
-          '100%': { width: 'var(--progress-width, 0%)' },
+          '50%':      { opacity: '1',   transform: 'scale(1.015)' },
         },
         slideInRight: {
-          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '0%':   { transform: 'translateX(100%)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
         },
-        tabIndicatorSlide: {
-          '0%': { left: 'var(--tab-from, 0)' },
-          '100%': { left: 'var(--tab-to, 0)' },
+        bounceY: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%':      { transform: 'translateY(6px)' },
         },
       },
       animation: {
-        'fade-in': 'fadeIn 400ms ease forwards',
-        'slide-up': 'slideUp 500ms ease forwards',
-        'fade-slide-up': 'fadeSlideUp 500ms ease forwards',
-        'scale-in': 'scaleIn 300ms ease forwards',
-        'pop-in': 'popIn 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
-        'breathe': 'breathe 4s ease-in-out infinite',
-        'slide-in-right': 'slideInRight 300ms ease forwards',
-        // Stagger helpers (delay applied via inline style --reveal-delay)
-        'reveal': 'fadeSlideUp 500ms ease forwards',
+        'fade-in':      `fadeIn ${tokens.animation.durationBase} ${tokens.animation.easingDefault} forwards`,
+        'slide-up':     `slideUp ${tokens.animation.durationSlow} ${tokens.animation.easingDefault} forwards`,
+        'fade-slide-up': `fadeSlideUp ${tokens.animation.durationSlow} ${tokens.animation.easingDefault} forwards`,
+        'scale-in':     `scaleIn ${tokens.animation.durationBase} ${tokens.animation.easingDefault} forwards`,
+        'pop-in':       `popIn ${tokens.animation.durationBase} ${tokens.animation.easingBounce} forwards`,
+        'breathe':      'breathe 4s ease-in-out infinite',
+        'slide-in-right': `slideInRight ${tokens.animation.durationBase} ${tokens.animation.easingDefault} forwards`,
+        'bounce-y':     'bounceY 1.5s ease-in-out infinite',
+        'reveal':       `fadeSlideUp ${tokens.animation.durationSlow} ${tokens.animation.easingDefault} forwards`,
       },
       transitionDuration: {
-        '150': '150ms',
-        '200': '200ms',
-        '300': '300ms',
-        '500': '500ms',
+        fast: tokens.animation.durationFast,   // 150ms
+        base: tokens.animation.durationBase,   // 300ms
+        slow: tokens.animation.durationSlow,   // 500ms
       },
       transitionTimingFunction: {
-        smooth: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        smooth: tokens.animation.easingDefault,
+        bounce: tokens.animation.easingBounce,
       },
     },
   },
