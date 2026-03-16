@@ -1,3 +1,7 @@
+// Based on 21st.dev efferd/minimal-footer - customized per BRAND.md v2.0
+// Source: https://21st.dev/components/efferd/minimal-footer
+// H18-H19, F1-F5 per Mandatory Implementation Checklist
+
 import Link from 'next/link'
 import Container from '@/components/ui/Container'
 

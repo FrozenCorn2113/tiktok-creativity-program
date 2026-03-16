@@ -1,5 +1,9 @@
+// R2-R8: ComparisonTable per BRAND.md v2.0
+// Built from vaib215/pricing-table as structural reference
+// Source: https://21st.dev/components/vaib215/pricing-table
+
 import React from 'react'
-import { CheckCircle2, XCircle, Minus } from 'lucide-react'
+import { Check, X, Minus } from 'lucide-react'
 
 export type CellValue = string | boolean | null | 'partial'
 
@@ -17,18 +21,28 @@ type ComparisonTableProps = {
 
 function renderCell(value: CellValue, colIndex: number) {
   if (value === true) {
-    return <CheckCircle2 className="h-5 w-5 text-[var(--color-success)]" aria-label="Yes" />
+    // R6: Check icon in green circle
+    return (
+      <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-[#DCFCE7]">
+        <Check className="h-3 w-3 text-[#12B76A]" aria-label="Yes" />
+      </span>
+    )
   }
   if (value === false) {
-    return <XCircle className="h-5 w-5 text-[var(--color-error)]" aria-label="No" />
+    // R7: X icon in red circle
+    return (
+      <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-[#FEF2F2]">
+        <X className="h-3 w-3 text-[#F04438]" aria-label="No" />
+      </span>
+    )
   }
   if (value === 'partial') {
-    return <Minus className="h-5 w-5 text-[var(--color-text-muted)]" aria-label="Partial" />
+    return <Minus className="h-5 w-5 text-[#475467]" aria-label="Partial" />
   }
   if (value === null) {
-    return <Minus className="h-5 w-5 text-[var(--color-text-muted)]" aria-label="N/A" />
+    return <Minus className="h-5 w-5 text-[#475467]" aria-label="N/A" />
   }
-  return <span className={colIndex === 0 ? 'font-semibold text-[var(--color-ink)]' : ''}>{value}</span>
+  return <span className={colIndex === 0 ? 'font-[600] text-[#111827]' : ''}>{value}</span>
 }
 
 function normalizeRows(rows: ComparisonTableProps['rows'], winnerIndex?: number): Array<{ cells: CellValue[]; isWinner: boolean }> {
@@ -44,20 +58,24 @@ export default function ComparisonTable({ columns, rows, caption, winnerIndex }:
   const normalizedRows = normalizeRows(rows, winnerIndex)
 
   return (
-    <div className="scroll-fade-right overflow-x-auto rounded-[var(--radius-md)] border border-[var(--color-border)]">
+    // R3: overflow-x-auto wrapper, relative for scroll-fade overlay
+    // R3: right-fade gradient on mobile
+    <div className="relative overflow-x-auto rounded-xl border border-[#EADFD3] after:pointer-events-none after:absolute after:right-0 after:top-0 after:bottom-0 after:w-8 after:bg-gradient-to-l after:from-white after:content-[''] md:after:hidden">
       <table className="w-full min-w-[640px] border-collapse text-sm">
         {caption ? (
-          <caption className="border-b border-[var(--color-border)] bg-[var(--color-surface-muted)] px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-[var(--color-text-subtle)]">
+          <caption className="border-b border-[#EADFD3] bg-[#FFF1E6] px-4 py-3 text-left text-[14px] font-[600] text-[#111827]">
             {caption}
           </caption>
         ) : null}
         <thead>
-          <tr className="bg-[var(--color-surface-muted)]">
+          {/* Header row: bg-[#FFF1E6], Manrope 600 14px ink */}
+          <tr className="bg-[#FFF1E6]">
             {columns.map((col, i) => (
               <th
                 key={col}
-                className={`px-4 py-3.5 text-left text-sm font-semibold text-[var(--color-ink)] ${
-                  i === 0 ? 'sticky left-0 z-10 bg-[var(--color-surface-muted)]' : ''
+                className={`px-4 py-3.5 text-left text-[14px] font-[600] text-[#111827] ${
+                  // R4: first column sticky on mobile
+                  i === 0 ? 'sticky left-0 z-10 bg-[#FFF1E6]' : ''
                 }`}
               >
                 {col}
@@ -69,9 +87,10 @@ export default function ComparisonTable({ columns, rows, caption, winnerIndex }:
           {normalizedRows.map((row, rowIndex) => (
             <tr
               key={rowIndex}
-              className={`transition-colors duration-150 hover:bg-[var(--color-surface-muted)] ${
+              className={`transition-colors duration-150 ${
                 row.isWinner
-                  ? 'border-l-[3px] border-l-[var(--color-primary)] bg-[var(--color-surface-warm)] font-semibold'
+                  // R5: recommended row — orange left border, warm white bg
+                  ? 'border-l-4 border-l-[#F4A261] bg-[#FFF7ED]'
                   : rowIndex % 2 === 0
                   ? 'bg-white'
                   : 'bg-[#FAFAF9]'
@@ -80,10 +99,11 @@ export default function ComparisonTable({ columns, rows, caption, winnerIndex }:
               {row.cells.map((cell, cellIndex) => (
                 <td
                   key={cellIndex}
-                  className={`border-t border-[var(--color-border)] px-4 py-3.5 text-[var(--color-text)] ${
+                  className={`border-t border-[#EADFD3] px-4 py-3.5 text-[#475467] ${
                     cellIndex === 0
+                      // R4: first column sticky
                       ? `sticky left-0 z-10 ${
-                          row.isWinner ? 'bg-[var(--color-surface-warm)]' : rowIndex % 2 === 0 ? 'bg-white' : 'bg-[#FAFAF9]'
+                          row.isWinner ? 'bg-[#FFF7ED]' : rowIndex % 2 === 0 ? 'bg-white' : 'bg-[#FAFAF9]'
                         }`
                       : ''
                   }`}

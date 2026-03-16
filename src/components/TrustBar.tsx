@@ -1,5 +1,9 @@
 'use client'
 
+// H7-H9 per BRAND.md Mandatory Implementation Checklist
+// H8: countUp via useCountUp hook — initial render shows TARGET (not 0) for SSR safety
+// Animation triggers only when element enters viewport AND JS is available
+
 import { useEffect, useRef, useState } from 'react'
 
 type TrustStat = {
@@ -9,24 +13,32 @@ type TrustStat = {
   label: string
 }
 
+// H9: exactly these three stats
 const defaultStats: TrustStat[] = [
-  { value: 64, suffix: '', label: 'guides' },
-  { value: 3, suffix: '', label: 'free calculators' },
-  { value: 2026, prefix: 'Updated for ', label: '' },
+  { value: 64, suffix: ' Guides', label: '' },
+  { value: 3, suffix: ' Free Calculators', label: '' },
+  { value: 2026, prefix: 'Updated ', label: '' },
 ]
 
 function useCountUp(target: number, isVisible: boolean, duration = 1200) {
-  const [count, setCount] = useState(0)
+  // H8: initialize to target so SSR shows correct value — no flash of zeros
+  const [count, setCount] = useState(target)
+  const hasAnimated = useRef(false)
   const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
-    if (!isVisible) return
-    // Respect prefers-reduced-motion
+    // Only animate once, and only when visible
+    if (!isVisible || hasAnimated.current) return
+    hasAnimated.current = true
+
+    // H8: Respect prefers-reduced-motion — skip animation, keep final value
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setCount(target)
       return
     }
 
+    // Animate from 0 to target
+    setCount(0)
     const startTime = performance.now()
     const animate = (now: number) => {
       const elapsed = now - startTime
@@ -47,7 +59,7 @@ function useCountUp(target: number, isVisible: boolean, duration = 1200) {
   return count
 }
 
-function StatItem({ stat }: { stat: TrustStat; index: number }) {
+function StatItem({ stat }: { stat: TrustStat }) {
   const [isVisible, setIsVisible] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const count = useCountUp(stat.value, isVisible)
@@ -69,11 +81,13 @@ function StatItem({ stat }: { stat: TrustStat; index: number }) {
 
   return (
     <div ref={ref} className="flex flex-col items-center gap-1 text-center">
-      <span className="text-[1.25rem] font-bold text-[var(--color-ink-strong)]">
-        {stat.prefix ?? ''}{count}{stat.suffix ?? ''}
+      {/* H7: stat numbers — large, ink-strong */}
+      <span className="text-[1.5rem] font-[700] leading-[1.2] text-[#0B0F1A] md:text-[1.75rem]">
+        {stat.prefix ?? ''}{count.toLocaleString()}{stat.suffix ?? ''}
       </span>
+      {/* H9: label below number, 12px text-muted */}
       {stat.label ? (
-        <span className="text-sm font-medium text-[var(--color-text-muted)]">{stat.label}</span>
+        <span className="text-[12px] font-[500] text-[#475467]">{stat.label}</span>
       ) : null}
     </div>
   )
@@ -86,13 +100,14 @@ type TrustBarProps = {
 
 export default function TrustBar({ stats = defaultStats, className = '' }: TrustBarProps) {
   return (
+    // H7: 3-column flex on desktop, grid-cols-3 on mobile
     <div
-      className={`bg-[var(--color-surface-muted)] px-4 py-6 ${className}`}
+      className={`bg-white px-4 py-8 ${className}`}
       aria-label="Site stats"
     >
-      <div className="mx-auto flex max-w-[var(--container-max)] flex-wrap items-center justify-center gap-8 sm:gap-12 md:gap-16 px-[var(--gutter)]">
+      <div className="mx-auto flex max-w-3xl items-center justify-center gap-8 md:gap-16">
         {stats.map((stat, i) => (
-          <StatItem key={stat.label || stat.value} stat={stat} index={i} />
+          <StatItem key={`${stat.label || stat.value}-${i}`} stat={stat} />
         ))}
       </div>
     </div>

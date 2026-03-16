@@ -1,3 +1,7 @@
+// Based on 21st.dev efferd/header-1 - customized per BRAND.md v2.0
+// Source: https://21st.dev/components/efferd/header-1
+// N1-N10 per Mandatory Implementation Checklist
+
 'use client'
 
 import Link from 'next/link'
@@ -6,7 +10,7 @@ import { usePathname } from 'next/navigation'
 import { navigation } from '@/lib/site'
 import Button from '@/components/ui/Button'
 import Container from '@/components/ui/Container'
-import { X, Menu, ChevronDown } from 'lucide-react'
+import { X, Menu } from 'lucide-react'
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -14,7 +18,8 @@ export default function Navbar() {
   const pathname = usePathname()
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 4)
+    // N3: scroll shadow at >10px
+    const handleScroll = () => setIsScrolled(window.scrollY > 10)
     handleScroll()
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
@@ -26,16 +31,22 @@ export default function Navbar() {
   }, [pathname])
 
   return (
+    // N2: white bg, border-b #EADFD3
+    // N3: shadow-sm on scroll (no blur, no gradient)
     <header
-      className={`fixed top-0 left-0 right-0 z-50 border-b border-[var(--color-border)] bg-white transition-shadow duration-200 ${
-        isScrolled ? 'shadow-[var(--shadow-sm)]' : ''
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-[#EADFD3] bg-white transition-shadow duration-200 ${
+        isScrolled ? 'shadow-sm' : ''
       }`}
     >
       <Container>
         <div className="flex h-16 items-center justify-between">
-          {/* Logo — text only, Manrope 700 */}
-          <Link href="/" className="cursor-pointer">
-            <span className="font-bold text-[var(--color-ink-strong)] text-[0.9375rem]" style={{ fontFamily: 'var(--font-sans)' }}>
+
+          {/* N4: Logo — 18px, font-700, tracking-tight, ink-strong */}
+          <Link href="/" className="shrink-0 cursor-pointer no-underline">
+            <span
+              className="text-[18px] font-[700] leading-none tracking-[-0.02em] text-[#0B0F1A]"
+              style={{ fontFamily: 'var(--font-sans)' }}
+            >
               TikTok Creativity Program
             </span>
           </Link>
@@ -46,45 +57,18 @@ export default function Navbar() {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
               return (
                 <div key={item.label} className="group relative">
+                  {/* N5: Manrope 500, 15px, text-muted. Hover: text-ink */}
+                  {/* N6: Active: orange underline via nav-underline class + active */}
                   <Link
                     href={item.href}
-                    className={`nav-underline inline-flex items-center gap-1 px-3 py-2 text-[0.9375rem] font-medium transition-colors duration-200 ${
+                    className={`nav-underline relative inline-flex items-center gap-1 px-3 py-2 text-[15px] font-[500] transition-colors duration-200 ${
                       isActive
-                        ? 'active text-[var(--color-ink)] '
-                        : 'text-[var(--color-text-muted)] hover:text-[var(--color-ink)]'
+                        ? 'active text-[#101828]'
+                        : 'text-[#475467] hover:text-[#101828]'
                     }`}
                   >
                     {item.label}
-                    {'sections' in item && item.sections ? (
-                      <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-                    ) : null}
                   </Link>
-
-                  {'sections' in item && item.sections ? (
-                    <div className="pointer-events-none absolute left-0 top-full mt-1 w-[520px] rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-white p-6 shadow-[var(--shadow-md)] opacity-0 transition-opacity duration-150 group-hover:pointer-events-auto group-hover:opacity-100">
-                      <div className="grid gap-6 md:grid-cols-2">
-                        {item.sections.map((section) => (
-                          <div key={section.title}>
-                            <p className="text-[0.75rem] font-semibold uppercase tracking-wide text-[var(--color-text-subtle)]">
-                              {section.title}
-                            </p>
-                            <ul className="mt-3 space-y-1.5">
-                              {section.links.map((link) => (
-                                <li key={link.href}>
-                                  <Link
-                                    href={link.href}
-                                    className="block rounded-[var(--radius-sm)] px-2 py-1.5 text-sm text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface-muted)]"
-                                  >
-                                    {link.label}
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ) : null}
                 </div>
               )
             })}
@@ -92,64 +76,61 @@ export default function Navbar() {
 
           {/* Right side — CTA + hamburger */}
           <div className="flex items-center gap-3">
+            {/* N7: "Start Here" primary button — right side, desktop */}
             <Link href="/start-here" className="hidden sm:inline-flex">
-              <Button size="sm">Start here</Button>
+              <Button size="sm">Start Here</Button>
             </Link>
+
+            {/* N8: hamburger — Lucide Menu size 24 */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden cursor-pointer rounded-[var(--radius-md)] border border-[var(--color-border)] p-2 text-[var(--color-text)] transition hover:bg-[var(--color-surface-muted)]"
+              className="lg:hidden cursor-pointer rounded-xl border border-[#EADFD3] p-2 text-[#475467] transition-colors hover:bg-[#FFF7ED]"
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
             >
+              {/* N8: static X icon (Lucide X size 24) when open — no animated X */}
               {isMobileMenuOpen ? (
-                <X className="h-5 w-5" />
+                <X className="h-6 w-6" aria-hidden />
               ) : (
-                <Menu className="h-5 w-5" />
+                <Menu className="h-6 w-6" aria-hidden />
               )}
             </button>
           </div>
         </div>
       </Container>
 
-      {/* Mobile drawer */}
+      {/* N9: Mobile nav panel — slides in from right, white bg */}
       {isMobileMenuOpen ? (
-        <div className="lg:hidden border-t border-[var(--color-border)] bg-white">
+        <div className="lg:hidden border-t border-[#EADFD3] bg-white">
           <Container>
-            <div className="flex flex-col gap-1 py-4">
+            {/* N9: Flex col, gap-0, full height with CTA pinned at bottom */}
+            <div className="flex flex-col py-4 gap-0">
+              {/* N10: Group label above each group */}
               {navigation.main.map((item) => {
                 const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
                 return (
-                  <div key={item.label} className="space-y-1">
+                  <div key={item.label}>
                     <Link
                       href={item.href}
-                      className={`block rounded-[var(--radius-sm)] px-3 py-2.5 text-sm font-semibold transition-colors ${
+                      // N9: 48px minimum tap height
+                      className={`flex min-h-[48px] items-center rounded-xl px-3 text-[15px] font-[500] transition-colors ${
                         isActive
-                          ? 'bg-[var(--color-surface-muted)] text-[var(--color-ink)]'
-                          : 'text-[var(--color-text)] hover:bg-[var(--color-surface-muted)]'
+                          ? 'bg-[#FFF7ED] text-[#101828]'
+                          : 'text-[#475467] hover:bg-[#FFF7ED] hover:text-[#101828]'
                       }`}
                     >
                       {item.label}
                     </Link>
-                    {'sections' in item && item.sections ? (
-                      <ul className="space-y-0.5 pl-3">
-                        {item.sections.flatMap((section) => section.links).map((link) => (
-                          <li key={link.href}>
-                            <Link
-                              href={link.href}
-                              className="block rounded-[var(--radius-sm)] px-3 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-muted)] hover:text-[var(--color-text)]"
-                            >
-                              {link.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : null}
                   </div>
                 )
               })}
-              <div className="pt-2">
-                <Link href="/start-here">
-                  <Button className="w-full">Start here</Button>
+
+              {/* N9: CTA pinned at bottom of panel */}
+              <div className="mt-4 pt-4 border-t border-[#EADFD3]">
+                {/* N10: small gray label above group */}
+                <p className="mb-2 px-3 text-[12px] font-[500] text-[#667085]">Get started</p>
+                <Link href="/start-here" className="block">
+                  <Button className="w-full">Start Here</Button>
                 </Link>
               </div>
             </div>
