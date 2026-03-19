@@ -35,13 +35,13 @@ export function CalculatorsPreview() {
               Most TikTok earnings calculators use follower count. The Creator Rewards Program doesn&apos;t pay based on followers — it pays based on qualified views and your RPM. These calculators use the actual model.
             </p>
 
-            {/* Image replacing the former stat links */}
+            {/* Imagen-generated TikTok creator illustration */}
             <div className="mt-8 rounded-2xl overflow-hidden">
               <Image
-                src="/images/brand/landpress-marketing-4.png"
-                alt="Creator reviewing TikTok earnings data"
+                src="/images/homepage-explainer.webp"
+                alt="Creator checking TikTok earnings and analytics on phone"
                 width={480}
-                height={320}
+                height={360}
                 className="w-full object-contain rounded-2xl"
                 loading="lazy"
               />
