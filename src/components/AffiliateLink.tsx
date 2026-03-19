@@ -3,28 +3,35 @@
 import { trackEvent } from '@/lib/analytics'
 
 type AffiliateLinkProps = {
-  slug: string
-  label: string
+  // slug+label API (original)
+  slug?: string
+  label?: string
+  // href+children API (used in MDX inline links)
+  href?: string
+  children?: React.ReactNode
   className?: string
 }
 
-export default function AffiliateLink({ slug, label, className = '' }: AffiliateLinkProps) {
+export default function AffiliateLink({ slug, label, href, children, className = '' }: AffiliateLinkProps) {
+  const resolvedHref = href ?? (slug ? `/go/${slug}` : '#')
+  const resolvedLabel = slug ?? href ?? 'affiliate'
+
   const handleClick = () => {
     trackEvent({
       action: 'affiliate_click',
       category: 'monetization',
-      label: slug,
+      label: resolvedLabel,
     })
   }
 
   return (
     <a
-      href={`/go/${slug}`}
+      href={resolvedHref}
       onClick={handleClick}
       rel="noopener noreferrer sponsored"
       className={`text-[var(--color-primary-hover)] underline decoration-[var(--color-primary)] underline-offset-2 hover:text-[var(--color-ink)] ${className}`}
     >
-      {label}
+      {children ?? label}
     </a>
   )
 }
