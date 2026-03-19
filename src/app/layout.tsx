@@ -21,6 +21,8 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ['400'],
   variable: '--font-mono',
   display: 'swap',
+  preload: false,
+  fallback: ['Menlo', 'Monaco', 'Courier New', 'monospace'],
 })
 
 export const metadata: Metadata = {
