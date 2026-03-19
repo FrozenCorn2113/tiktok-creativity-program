@@ -10,13 +10,31 @@ export interface NicheToolCard {
   ctaText: string
 }
 
+export interface CreatorSpotlight {
+  handle: string          // @handle without @
+  name: string
+  followers: string       // e.g. "14M"
+  profileImage: string    // public path e.g. /images/niches/fitness/demibagby-profile.png
+  tiktokUrl: string
+  what: string            // what they do
+  monetization: string    // how they make money
+}
+
+export interface GettingStartedStep {
+  heading: string
+  body: string
+}
+
 export interface NicheData {
   slug: string
   title: string
   description: string
   emoji: string
+  intro?: string          // optional long-form intro paragraph
+  creatorSpotlights?: CreatorSpotlight[]
   recommendedTools: NicheToolCard[]
   monetizationTips: string[]
+  gettingStarted?: GettingStartedStep[]
   relatedGuides: { label: string; href: string }[]
   relatedNiches: string[]
 }
@@ -180,53 +198,102 @@ export const niches: NicheData[] = [
     slug: 'fitness-creators',
     title: 'TikTok Monetization for Fitness Creators',
     description:
-      'Fitness content dominates TikTok retention metrics — workout demos keep viewers watching until the rep is done. High watch time means high RPM. Convert that into program sales, affiliate commissions, and recurring coaching revenue.',
+      'Fitness is one of the best niches on TikTok for building real income. RPM is competitive, but the bigger opportunity is that fitness content converts — viewers buy workout programs, coaching packages, and supplement codes. TikTok is top of funnel. The money comes from what you send them to.',
     emoji: '💪',
+    intro:
+      'Fitness content earns $3–$8 per 1,000 qualified views through Creator Rewards Program — competitive compared to most niches. But RPM is almost beside the point here. Fitness is one of the few niches where the Creator Rewards payout is secondary income by the time you\'ve built a real following. Viewers don\'t just watch; they buy. Workout programs, coaching packages, supplement discount codes, activewear partnerships — the revenue ceiling is much higher than what TikTok pays per view. The creators making consistent money figured this out early: TikTok gets you in front of people. You still need something to sell them.',
+    creatorSpotlights: [
+      {
+        handle: 'demibagby',
+        name: 'Demi Bagby',
+        followers: '14M',
+        profileImage: '/images/niches/fitness/demibagby-profile.png',
+        tiktokUrl: 'https://www.tiktok.com/@demibagby',
+        what: 'CrossFit, gymnastics, calisthenics, and bodybuilding stunts. Opens almost every video mid-movement — by the time you register what you\'re watching, you\'ve already watched five seconds of it.',
+        monetization: 'Major brand deals with Gymshark, Samsung, Red Bull USA, and eBay Motors. Runs Bagby Bootcamp, a free app that keeps followers inside her ecosystem between posts. At 14M followers, even modest CPM on brand deals adds up fast.',
+      },
+      {
+        handle: 'movementbydavid',
+        name: 'David Thurin',
+        followers: '3.7M',
+        profileImage: '/images/niches/fitness/movementbydavid-profile.png',
+        tiktokUrl: 'https://www.tiktok.com/@movementbydavid',
+        what: 'Flexibility and mobility coaching. Science-based, accessible instructional content — stretch breakdowns, functional movement progressions, tutorials built for people who don\'t think of themselves as athletes.',
+        monetization: 'TikTok drives awareness to the Ganbaru Method app and his own site (movementbydavid.com) selling ebooks and programs. Instructional format runs 1–3 minutes, which qualifies well for Creator Rewards payouts — but app and program sales are the primary income driver.',
+      },
+      {
+        handle: 'antonielokhorst',
+        name: 'Antonie Lokhorst',
+        followers: '4M',
+        profileImage: '/images/niches/fitness/antonielokhorst-profile.png',
+        tiktokUrl: 'https://www.tiktok.com/@antonielokhorst',
+        what: 'Calisthenics and bodyweight training — front levers, muscle-ups, full-body routines. Grew up overweight; built his brand around that origin story, so every skill video carries a second layer.',
+        monetization: 'Online coaching and digital workout programs through antonielokhorst.com. Brand partnership with VQ FIT. No dependence on platform monetization — the coaching offer is the engine, and each video is a proof point.',
+      },
+      {
+        handle: 'fitwithmezz',
+        name: 'Harvin Mezgin',
+        followers: '287K',
+        profileImage: '/images/niches/fitness/fitwithmezz-profile.png',
+        tiktokUrl: 'https://www.tiktok.com/@fitwithmezz',
+        what: 'Fitness content with a "fitness obsessed lawyer" angle — specific enough to prevent the account from reading like another gym page. Audience skews 62%+ women, which is exactly what activewear and supplement brands want.',
+        monetization: 'Three confirmed brand deals under 300K followers: ONE SOL (vegan supplements), DFYNE (activewear), and Kata Active (women\'s activewear). Mid-tier creators with strong engagement and the right demographic earn $1,500–$3,000 per sponsored post based on industry benchmarks.',
+      },
+      {
+        handle: 'courtneylynea',
+        name: 'Courtney Lynea',
+        followers: '239K',
+        profileImage: '/images/niches/fitness/courtneylynea-profile.png',
+        tiktokUrl: 'https://www.tiktok.com/@courtneylynea',
+        what: 'Weight loss journey — transformation progress, meal ideas, gym tips, short fitness plans. Documents rather than teaches. Content performs well because viewers save it for motivation.',
+        monetization: 'Confirmed sponsorship with EHP Labs for OxyShred using affiliate code LYNEA — earns commission every time someone buys through it. At 239K followers, a consistent audience that trusts her generates consistent affiliate commission. No viral required.',
+      },
+    ],
     recommendedTools: [
       {
         slug: 'stan-store',
         toolName: 'Stan Store',
         domain: 'stan.store',
         nicheDescription:
-          'Sell workout programs, nutrition guides, and 1:1 coaching bookings directly from your bio. Fitness is one of the top-converting niches on Stan.',
+          'The standard for fitness creators selling digital products. Bio link, payment processing, and basic storefront in one place. Takes about 20 minutes to set up. Fitness is one of the top-converting niches on Stan.',
         priceRange: 'Free plan • Paid plans ~$29–99/mo',
         ctaText: 'Try Stan Store',
       },
       {
         slug: 'mavely',
         toolName: 'Mavely',
-        domain: 'joinavenly.com',
+        domain: 'joinmavely.com',
         nicheDescription:
-          'Earn commissions on the supplements, gear, and apparel you already recommend. Fitness creators see strong conversion on product links.',
+          'Earn commissions on supplements, gear, and apparel you already recommend. Fitness creators see strong conversion on product links — especially supplements and activewear.',
         priceRange: 'Free to join • Revenue-share',
         ctaText: 'Join Mavely',
       },
       {
-        slug: 'capcut-pro',
-        toolName: 'CapCut Pro',
-        domain: 'capcut.com',
+        slug: 'filmora',
+        toolName: 'Filmora',
+        domain: 'filmora.wondershare.com',
         nicheDescription:
-          'Edit transformation clips, workout transitions, and training montages. AI-powered templates speed up editing for high-frequency posting.',
-        priceRange: 'Free • Pro from ~$7.99/mo',
-        ctaText: 'Try CapCut Pro',
+          'Step up from CapCut for polished workout walkthroughs. Better color grading and audio control for long-form instructional content. Handles before/after transformation edits cleanly.',
+        priceRange: '~$49/yr or $7.99/mo',
+        ctaText: 'Try Filmora',
       },
       {
-        slug: 'ring-light',
-        toolName: 'Ring Light',
-        domain: 'amazon.com',
+        slug: 'kit',
+        toolName: 'Kit (email)',
+        domain: 'kit.com',
         nicheDescription:
-          'Even lighting on workout demos makes content look professional. Reduces shadows during floor exercises and makes form corrections clearly visible.',
-        priceRange: 'Typically $20–60 via Amazon',
-        ctaText: 'Browse Ring Lights',
+          'Brand deals and TikTok algorithms both change. Email doesn\'t. Build a list your coaching and program sales don\'t depend on a platform for. Free up to 10,000 subscribers.',
+        priceRange: 'Free up to 10K subscribers',
+        ctaText: 'Start Free with Kit',
       },
       {
-        slug: 'tripod',
-        toolName: 'Phone Tripod',
-        domain: 'amazon.com',
+        slug: 'fillout',
+        toolName: 'Fillout',
+        domain: 'fillout.com',
         nicheDescription:
-          'Hands-free recording for solo workouts. A flexible gorilla-grip tripod lets you film from any angle without a camera operator.',
-        priceRange: 'Typically $15–40 via Amazon',
-        ctaText: 'Browse Tripods',
+          'Once brand DMs start coming in, you need a system. Fillout gives you a form to send prospective sponsors so you\'re not running a negotiation through Instagram DMs.',
+        priceRange: 'Free plan available',
+        ctaText: 'Try Fillout',
       },
       {
         slug: 'canva-pro',
@@ -239,11 +306,34 @@ export const niches: NicheData[] = [
       },
     ],
     monetizationTips: [
-      'Sell 4–8 week workout programs as digital downloads — one product can generate recurring income long after the TikTok that promoted it disappears.',
-      'Earn affiliate commissions on protein powder, supplements, and workout gear you already use in your content.',
-      'Offer transformation check-ins or weekly coaching calls through Stan Store to justify premium pricing.',
-      'Post "day in my life" content showing your own program results — these earn high watch time and validate the products you sell.',
-      'Use TikTok Creator Rewards income to fund paid ads promoting your Stan Store — fitness converts well on ad spend.',
+      'Digital products (workout programs, meal plans) are the ceiling. A creator with 50,000 engaged followers selling a $47 program converts better than most niches — the content itself is the proof of concept. Use Stan Store to set this up from your bio.',
+      'One-to-one coaching carries the highest per-customer revenue in fitness. If you\'re charging $200/month and converting 1% of a 50K following, that\'s $1,000/month recurring from a single income stream. The volume doesn\'t need to be high if the ticket is right.',
+      'Supplement and gear affiliate codes are the most accessible starting point. Brands like OxyShred, Athletic Greens, and Ghost actively recruit fitness creators — commissions typically run 10–20% per sale. Use Mavely to consolidate product links.',
+      'Activewear and supplement brands are the primary buyers for brand deals in this niche. Mid-tier benchmarks: under 100K = $500–$1,500 per post; 100K–500K = $1,500–$5,000. Engagement rate matters more than raw follower count.',
+      'Creator Rewards Program pays best on instructional content over 60 seconds — workout walkthroughs, stretch breakdowns, transformation timelines all qualify. Aim for 60–90 second instructional content for the best payout-to-completion-rate ratio.',
+      'Build your email list while your audience is growing. Kit is free up to 10,000 subscribers. Brand deals and algorithms change — email is the one channel you own.',
+    ],
+    gettingStarted: [
+      {
+        heading: 'Pick a lane, not a category',
+        body: '"Fitness" is too broad. "Beginner calisthenics for people over 40" is a lane. "Mobility for desk workers" is a lane. The narrower you go, the faster TikTok search traffic finds you — and the more precisely brands can justify paying you.',
+      },
+      {
+        heading: 'Build the backend before you need it',
+        body: 'The worst time to set up a Stan Store is after a video goes viral and 10,000 people land on your profile. Build the product or coaching offer while your audience is small enough to test it.',
+      },
+      {
+        heading: 'Open mid-action in the first two seconds',
+        body: 'Every creator profiled here uses a visual hook immediately — movement, transformation, before/after. TikTok reads completion rate. If viewers stop in the first two seconds, the video doesn\'t distribute.',
+      },
+      {
+        heading: 'Post instructional content for CRP income',
+        body: 'Workout walkthroughs, stretch breakdowns, routine demos — all qualify for higher Creator Rewards payouts than short motivational clips. Aim for 60–90 seconds for the sweet spot between completion rate and payout.',
+      },
+      {
+        heading: 'Use TikTok as the funnel, not the destination',
+        body: 'Every creator profiled on this page earns most of their income from something that lives off TikTok — an app, a program, a coaching offer, a brand deal. TikTok gets you in front of people. You still have to have something to sell them.',
+      },
     ],
     relatedGuides: [
       { label: 'Growing from 5K to 10K Followers', href: '/guides/grow-5k-to-10k' },

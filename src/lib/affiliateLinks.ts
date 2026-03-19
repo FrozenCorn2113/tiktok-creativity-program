@@ -40,6 +40,9 @@ export const affiliateLinks: Record<string, string> = {
   skillshare: 'https://www.skillshare.com/',
   'obs-studio': 'https://obsproject.com/',
   'elgato-stream-deck': 'https://www.elgato.com/stream-deck',
+  // Fitness niche tools
+  kit: 'https://kit.com/',
+  fillout: 'https://www.fillout.com/',
 }
 
 export function getAffiliateLink(slug: string) {

@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ExternalLink, ChevronRight, TrendingUp, DollarSign, BookOpen, Mail } from 'lucide-react'
+import { ExternalLink, ChevronRight, TrendingUp, DollarSign, BookOpen, Users } from 'lucide-react'
 import { buildMetadata } from '@/lib/seo'
 import { niches, getNicheBySlug } from '@/lib/nicheData'
 import { getAffiliateLink } from '@/lib/affiliateLinks'
 import { EmailCapture } from '@/components/sections/email-capture'
+import { CreatorSpotlightCard } from '@/components/CreatorSpotlightCard'
 
 export async function generateStaticParams() {
   return niches.map((n) => ({ slug: n.slug }))
@@ -52,6 +53,37 @@ export default function NichePage({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </section>
+
+      {/* Intro — only render if niche has an intro */}
+      {niche.intro && (
+        <section className="py-12 bg-white border-b border-border-default">
+          <div className="max-w-container mx-auto px-6">
+            <div className="max-w-3xl">
+              <p className="text-[1.05rem] text-text-primary leading-[1.8]">{niche.intro}</p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Creator Spotlights — only render if niche has creator data */}
+      {niche.creatorSpotlights && niche.creatorSpotlights.length > 0 && (
+        <section className="py-14 bg-background-warm border-b border-border-default">
+          <div className="max-w-container mx-auto px-6">
+            <div className="flex items-center gap-2 mb-2">
+              <Users className="w-5 h-5 text-brand-primary" aria-hidden />
+              <h2 className="text-[1.75rem] font-bold text-brand-ink">Creator Spotlights</h2>
+            </div>
+            <p className="text-text-secondary mb-8 max-w-2xl">
+              Five creators across different follower tiers — what they do, how they monetize, and what makes their model work.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {niche.creatorSpotlights.map((creator) => (
+                <CreatorSpotlightCard key={creator.handle} creator={creator} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Recommended Tools — THE MONEY SECTION */}
       <section className="py-14 bg-white">
@@ -135,6 +167,35 @@ export default function NichePage({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </section>
+
+      {/* Getting Started — only render if niche has gettingStarted data */}
+      {niche.gettingStarted && niche.gettingStarted.length > 0 && (
+        <section className="py-14 bg-white border-t border-border-default">
+          <div className="max-w-container mx-auto px-6">
+            <div className="max-w-3xl">
+              <h2 className="text-[1.75rem] font-bold text-brand-ink mb-2">
+                Starting Out in This Niche
+              </h2>
+              <p className="text-text-secondary mb-8">
+                What actually matters when you&rsquo;re building a fitness account from scratch.
+              </p>
+              <div className="space-y-5">
+                {niche.gettingStarted.map((step, i) => (
+                  <div key={i} className="flex gap-4">
+                    <div className="flex-shrink-0 w-7 h-7 rounded-full bg-brand-ink text-white text-xs font-bold flex items-center justify-center mt-0.5">
+                      {i + 1}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-brand-ink text-[0.975rem] mb-1">{step.heading}</p>
+                      <p className="text-[0.9rem] text-text-secondary leading-[1.7]">{step.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Related Guides */}
       <section className="py-14 bg-white border-t border-border-default">
