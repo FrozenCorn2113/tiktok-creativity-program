@@ -18,6 +18,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import { CalculatorPanel } from '@/components/sections/calculator-panel'
 import { Badge } from '@/components/ui/badge'
 import { EmailCapturePopup } from '@/components/email/email-capture-popup'
+import { CalculatorSection4b } from '@/components/sections/calculator-section-4b'
 
 export const metadata: Metadata = {
   title: 'TikTok Earnings Calculator',
@@ -73,10 +74,11 @@ export default function EarningsCalculatorPage() {
       />
 
       {/* C1-C3: two-column header band with illustration */}
-      <section className="bg-[#FFF7ED] py-12 md:py-16">
+      {/* Header band kept compact — nav is separate floating element */}
+      <section className="bg-[#FFF7ED] py-6 md:py-8">
         <Container>
-          <div className="grid items-center gap-12 md:grid-cols-[3fr_2fr]">
-            <div>
+          <div className="grid items-end gap-8 md:grid-cols-[3fr_2fr]">
+            <div className="[&_h1]:text-[2.75rem] [&_h1]:md:text-[4rem] [&_h1]:lg:text-[4.5rem] [&_h1]:font-black [&_h1]:leading-[1.05]">
               <PageHeader
                 breadcrumbs={[
                   { label: 'Home', href: '/' },
@@ -93,12 +95,13 @@ export default function EarningsCalculatorPage() {
                 100% Free • No signup required
               </Badge>
             </div>
-            <div className="relative hidden h-[320px] w-full md:block">
+            {/* Image aligned to bottom so it sits lower, not floating up into nav space */}
+            <div className="relative hidden h-[380px] w-full md:block mt-6">
               <Image
                 src="/assets/brand-images/landpress-marketing-hero.png"
                 alt="Creator analyzing TikTok earnings with calculator"
                 fill
-                className="object-contain object-right"
+                className="object-contain object-bottom"
                 priority
               />
             </div>
@@ -115,6 +118,20 @@ export default function EarningsCalculatorPage() {
             <div className="max-w-2xl">
               <CalculatorPanel />
             </div>
+
+            {/* Section 4b: Calculator results actions — email capture, share, affiliate */}
+            <CalculatorSection4b
+              emailLeadMagnetTitle="Get Your Results Explained"
+              emailLeadMagnetDescription="We will break down what your number actually means — what drives it up, what holds it down, and the one thing most creators in your range miss."
+              tweetText="I just calculated my estimated TikTok Creator Rewards earnings"
+              tweetUrl="https://tiktokcreativityprogram.com/calculators/earnings-calculator"
+              affiliateToolName="Exolyt"
+              affiliateSlug="exolyt"
+              affiliateReview="Exolyt tracks TikTok performance over time and lets you benchmark against other creators in your niche."
+              affiliateBestFor="Creators who want to understand what is driving their RPM"
+              affiliatePriceRange="Free tier available"
+              affiliateCtaText="Try Exolyt"
+            />
 
             {/* What affects your results? — required per BRAND.md */}
             <div>

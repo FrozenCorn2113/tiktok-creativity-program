@@ -5,30 +5,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Calculator, BarChart2, Users, ChevronRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { motion, useReducedMotion } from "framer-motion";
 import { fadeUp, viewportOnce } from "@/lib/motion";
-
-const calculators = [
-  {
-    Icon: Calculator,
-    title: "Earnings Calculator",
-    href: "/calculators/earnings-calculator",
-  },
-  {
-    Icon: BarChart2,
-    title: "RPM Calculator",
-    href: "/calculators/rpm-by-country",
-  },
-  {
-    Icon: Users,
-    title: "Follower Income Calculator",
-    href: "/calculators/follower-income-estimator",
-  },
-];
 
 export function CalculatorsPreview() {
   const shouldReduceMotion = useReducedMotion();
@@ -56,24 +35,16 @@ export function CalculatorsPreview() {
               Most TikTok earnings calculators use follower count. The Creator Rewards Program doesn&apos;t pay based on followers — it pays based on qualified views and your RPM. These calculators use the actual model.
             </p>
 
-            {/* Calculator links */}
-            <div className="mt-8 flex flex-col gap-3">
-              {calculators.map(({ Icon, title, href }) => (
-                <Link
-                  key={title}
-                  href={href}
-                  className="flex items-center gap-3 bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/10 transition-colors cursor-pointer group"
-                >
-                  <Icon className="h-6 w-6 text-brand-primary shrink-0" aria-hidden />
-                  <span className="flex-1 text-[15px] font-semibold text-white">
-                    {title}
-                  </span>
-                  <Badge className="bg-brand-primarySoft text-brand-primaryDeep text-xs font-manrope border-0 mr-1">
-                    Free
-                  </Badge>
-                  <ChevronRight className="h-4 w-4 text-gray-500 group-hover:text-gray-300 transition-colors" aria-hidden />
-                </Link>
-              ))}
+            {/* Image replacing the former stat links */}
+            <div className="mt-8 rounded-2xl overflow-hidden">
+              <Image
+                src="/images/brand/landpress-marketing-4.png"
+                alt="Creator reviewing TikTok earnings data"
+                width={480}
+                height={320}
+                className="w-full object-contain rounded-2xl"
+                loading="lazy"
+              />
             </div>
           </motion.div>
 
