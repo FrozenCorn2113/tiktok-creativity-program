@@ -45,7 +45,8 @@ function renderCell(value: CellValue, colIndex: number) {
   return <span className={colIndex === 0 ? 'font-[600] text-[#111827]' : ''}>{value}</span>
 }
 
-function normalizeRows(rows: ComparisonTableProps['rows'], winnerIndex?: number): Array<{ cells: CellValue[]; isWinner: boolean }> {
+function normalizeRows(rows: ComparisonTableProps['rows'] | undefined, winnerIndex?: number): Array<{ cells: CellValue[]; isWinner: boolean }> {
+  if (!rows) return []
   return rows.map((row, i) => {
     if (Array.isArray(row)) {
       return { cells: row as CellValue[], isWinner: i === winnerIndex }
@@ -55,6 +56,7 @@ function normalizeRows(rows: ComparisonTableProps['rows'], winnerIndex?: number)
 }
 
 export default function ComparisonTable({ columns, rows, caption, winnerIndex }: ComparisonTableProps) {
+  if (!columns || !rows) return null
   const normalizedRows = normalizeRows(rows, winnerIndex)
 
   return (
