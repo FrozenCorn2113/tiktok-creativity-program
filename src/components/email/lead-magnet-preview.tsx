@@ -1,5 +1,7 @@
 // Designed by Vale v4 — Lead magnet preview card for email capture
 
+"use client";
+
 import { Download } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
